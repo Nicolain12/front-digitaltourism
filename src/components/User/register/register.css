@@ -1,0 +1,136 @@
+.main-error-div{
+    display: none;
+}
+label{
+    margin-left: 2%;
+}
+#userImg-register{
+    margin-left: 4%;
+}
+h4{
+    margin-left: 2%;
+}
+.form-register {
+    width: 100%;
+    background: #24303c;
+    padding: 2%;
+    color: white;
+}
+
+.form-register h4 {
+    font-size: 22px;
+    margin-bottom: 20px;
+}
+
+.main-register-from-top-1 {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+}
+
+.register-form-i {
+    width: 50%;
+    display: flex;
+    justify-content: end;
+}
+
+.main-register-from-top-1 input {
+    margin: 2% 0;
+    cursor: pointer;
+}
+
+#admin {
+    background-color: #24303c;
+    color: white;
+    border: #1f53c5 solid 1px;
+    border-radius: 5px;
+    margin-left: 2%;
+    padding: 1%;
+}
+
+.controls-register {
+    width: 90%;
+    background: #24303c;
+    padding: 3%;
+    border-radius: 4px;
+    margin: 3%;
+    border: 1px solid #1f53c5;
+    font-size: 18px;
+    color: white;
+}
+
+.from-register-p {
+    height: 40px;
+    text-align: center;
+    font-size: 18px;
+    line-height: 40px;
+}
+
+
+.form-register a {
+    color: white;
+    text-decoration: none;
+}
+
+.boton-register {
+    display: flex;
+    justify-content: center;
+}
+
+.form-register .boton-register .botons-register {
+    width: 30%;
+    cursor: pointer;
+    background: #1f53c5;
+    height: 2rem;
+    border-radius: 5px;
+    border: none;
+    color: white;
+    font-size: 18px;
+}
+
+.form-register .boton-register .botons-register:hover {
+    box-shadow: 0 0 10px rgb(100, 100, 100);
+}
+
+
+@media (min-width: 768px) {
+    .register-top {
+        display: flex;
+        justify-content: space-around;
+    }
+
+    .input-div {
+        width: 40%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .register-middle {
+        display: flex;
+        justify-content: space-around;
+        margin-top: 2%;
+    }
+
+    .age-type {
+        width: 40%;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    #admin {
+        margin-top: 6%;
+    }
+
+    .register-end {
+        display: flex;
+        justify-content: space-around;
+    }
+
+    .botons-register {
+        margin-top: 2%;
+        width: 20%;
+        height: 3rem;
+        font-size: 26px;
+    }
+
+}

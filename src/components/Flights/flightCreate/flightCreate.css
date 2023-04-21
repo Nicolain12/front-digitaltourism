@@ -1,0 +1,177 @@
+
+.crate-flight {
+    width: 100%;
+    background: #24303c;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.form-createFlight-top {
+    display: flex;
+    flex-direction: column;
+    padding: 2%;
+    width: 100%;
+    align-items: center;
+}
+
+.form-createFlight-top-1 {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.form-createFlight-top-1 input {
+    display: none;
+}
+
+.add-img-label-flight {
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+}
+
+.form-createFlight-top-1 label {
+    color: #ffffff;
+    margin: 2%;
+}
+
+.form-createFlight-top-1 label i {
+    color: white;
+    font-size: 30px;
+    cursor: pointer;
+}
+
+.form-createFlight-top-1 label i:hover {
+    color: #1f53c5;
+    font-size: 34px;
+}
+
+.form-createFlight-top-2 {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.form-createFlight-top-2-div {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-createFlight-inputDiv {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-createFlight-input {
+    width: 100%;
+    background: #24303c;
+    padding: 3%;
+    border-radius: 5px;
+    border: 1px solid #1f53c5;
+    font-size: 18px;
+    color: white;
+}
+
+.form-createFlight-inputDiv select {
+    width: 100%;
+    background: #24303c;
+    padding: 3%;
+    border-radius: 5px;
+    border: 1px solid #1f53c5;
+    font-size: 18px;
+    color: white;
+}
+
+.form-createFlight-inputDiv label {
+    margin: 2% 0;
+    color: white
+}
+
+.form-createFlight-bottom {
+    padding: 2%;
+}
+
+.form-createFlight-bottom {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.mary {
+    width: 30%;
+    cursor: pointer;
+    background: #1f53c5;
+    height: 2rem;
+    border: none;
+    color: white;
+    font-size: 16px;
+}
+
+.mary:hover {
+    box-shadow: 0 0 30px rgb(100, 100, 100);
+    font-weight: 600;
+}
+
+@media (min-width: 768px) {
+
+    .form-createFlight-top-1 {
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+    }
+
+    .form-createFlight-top-1 label {
+        display: flex;
+        justify-content: flex-start;
+        width: 40%;
+    }
+
+    .form-createFlight-top-1 label i {
+        color: white;
+        font-size: 40px;
+    }
+
+    .form-createFlight-top-1 label i:hover {
+        color: #1f53c5;
+        font-size: 34px;
+    }
+
+    .form-createFlight-top-2-div {
+        flex-direction: row;
+        justify-content: space-around;
+        margin: 2% 0;
+    }
+
+    .form-createFlight-inputDiv {
+        width: 40%;
+    }
+
+    .mary {
+        width: 20%;
+        height: 3rem;
+        font-size: 26px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .form-createFlight-top-1 label i {
+        color: white;
+        font-size: 50px;
+    }
+
+    .form-createFlight-top-1 label i:hover {
+        color: #1f53c5;
+        font-size: 54px;
+    }
+
+    .form-createFlight-top-1 label {
+        width: 20%;
+    }
+
+}

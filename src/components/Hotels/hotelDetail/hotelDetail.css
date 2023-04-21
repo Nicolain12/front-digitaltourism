@@ -1,0 +1,233 @@
+.section-info {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.carousel_detail-flight {
+    margin-bottom: 0;
+    width: 100%;
+}
+
+.carousel_detail-flight img {
+    width: 100%;
+}
+
+.detail-flight-info {
+    margin-top: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.detail-flight-info-title {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    padding-left: 2%;
+}
+
+.detail-flight-info-maininfo {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.detail-flight-info-header {
+    background-color: #1f53c5;
+    display: flex;
+    justify-content: center;
+}
+
+.detail-flight-info-header h3 {
+    color: white;
+}
+
+.detail-flight-info-data {
+    background-color: white;
+    display: flex;
+}
+
+.detail-flight-departure,
+.detail-flight-reach {
+    width: 100%;
+    padding: 2%;
+}
+
+.detail-flight-departure h5 {
+    margin-top: 0;
+}
+
+.detail-flight-h4 {
+    width: 100%;
+    margin: 0;
+}
+
+.detail-flight-date {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    border-left: #000 1px solid;
+
+}
+
+.detail-flight-hour {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    border-left: #000 1px solid;
+}
+
+.detail-flight-airline-info {
+    width: 100%;
+}
+
+.detail-flight-button-section {
+    width: 100%;
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+}
+
+.btn-df-edit,
+.btn-df-delete {
+    margin-top: 2%;
+}
+
+.btn-df-edit {
+    margin-bottom: 2%;
+}
+
+.detail-flight-button-buy {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.detail-flight-button-buy p {
+    width: 30%;
+    margin: 2%;
+}
+
+.btn-df-edit,
+.btn-df-buy {
+    width: 30%;
+    cursor: pointer;
+    background: #1f53c5;
+    height: 2rem;
+    border: none;
+    color: white;
+    font-size: 16px;
+}
+
+.btn-df-delete {
+    width: 30%;
+    cursor: pointer;
+    background: red;
+    height: 2rem;
+    border: none;
+    color: white;
+    font-size: 16px;
+}
+
+.btn-df-edit:hover,
+.btn-df-buy:hover,
+.btn-df-delete:hover {
+    box-shadow: 0 0 30px rgb(100, 100, 100);
+    font-weight: 600;
+}
+
+@media (min-width: 768px) {
+
+    .detail-flight-button {
+        width: 20%;
+        height: 3rem;
+        font-size: 26px;
+    }
+
+    .detail-flight-button-section {
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: flex-end;
+        margin: 2% 0;
+    }
+
+    .detail-flight-button-buy {
+        width: 30%;
+    }
+
+    .detail-flight-button-buy p {
+        width: 100%;
+        margin: 2%;
+    }
+
+    .btn-df-edit,
+    .btn-df-buy,
+    .btn-df-delete {
+        margin: 0;
+    }
+
+    .btn-df-buy {
+        width: 100%;
+    }
+}
+
+@media (min-width: 768px) {
+
+    .detail-flight-info,
+    .detail-flight-airline-info {
+        width: 90%;
+    }
+
+    .detail-flight-info-header {
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+    }
+
+    .detail-flight-info-data {
+        border-bottom-left-radius: 15px;
+        border-bottom-right-radius: 15px;
+    }
+}
+
+@media (min-width: 1024px) {
+
+    .detail-flight-info-title h3,
+    .detail-flight-info-header h3,
+    .detail-flight-h4,
+    .detail-flight-date,
+    .detail-flight-hour,
+    .detail-flight-departure h5,
+    .detail-flight-description h5,
+    .detail-flight-description p,
+    .btn-df-edit,
+    .btn-df-buy,
+    .btn-df-delete,
+    .detail-flight-button-buy p {
+        font-size: 26px;
+    }
+
+}
+
+/* DETAILHOTEL (has same css) */
+/* DETAILPACKAGE (has same css) */
+.detail-package-separation {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    border-top: #000 2px dashed;
+    margin-top: 2%;
+}
+
+.detail-package-separation h2 {
+    font-size: 24px;
+    margin: 2%;
+}
+
+@media (min-width: 768px) {
+    .detail-package-separation h2 {
+        font-size: 30px;
+    }
+}

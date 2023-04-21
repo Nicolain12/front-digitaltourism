@@ -1,0 +1,108 @@
+.main-profile-div-EDIT {
+    width: 100%;
+    padding: 2%;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+}
+
+.img-profile-EDIT {
+    width: 80%;
+    margin-top: 2%;
+    text-align: center;
+}
+
+.img-profile-EDIT label {
+    cursor: pointer;
+}
+
+.img-profile-EDIT label p {
+    display: none;
+    color: black;
+    font-weight: 600;
+}
+
+.img-profile-EDIT label:hover {
+    width: 90%;
+}
+
+.img-profile-EDIT label:hover p {
+    display: block;
+}
+
+.img-profile-EDIT img {
+    width: 70%;
+    height: 100%;
+    border-radius: 100px;
+}
+
+.img-profile-EDIT input {
+    display: none
+}
+
+.main-info-profile-EDIT {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: flex-start;
+}
+
+.name-edit,
+.surname-edit,
+.email-edit {
+    border-bottom: #24262b 1px solid;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.name-edit input,
+.surname-edit input,
+.email-edit input {
+    margin-top: 5%;
+    margin-bottom: 2%;
+    height: 2rem;
+    width: 100%;
+    border-radius: 5px;
+    border: 1px solid gray;
+}
+
+.name-edit label,
+.surname-edit label,
+.email-edit label {
+    margin-top: 2%;
+}
+
+.button-profile-edit {
+    margin: 5% 2% 5% 0;
+    text-align: center;
+    color: white;
+    width: 100%;
+    height: 2em;
+}
+
+.button-profile-edit button {
+    color: white;
+    background-color: #1f53c5;
+    width: 40%;
+    cursor: pointer;
+    height: 100%;
+    text-align: center;
+    font-size: 22px;
+    border: none;
+}
+
+.button-profile-edit button:hover {
+    font-weight: 600;
+    box-shadow: 0 0 10px rgb(100, 100, 100);
+}
+
+@media (min-width: 768px) {
+    .main-profile-div-EDIT {
+        flex-direction: row;
+    }
+}

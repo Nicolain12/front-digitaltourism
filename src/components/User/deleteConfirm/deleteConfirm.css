@@ -1,0 +1,68 @@
+
+.main-deleteConfirm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #b0b7c7;
+}
+
+.delete-confirm p {
+    margin-top: 0;
+    color: white;
+}
+
+.delete-confirm {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.delete-confirm h3 {
+    width: 100%;
+    text-align: center;
+    color: white;
+}
+
+.delete-confirm div {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+}
+
+.delete-confirm div a {
+    background-color: #1f53c5;
+    color: white;
+    text-decoration: none;
+    width: 40%;
+    text-align: center;
+    font-size: 22px;
+    padding: 1% 0;
+    text-decoration: none;
+}
+
+.delete-confirm div a:hover {
+    font-weight: 600;
+    box-shadow: 0 0 10px rgb(100, 100, 100);
+}
+
+.delete-confirm div button {
+    color: white;
+    margin-top: 3%;
+    margin-bottom: 5%;
+    cursor: pointer;
+    background-color: red;
+    width: 40%;
+    padding: 1% 0;
+    text-align: center;
+    font-size: 22px;
+    border: none;
+}
+
+.delete-confirm div button:hover {
+    font-weight: 600;
+    box-shadow: 0 0 30px rgb(100, 100, 100);
+}
