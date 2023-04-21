@@ -106,7 +106,7 @@ function Loggin() {
 
   return (
     <div className="App-loggin">
-      <main>
+      <main className="logginmain">
         <form className="form-login" id="form-login" onSubmit={handleSubmit}>
           <h4>Iniciar sesión </h4>
           <h6 className="error-msg" id="errors-email-loggin">{emailError}</h6>
