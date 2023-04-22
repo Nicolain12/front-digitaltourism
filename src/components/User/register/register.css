@@ -1,15 +1,29 @@
-.main-error-div{
+.main-error-div {
     display: none;
 }
-label{
+
+.error-set-hidden {
+    margin: 0;
+}
+
+.error-set-shown {
+    display: block;
+    margin: 2% 0 0 2%;
+    color: red;
+}
+
+label {
     margin-left: 2%;
 }
-#userImg-register{
+
+#userImg-register {
     margin-left: 4%;
 }
-h4{
+
+h4 {
     margin-left: 2%;
 }
+
 .form-register {
     width: 100%;
     background: #24303c;
