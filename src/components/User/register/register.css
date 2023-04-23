@@ -4,12 +4,18 @@
 
 .error-set-hidden {
     margin: 0;
+    display: none;
 }
 
 .error-set-shown {
     display: block;
     margin: 2% 0 0 2%;
     color: red;
+}
+.error-set-shown-correct {
+    display: block;
+    margin: 2% 0 0 2%;
+    color: green;
 }
 
 label {

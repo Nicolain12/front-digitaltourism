@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import "./register.css";
 console.log();
 function Register() {
@@ -10,6 +10,7 @@ function Register() {
     const [age, setAge] = useState("");
     const [admin, setAdmin] = useState("");
     const [password, setPassword] = useState("");
+    const [passwordConfirm, setPasswordConfirm] = useState("");
 
     // ***** References *****
     // Imputs
@@ -20,9 +21,10 @@ function Register() {
     const refAge = useRef()
     const refAdmin = useRef()
     const refPassword = useRef()
+    const refPasswordConfirm = useRef()
     // Errors
     const logginErrors = []
-    //-----------------
+    //-------------------------
     const userImgErr = useRef()
     const nameErr = useRef()
     const surnameErr = useRef()
@@ -30,6 +32,11 @@ function Register() {
     const ageErr = useRef()
     const adminErr = useRef()
     const passwordErr = useRef()
+    const passwordConfirmErr = useRef()
+    //-------------------------
+    const capPass = useRef()
+    const speCarPass = useRef()
+    const numPass = useRef()
 
     // ***** Catching Changes *****
     const handleUserImgChange = (event) => {
@@ -41,19 +48,70 @@ function Register() {
     };
     const handleSurnameChange = (event) => {
         setSurname(event.target.value);
+        surnameErr.current.innerHTML = "";
     };
     const handleEmailChange = (event) => {
         setEmail(event.target.value);
+        emailErr.current.innerHTML = "";
     };
     const handleAgeChange = (event) => {
         setAge(event.target.value);
+        ageErr.current.innerHTML = "";
     };
     const handleAdminChange = (event) => {
         setAdmin(event.target.value);
+        adminErr.current.innerHTML = "";
     };
     const handlePasswordChange = (event) => {
         setPassword(event.target.value);
+        passwordErr.current.innerHTML = "";
+        const uppercaseRegex = /[A-Z]/;
+        const numberRegex = /\d/;
+        const specialCharRegex = /[!@#$%^&*]/;
+        const passwordValue = event.target.value;
+        if (passwordValue.length < 8) {
+            passwordErr.current.innerHTML = `Characters: ${passwordValue.length}/8`;
+            passwordErr.current.className = "error-set-shown";
+        } else {
+            passwordErr.current.innerHTML = `Characters: 8/8`;
+            passwordErr.current.className = "error-set-shown-correct";
+        }
+        if (!uppercaseRegex.test(passwordValue)) {
+            capPass.current.innerHTML = "You must include at least one capital letter";
+            capPass.current.className = "error-set-shown";
+        } else {
+            capPass.current.className = "error-set-shown-correct";
+        }
+        if (!numberRegex.test(passwordValue)) {
+            numPass.current.innerHTML = "You must include at least one number";
+            numPass.current.className = "error-set-shown";
+        } else {
+            numPass.current.className = "error-set-shown-correct";
+        }
+        if (!specialCharRegex.test(passwordValue)) {
+            speCarPass.current.innerHTML = "You must include at least one special character";
+            speCarPass.current.className = "error-set-shown";
+        } else {
+            speCarPass.current.className = "error-set-shown-correct";
+        }
     };
+    const handlePasswordConfirm = (event) => {
+        setPasswordConfirm(event.target.value)
+        const passwordConf = event.target.value
+        if (password != passwordConf) {
+            passwordConfirmErr.current.innerHTML = "The passwords dosn't match"
+            passwordConfirmErr.current.className = 'error-set-shown'
+        } else {
+            passwordConfirmErr.current.innerHTML = "The passwords match"
+            passwordConfirmErr.current.className = 'error-set-shown-correct'
+        }
+    }
+
+    useEffect(() => {
+        setPasswordConfirm('')
+        refPasswordConfirm.current.style.borderColor = '#1f53c5'
+      }, [password]);
+
 
     // ***** Validations *****
     const validationUserImg = (e) => {
@@ -65,63 +123,85 @@ function Register() {
             nameErr.current.innerHTML = "Please enter a valid name.";
             nameErr.current.className = 'error-set-shown'
         } else {
-            refName.current.style.borderColor = '#1f53c5';
+            refName.current.style.borderColor = 'green';
             nameErr.current.innerHTML = "";
             nameErr.current.className = 'error-set-hidden'
         }
     }
     const validationSurname = (e) => {
-
+        if (surname.length < 3) {
+            refSurname.current.style.borderColor = 'red';
+            surnameErr.current.innerHTML = "Please enter a valid surname.";
+            surnameErr.current.className = 'error-set-shown'
+        } else {
+            refSurname.current.style.borderColor = 'green';
+            surnameErr.current.innerHTML = "";
+            surnameErr.current.className = 'error-set-hidden'
+        }
     }
     const validationEmail = (e) => {
-
+        if (email.length < 13) {
+            refEmail.current.style.borderColor = 'red';
+            emailErr.current.innerHTML = "Please enter a valid email";
+            emailErr.current.className = 'error-set-shown'
+        } else {
+            refEmail.current.style.borderColor = 'green';
+            emailErr.current.className = 'error-set-hidden'
+        }
     }
     const validationAge = (e) => {
+        const birthdate = e.target.value;
+        const today = new Date();
+        const birthdateObj = new Date(birthdate);
+        let age = today.getFullYear() - birthdateObj.getFullYear();
+        const monthDiff = today.getMonth() - birthdateObj.getMonth();
+        if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthdateObj.getDate())) {
+            age--;
+        }
+        if (age < 18) {
+            refAge.current.style.borderColor = 'red';
+            ageErr.current.innerHTML = "You have to be older";
+            ageErr.current.className = 'error-set-shown'
+        } else {
+            refAge.current.style.borderColor = 'green';
+            ageErr.current.innerHTML = "";
+            ageErr.current.className = 'error-set-hidden'
+        }
+    };
 
-    }
     const validationAdmin = (e) => {
-
+        refAdmin.current.style.borderColor = 'green'
     }
+
     const validationPassword = (e) => {
+        capPass.current.className = "error-set-hidden";
+        numPass.current.className = "error-set-hidden";
+        speCarPass.current.className = "error-set-hidden";
+        const uppercaseRegex = /[A-Z]/;
+        const numberRegex = /\d/;
+        const specialCharRegex = /[!@#$%^&*]/;
+
+        if (password.length < 8 || !uppercaseRegex.test(password) || !numberRegex.test(password) || !specialCharRegex.test(password)) {
+            refPassword.current.style.borderColor = 'red';
+            passwordErr.current.innerHTML = "Please enter a valid password";
+            passwordErr.current.className = 'error-set-shown'
+        } else {
+            refPassword.current.style.borderColor = 'green';
+            passwordErr.current.innerHTML = "";
+            passwordErr.current.className = 'error-set-hidden'
+        }
 
     }
-
-    // ***** Showing Requirements *****
-    useEffect(() => {
-        if (userImg) {
-            console.log(`userImg: ${userImg}`);
+    const validationPasswordConfirm = (e) => {
+        const passwordConfirm = e.target.value
+        passwordConfirmErr.current.className = 'error-set-hidden'
+        passwordConfirmErr.current.innerHTML = ""
+        if (password != passwordConfirm) {
+            refPasswordConfirm.current.style.borderColor = 'red'
+        } else {
+            refPasswordConfirm.current.style.borderColor = 'green';
         }
-    }, [userImg])
-    useEffect(() => {
-        if (name) {
-            console.log(`name: ${name}`);
-        }
-    }, [name])
-    useEffect(() => {
-        if (surname) {
-            console.log(`surname: ${surname}`);
-        }
-    }, [surname])
-    useEffect(() => {
-        if (email) {
-            console.log(`email: ${email}`);
-        }
-    }, [email])
-    useEffect(() => {
-        if (age) {
-            console.log(`age: ${age}`);
-        }
-    }, [age])
-    useEffect(() => {
-        if (admin) {
-            console.log(`admin: ${admin}`);
-        }
-    }, [admin])
-    useEffect(() => {
-        if (password) {
-            console.log(`password: ${password}`);
-        }
-    }, [password])
+    }
 
     return (
         <div className="App-register">
@@ -237,12 +317,12 @@ function Register() {
                             <label for="password-register">Ingrese su Contraseña:</label>
                             <div className="set-password-div">
                                 <h5 ref={passwordErr} className="error-set-hidden"></h5>
-                                {/* password-num-register */}
-                                <h5 className="error-set-hidden"></h5> 
                                 {/* password-cap-register */}
-                                <h5 className="error-set-hidden"></h5> 
+                                <h5 ref={capPass} className="error-set-hidden"></h5>
+                                {/* password-num-register */}
+                                <h5 ref={numPass} className="error-set-hidden"></h5>
                                 {/* password-let-register */}
-                                <h5 className="error-set-hidden"></h5> 
+                                <h5 ref={speCarPass} className="error-set-hidden"></h5>
                             </div>
                             <input
                                 className="controls-register"
@@ -258,14 +338,17 @@ function Register() {
 
                         <div className="input-div">
                             <label for="passwordConfirm">Confirme su Contraseña:</label>
-                            <h5 id="passConfirm-set-register" className="error-set-hidden"></h5>
+                            <h5 ref={passwordConfirmErr} className="error-set-hidden"></h5>
                             <input
                                 className="controls-register"
                                 type="password"
                                 name="passwordConfirm-register"
                                 id="passwordConfirm-register"
+                                value={passwordConfirm}
+                                onChange={handlePasswordConfirm}
+                                onBlur={validationPasswordConfirm}
+                                ref={refPasswordConfirm}
                             />
-                            <p className="error-msg"></p>
                         </div>
                     </div>
                     <div className="boton-register">
