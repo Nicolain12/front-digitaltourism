@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
+import { useForm } from 'react-hook-form';
 import "./register.css";
 console.log();
 function Register() {
@@ -14,7 +15,9 @@ function Register() {
 
     // ***** References *****
     // Imputs
+// *****************************
     const refUserImg = useRef()
+// *****************************
     const refName = useRef()
     const refSurname = useRef()
     const refEmail = useRef()
@@ -23,8 +26,16 @@ function Register() {
     const refPassword = useRef()
     const refPasswordConfirm = useRef()
     // Errors
-    const logginErrors = []
-    //-------------------------
+    const logginAuth = {
+        userImg: false,
+        name: false,
+        surname: false,
+        email: false,
+        age: false,
+        admin: false,
+        password: false,
+        passwordConfirm: false
+    }
     const userImgErr = useRef()
     const nameErr = useRef()
     const surnameErr = useRef()
@@ -33,15 +44,17 @@ function Register() {
     const adminErr = useRef()
     const passwordErr = useRef()
     const passwordConfirmErr = useRef()
-    //-------------------------
     const capPass = useRef()
     const speCarPass = useRef()
     const numPass = useRef()
 
     // ***** Catching Changes *****
+// *******************************************
     const handleUserImgChange = (event) => {
-        setUserImg(event.target.value);
+        setUserImg(event.target.files[0])
     };
+// *******************************************
+
     const handleNameChange = (event) => {
         setName(event.target.value);
         nameErr.current.innerHTML = "";
@@ -110,22 +123,25 @@ function Register() {
     useEffect(() => {
         setPasswordConfirm('')
         refPasswordConfirm.current.style.borderColor = '#1f53c5'
-      }, [password]);
+    }, [password]);
 
 
     // ***** Validations *****
-    const validationUserImg = (e) => {
-
-    }
     const validationName = (e) => {
         if (name.length < 3) {
             refName.current.style.borderColor = 'red';
             nameErr.current.innerHTML = "Please enter a valid name.";
             nameErr.current.className = 'error-set-shown'
+            if (logginAuth.name) {
+                logginAuth.name = false
+            }
         } else {
             refName.current.style.borderColor = 'green';
             nameErr.current.innerHTML = "";
             nameErr.current.className = 'error-set-hidden'
+            if (!logginAuth.name) {
+                logginAuth.name = true
+            }
         }
     }
     const validationSurname = (e) => {
@@ -133,10 +149,16 @@ function Register() {
             refSurname.current.style.borderColor = 'red';
             surnameErr.current.innerHTML = "Please enter a valid surname.";
             surnameErr.current.className = 'error-set-shown'
+            if (logginAuth.surname) {
+                logginAuth.surname = false
+            }
         } else {
             refSurname.current.style.borderColor = 'green';
             surnameErr.current.innerHTML = "";
             surnameErr.current.className = 'error-set-hidden'
+            if (!logginAuth.surname) {
+                logginAuth.surname = true
+            }
         }
     }
     const validationEmail = (e) => {
@@ -144,9 +166,15 @@ function Register() {
             refEmail.current.style.borderColor = 'red';
             emailErr.current.innerHTML = "Please enter a valid email";
             emailErr.current.className = 'error-set-shown'
+            if (logginAuth.email) {
+                logginAuth.email = false
+            }
         } else {
             refEmail.current.style.borderColor = 'green';
             emailErr.current.className = 'error-set-hidden'
+            if (!logginAuth.email) {
+                logginAuth.email = true
+            }
         }
     }
     const validationAge = (e) => {
@@ -162,17 +190,21 @@ function Register() {
             refAge.current.style.borderColor = 'red';
             ageErr.current.innerHTML = "You have to be older";
             ageErr.current.className = 'error-set-shown'
+            if (logginAuth.age) {
+                logginAuth.age = false
+            }
         } else {
             refAge.current.style.borderColor = 'green';
             ageErr.current.innerHTML = "";
             ageErr.current.className = 'error-set-hidden'
+            if (!logginAuth.age) {
+                logginAuth.age = true
+            }
         }
     };
-
     const validationAdmin = (e) => {
         refAdmin.current.style.borderColor = 'green'
     }
-
     const validationPassword = (e) => {
         capPass.current.className = "error-set-hidden";
         numPass.current.className = "error-set-hidden";
@@ -185,10 +217,16 @@ function Register() {
             refPassword.current.style.borderColor = 'red';
             passwordErr.current.innerHTML = "Please enter a valid password";
             passwordErr.current.className = 'error-set-shown'
+            if (logginAuth.password) {
+                logginAuth.password = false
+            }
         } else {
             refPassword.current.style.borderColor = 'green';
             passwordErr.current.innerHTML = "";
             passwordErr.current.className = 'error-set-hidden'
+            if (!logginAuth.password) {
+                logginAuth.password = true
+            }
         }
 
     }
@@ -198,10 +236,34 @@ function Register() {
         passwordConfirmErr.current.innerHTML = ""
         if (password != passwordConfirm) {
             refPasswordConfirm.current.style.borderColor = 'red'
+            if (logginAuth.passwordConfirm) {
+                logginAuth.passwordConfirm = false
+            }
         } else {
             refPasswordConfirm.current.style.borderColor = 'green';
+            if (!logginAuth.passwordConfirm) {
+                logginAuth.passwordConfirm = true
+            }
         }
     }
+// *******************************
+    const submitFetch = (e) => {
+        e.preventdefault()
+        
+        const data = {
+            userImg,
+            name,
+            surname,
+            email,
+            age,
+            admin,
+            password
+        }
+
+        console.log(data);
+    }
+// *******************************
+
 
     return (
         <div className="App-register">
@@ -212,13 +274,14 @@ function Register() {
                 <form
                     className="form-register"
                     id="form-register"
-                    enctype="multipart/form-data"
+                    encType="multipart/form-data"
+                    onSubmit={submitFetch}
                 >
                     <p className="error-msg"></p>
                     <h4>Formulario Registro</h4>
 
                     <div className="main-register-from-top-1">
-                        <label for="userImg-register">Ingrese una foto:</label>
+                        <label htmlFor="userImg-register">Ingrese una foto:</label>
                         <h5 ref={userImgErr} className="error-set-hidden"></h5>
                         <input
                             type="file"
@@ -226,14 +289,13 @@ function Register() {
                             name="userImg"
                             value={userImg}
                             onChange={handleUserImgChange}
-                            onBlur={validationUserImg}
                             ref={refUserImg}
                         />
                         <p className="error-msg"></p>
                     </div>
                     <div className="register-top">
                         <div className="input-div">
-                            <label className="first-label" for="name-register">
+                            <label className="first-label" htmlFor="name-register">
                                 Ingrese su Nombre:
                             </label>
                             <h5 ref={nameErr} className="error-set-hidden"></h5>
@@ -249,7 +311,7 @@ function Register() {
                             />
                         </div>
                         <div className="input-div">
-                            <label for="surname-register">Ingrese su Apellido:</label>
+                            <label htmlFor="surname-register">Ingrese su Apellido:</label>
                             <h5 ref={surnameErr} className="error-set-hidden"></h5>
                             <input
                                 className="controls-register"
@@ -267,7 +329,7 @@ function Register() {
 
                     <div className="register-middle">
                         <div className="input-div">
-                            <label for="email-register">Ingrese su Email:</label>
+                            <label htmlFor="email-register">Ingrese su Email:</label>
                             <div className="set-password-div">
                                 <h5 ref={emailErr} className="error-set-hidden"></h5>
                                 <h5 id="email-set-alert-register" className="error-set-hidden"></h5>
@@ -286,7 +348,7 @@ function Register() {
                         </div>
                         <div className="age-type">
                             <div className="input-div">
-                                <label for="age-register">Fecha de nacimiento:</label>
+                                <label htmlFor="age-register">Fecha de nacimiento:</label>
                                 <h5 ref={ageErr} className="error-set-hidden"></h5>
                                 <input
                                     className="controls-register"
@@ -301,7 +363,7 @@ function Register() {
                                 <p className="error-msg"></p>
                             </div>
                             <div className="input-div">
-                                <label for="admin-register">Tipo de usuario:</label>
+                                <label htmlFor="admin-register">Tipo de usuario:</label>
                                 <h5 ref={adminErr} className="error-set-hidden"></h5>
                                 <select name="isAdmin" id="admin" value={admin} onChange={handleAdminChange} ref={refAdmin} onBlur={validationAdmin}>
                                     <option value="false">Cliente</option>
@@ -314,7 +376,7 @@ function Register() {
 
                     <div className="register-end">
                         <div className="input-div">
-                            <label for="password-register">Ingrese su Contraseña:</label>
+                            <label htmlFor="password-register">Ingrese su Contraseña:</label>
                             <div className="set-password-div">
                                 <h5 ref={passwordErr} className="error-set-hidden"></h5>
                                 {/* password-cap-register */}
@@ -337,7 +399,7 @@ function Register() {
                         </div>
 
                         <div className="input-div">
-                            <label for="passwordConfirm">Confirme su Contraseña:</label>
+                            <label htmlFor="passwordConfirm">Confirme su Contraseña:</label>
                             <h5 ref={passwordConfirmErr} className="error-set-hidden"></h5>
                             <input
                                 className="controls-register"
