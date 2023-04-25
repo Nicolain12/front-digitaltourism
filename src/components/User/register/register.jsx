@@ -1,23 +1,32 @@
-import React, { useState, useRef, useEffect } from "react";
-import { useForm } from 'react-hook-form';
-import "./register.css";
-console.log();
+import React, { useState, useRef, useEffect } from "react"
+import "./register.css"
 function Register() {
+    function isAgeAllow(dateStr) {
+        const currentDate = new Date();
+        const minAgeDate = new Date(currentDate.getFullYear() - 18, currentDate.getMonth(), currentDate.getDate());
+        const inputDate = new Date(dateStr);
+        return inputDate <= minAgeDate;
+      }
+    function addValueToArray(array, value) {
+        if (!array.includes(value)) {
+            array.push(value)
+        } else {
+            return array
+        }
+        return array
+    }
     // ***** States *****
-    const [userImg, setUserImg] = useState("");
-    const [name, setName] = useState("");
-    const [surname, setSurname] = useState("");
-    const [email, setEmail] = useState("");
-    const [age, setAge] = useState("");
-    const [admin, setAdmin] = useState("");
-    const [password, setPassword] = useState("");
-    const [passwordConfirm, setPasswordConfirm] = useState("");
+    const [userImg, setUserImg] = useState("")
+    const [name, setName] = useState("")
+    const [surname, setSurname] = useState("")
+    const [email, setEmail] = useState("")
+    const [age, setAge] = useState("")
+    const [admin, setAdmin] = useState("")
+    const [password, setPassword] = useState("")
+    const [passwordConfirm, setPasswordConfirm] = useState("")
 
     // ***** References *****
     // Imputs
-// *****************************
-    const refUserImg = useRef()
-// *****************************
     const refName = useRef()
     const refSurname = useRef()
     const refEmail = useRef()
@@ -26,16 +35,6 @@ function Register() {
     const refPassword = useRef()
     const refPasswordConfirm = useRef()
     // Errors
-    const logginAuth = {
-        userImg: false,
-        name: false,
-        surname: false,
-        email: false,
-        age: false,
-        admin: false,
-        password: false,
-        passwordConfirm: false
-    }
     const userImgErr = useRef()
     const nameErr = useRef()
     const surnameErr = useRef()
@@ -49,65 +48,69 @@ function Register() {
     const numPass = useRef()
 
     // ***** Catching Changes *****
-// *******************************************
     const handleUserImgChange = (event) => {
-        setUserImg(event.target.files[0])
-    };
-// *******************************************
-
+        const file = event.target.files[0]
+        if (!file.type.startsWith('image/')) {
+            userImgErr.current.innerHTML = 'You have to upload an image'
+            userImgErr.current.className = 'error-set-shown'
+            return
+        }
+        setUserImg(file)
+        userImgErr.current.className = 'error-set-hidden'
+    }
     const handleNameChange = (event) => {
-        setName(event.target.value);
-        nameErr.current.innerHTML = "";
-    };
+        setName(event.target.value)
+        nameErr.current.innerHTML = ""
+    }
     const handleSurnameChange = (event) => {
-        setSurname(event.target.value);
-        surnameErr.current.innerHTML = "";
-    };
+        setSurname(event.target.value)
+        surnameErr.current.innerHTML = ""
+    }
     const handleEmailChange = (event) => {
-        setEmail(event.target.value);
-        emailErr.current.innerHTML = "";
-    };
+        setEmail(event.target.value)
+        emailErr.current.innerHTML = ""
+    }
     const handleAgeChange = (event) => {
-        setAge(event.target.value);
-        ageErr.current.innerHTML = "";
-    };
+        setAge(event.target.value)
+        ageErr.current.innerHTML = ""
+    }
     const handleAdminChange = (event) => {
-        setAdmin(event.target.value);
-        adminErr.current.innerHTML = "";
-    };
+        setAdmin(event.target.value)
+        adminErr.current.innerHTML = ""
+    }
     const handlePasswordChange = (event) => {
-        setPassword(event.target.value);
-        passwordErr.current.innerHTML = "";
-        const uppercaseRegex = /[A-Z]/;
-        const numberRegex = /\d/;
-        const specialCharRegex = /[!@#$%^&*]/;
-        const passwordValue = event.target.value;
+        setPassword(event.target.value)
+        passwordErr.current.innerHTML = ""
+        const uppercaseRegex = /[A-Z]/
+        const numberRegex = /\d/
+        const specialCharRegex = /[!@#$%^&*]/
+        const passwordValue = event.target.value
         if (passwordValue.length < 8) {
-            passwordErr.current.innerHTML = `Characters: ${passwordValue.length}/8`;
-            passwordErr.current.className = "error-set-shown";
+            passwordErr.current.innerHTML = `Characters: ${passwordValue.length}/8`
+            passwordErr.current.className = "error-set-shown"
         } else {
-            passwordErr.current.innerHTML = `Characters: 8/8`;
-            passwordErr.current.className = "error-set-shown-correct";
+            passwordErr.current.innerHTML = `Characters: 8/8`
+            passwordErr.current.className = "error-set-shown-correct"
         }
         if (!uppercaseRegex.test(passwordValue)) {
-            capPass.current.innerHTML = "You must include at least one capital letter";
-            capPass.current.className = "error-set-shown";
+            capPass.current.innerHTML = "You must include at least one capital letter"
+            capPass.current.className = "error-set-shown"
         } else {
-            capPass.current.className = "error-set-shown-correct";
+            capPass.current.className = "error-set-shown-correct"
         }
         if (!numberRegex.test(passwordValue)) {
-            numPass.current.innerHTML = "You must include at least one number";
-            numPass.current.className = "error-set-shown";
+            numPass.current.innerHTML = "You must include at least one number"
+            numPass.current.className = "error-set-shown"
         } else {
-            numPass.current.className = "error-set-shown-correct";
+            numPass.current.className = "error-set-shown-correct"
         }
         if (!specialCharRegex.test(passwordValue)) {
-            speCarPass.current.innerHTML = "You must include at least one special character";
-            speCarPass.current.className = "error-set-shown";
+            speCarPass.current.innerHTML = "You must include at least one special character"
+            speCarPass.current.className = "error-set-shown"
         } else {
-            speCarPass.current.className = "error-set-shown-correct";
+            speCarPass.current.className = "error-set-shown-correct"
         }
-    };
+    }
     const handlePasswordConfirm = (event) => {
         setPasswordConfirm(event.target.value)
         const passwordConf = event.target.value
@@ -123,133 +126,92 @@ function Register() {
     useEffect(() => {
         setPasswordConfirm('')
         refPasswordConfirm.current.style.borderColor = '#1f53c5'
-    }, [password]);
+    }, [password])
 
 
     // ***** Validations *****
     const validationName = (e) => {
-        if (name.length < 3) {
-            refName.current.style.borderColor = 'red';
-            nameErr.current.innerHTML = "Please enter a valid name.";
+        const userName = /^[a-z]{3,}$/i.test(name)
+        if (!userName) {
+            refName.current.style.borderColor = 'red'
+            nameErr.current.innerHTML = "Please enter a valid name."
             nameErr.current.className = 'error-set-shown'
-            if (logginAuth.name) {
-                logginAuth.name = false
-            }
         } else {
-            refName.current.style.borderColor = 'green';
-            nameErr.current.innerHTML = "";
+            refName.current.style.borderColor = 'green'
+            nameErr.current.innerHTML = ""
             nameErr.current.className = 'error-set-hidden'
-            if (!logginAuth.name) {
-                logginAuth.name = true
-            }
         }
     }
     const validationSurname = (e) => {
-        if (surname.length < 3) {
-            refSurname.current.style.borderColor = 'red';
-            surnameErr.current.innerHTML = "Please enter a valid surname.";
+        const userSurname = /^[a-z]{3,}$/i.test(surname)
+        if (!userSurname) {
+            refSurname.current.style.borderColor = 'red'
+            surnameErr.current.innerHTML = "Please enter a valid surname."
             surnameErr.current.className = 'error-set-shown'
-            if (logginAuth.surname) {
-                logginAuth.surname = false
-            }
         } else {
-            refSurname.current.style.borderColor = 'green';
-            surnameErr.current.innerHTML = "";
+            refSurname.current.style.borderColor = 'green'
+            surnameErr.current.innerHTML = ""
             surnameErr.current.className = 'error-set-hidden'
-            if (!logginAuth.surname) {
-                logginAuth.surname = true
-            }
         }
     }
     const validationEmail = (e) => {
-        if (email.length < 13) {
-            refEmail.current.style.borderColor = 'red';
-            emailErr.current.innerHTML = "Please enter a valid email";
+        const userEmail = /^[a-z]{13,}$/i.test(email)
+        if (!userEmail) {
+            refEmail.current.style.borderColor = 'red'
+            emailErr.current.innerHTML = "Please enter a valid email"
             emailErr.current.className = 'error-set-shown'
-            if (logginAuth.email) {
-                logginAuth.email = false
-            }
         } else {
-            refEmail.current.style.borderColor = 'green';
+            refEmail.current.style.borderColor = 'green'
             emailErr.current.className = 'error-set-hidden'
-            if (!logginAuth.email) {
-                logginAuth.email = true
-            }
         }
     }
     const validationAge = (e) => {
-        const birthdate = e.target.value;
-        const today = new Date();
-        const birthdateObj = new Date(birthdate);
-        let age = today.getFullYear() - birthdateObj.getFullYear();
-        const monthDiff = today.getMonth() - birthdateObj.getMonth();
-        if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthdateObj.getDate())) {
-            age--;
-        }
-        if (age < 18) {
-            refAge.current.style.borderColor = 'red';
-            ageErr.current.innerHTML = "You have to be older";
+        const birthdate = e.target.value
+        const checkAge = isAgeAllow(birthdate)
+        if (!checkAge) {
+            refAge.current.style.borderColor = 'red'
+            ageErr.current.innerHTML = "You have to be older"
             ageErr.current.className = 'error-set-shown'
-            if (logginAuth.age) {
-                logginAuth.age = false
-            }
         } else {
-            refAge.current.style.borderColor = 'green';
-            ageErr.current.innerHTML = "";
+            refAge.current.style.borderColor = 'green'
+            ageErr.current.innerHTML = ""
             ageErr.current.className = 'error-set-hidden'
-            if (!logginAuth.age) {
-                logginAuth.age = true
-            }
         }
-    };
+    }
     const validationAdmin = (e) => {
         refAdmin.current.style.borderColor = 'green'
     }
     const validationPassword = (e) => {
-        capPass.current.className = "error-set-hidden";
-        numPass.current.className = "error-set-hidden";
-        speCarPass.current.className = "error-set-hidden";
-        const uppercaseRegex = /[A-Z]/;
-        const numberRegex = /\d/;
-        const specialCharRegex = /[!@#$%^&*]/;
+        capPass.current.className = "error-set-hidden"
+        numPass.current.className = "error-set-hidden"
+        speCarPass.current.className = "error-set-hidden"
+        const uppercaseRegex = /[A-Z]/
+        const numberRegex = /\d/
+        const specialCharRegex = /[!@#$%^&*]/
 
         if (password.length < 8 || !uppercaseRegex.test(password) || !numberRegex.test(password) || !specialCharRegex.test(password)) {
-            refPassword.current.style.borderColor = 'red';
-            passwordErr.current.innerHTML = "Please enter a valid password";
+            refPassword.current.style.borderColor = 'red'
+            passwordErr.current.innerHTML = "Please enter a valid password"
             passwordErr.current.className = 'error-set-shown'
-            if (logginAuth.password) {
-                logginAuth.password = false
-            }
         } else {
-            refPassword.current.style.borderColor = 'green';
-            passwordErr.current.innerHTML = "";
+            refPassword.current.style.borderColor = 'green'
+            passwordErr.current.innerHTML = ""
             passwordErr.current.className = 'error-set-hidden'
-            if (!logginAuth.password) {
-                logginAuth.password = true
-            }
         }
 
     }
     const validationPasswordConfirm = (e) => {
         const passwordConfirm = e.target.value
         passwordConfirmErr.current.className = 'error-set-hidden'
-        passwordConfirmErr.current.innerHTML = ""
-        if (password != passwordConfirm) {
-            refPasswordConfirm.current.style.borderColor = 'red'
-            if (logginAuth.passwordConfirm) {
-                logginAuth.passwordConfirm = false
-            }
+        if (password === passwordConfirm && password != '') {
+            refPasswordConfirm.current.style.borderColor = 'green'
         } else {
-            refPasswordConfirm.current.style.borderColor = 'green';
-            if (!logginAuth.passwordConfirm) {
-                logginAuth.passwordConfirm = true
-            }
+            refPasswordConfirm.current.style.borderColor = 'red'
         }
     }
-// *******************************
+    // ***********************************************************************************************************************************************
     const submitFetch = (e) => {
-        e.preventdefault()
-        
+        e.preventDefault()
         const data = {
             userImg,
             name,
@@ -259,10 +221,41 @@ function Register() {
             admin,
             password
         }
+        const logginAuth = []
+        const nameValidate = /^[a-z]{3,}$/i.test(data.name)
+        const surnameValidate = /^[a-z]{3,}$/i.test(data.surname)
+        const emailValidate = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/i.test(data.email)
+        const ageValidate = isAgeAllow(data.age)
+        const passwordValidate = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=.*[^\s]).{8,}$/.test(data.password)
 
+        if (!nameValidate) {
+            addValueToArray(logginAuth, 'name')
+        }
+        if (!surnameValidate) {
+            addValueToArray(logginAuth, 'surname')
+        }
+        if (!emailValidate) {
+            addValueToArray(logginAuth, 'email')
+        }
+        if (!ageValidate) {
+            addValueToArray(logginAuth, 'age')
+        }
+        if (!passwordValidate) {
+            addValueToArray(logginAuth, 'password')
+        }
+
+        // Logic to check errors array and fetch or show errors
+
+        console.log('--------------------------------------------------------');
+        console.log('ERRORS:');
+        console.log(logginAuth);
+        console.log('--------------------------------------------------------');
+        console.log('DATA:')
         console.log(data);
+        console.log('--------------------------------------------------------');
     }
-// *******************************
+    // ***********************************************************************************************************************************************
+
 
 
     return (
@@ -274,7 +267,6 @@ function Register() {
                 <form
                     className="form-register"
                     id="form-register"
-                    encType="multipart/form-data"
                     onSubmit={submitFetch}
                 >
                     <p className="error-msg"></p>
@@ -287,9 +279,7 @@ function Register() {
                             type="file"
                             id="userImg-register"
                             name="userImg"
-                            value={userImg}
                             onChange={handleUserImgChange}
-                            ref={refUserImg}
                         />
                         <p className="error-msg"></p>
                     </div>
@@ -414,7 +404,7 @@ function Register() {
                         </div>
                     </div>
                     <div className="boton-register">
-                        <button className="botons-register">Registrar</button>
+                        <button type="submit" className="botons-register">Registrar</button>
                     </div>
                     <p className="from-register-p">
                         <a href="/users/loggin">¿Ya tengo Cuenta?</a>
@@ -422,7 +412,7 @@ function Register() {
                 </form>
             </main>
         </div>
-    );
+    )
 }
 
-export default Register;
+export default Register
