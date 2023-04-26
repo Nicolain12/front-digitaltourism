@@ -6,7 +6,7 @@ function Register() {
         const minAgeDate = new Date(currentDate.getFullYear() - 18, currentDate.getMonth(), currentDate.getDate());
         const inputDate = new Date(dateStr);
         return inputDate <= minAgeDate;
-      }
+    }
     function addValueToArray(array, value) {
         if (!array.includes(value)) {
             array.push(value)
@@ -15,6 +15,17 @@ function Register() {
         }
         return array
     }
+    async function fetchApi(endpoint, config) {
+        try {
+            const response = await fetch(endpoint, config)
+            const jsonResponse = response.json()
+            console.log(jsonResponse);
+            //check response
+            // if(status){}
+        } catch (err){
+        }
+    }
+
     // ***** States *****
     const [userImg, setUserImg] = useState("")
     const [name, setName] = useState("")
@@ -155,8 +166,7 @@ function Register() {
         }
     }
     const validationEmail = (e) => {
-        const userEmail = /^[a-z]{13,}$/i.test(email)
-        if (!userEmail) {
+        if (e.target.value.length < 13) {
             refEmail.current.style.borderColor = 'red'
             emailErr.current.innerHTML = "Please enter a valid email"
             emailErr.current.className = 'error-set-shown'
@@ -224,7 +234,7 @@ function Register() {
         const logginAuth = []
         const nameValidate = /^[a-z]{3,}$/i.test(data.name)
         const surnameValidate = /^[a-z]{3,}$/i.test(data.surname)
-        const emailValidate = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/i.test(data.email)
+        const emailValidate = data.email.length > 13
         const ageValidate = isAgeAllow(data.age)
         const passwordValidate = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=.*[^\s]).{8,}$/.test(data.password)
 
@@ -243,16 +253,43 @@ function Register() {
         if (!passwordValidate) {
             addValueToArray(logginAuth, 'password')
         }
+        if (password != passwordConfirm) {
+            addValueToArray(logginAuth, 'passwordConfirm')
+        }
 
         // Logic to check errors array and fetch or show errors
-
-        console.log('--------------------------------------------------------');
-        console.log('ERRORS:');
-        console.log(logginAuth);
-        console.log('--------------------------------------------------------');
-        console.log('DATA:')
-        console.log(data);
-        console.log('--------------------------------------------------------');
+        if (logginAuth.length > 0) {
+            logginAuth.forEach((element, index) => {
+                if (element == 'name') {
+                    refName.current.style.borderColor = 'red'
+                }
+                if (element == 'surname') {
+                    refSurname.current.style.borderColor = 'red'
+                }
+                if (element == 'email') {
+                    refEmail.current.style.borderColor = 'red'
+                }
+                if (element == 'age') {
+                    refAge.current.style.borderColor = 'red'
+                }
+                if (element == 'password') {
+                    refPassword.current.style.borderColor = 'red'
+                }
+                if (element == 'passwordConfirm') {
+                    refPasswordConfirm.current.style.borderColor = 'red'
+                }
+            })
+        } else {
+            if (password == passwordConfirm) {
+                fetchApi('http://localhost:3001/api/users/register', {
+                    method: 'POST',
+                    headers: {
+                      'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                  })
+            }
+        }
     }
     // ***********************************************************************************************************************************************
 
