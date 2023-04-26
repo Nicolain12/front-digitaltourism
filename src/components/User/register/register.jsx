@@ -18,16 +18,30 @@ function Register() {
     async function fetchApi(endpoint, config) {
         try {
             const response = await fetch(endpoint, config)
-            const jsonResponse = response.json()
+            const jsonResponse = await response.json()
             console.log(jsonResponse);
-            //check response
-            // if(status){}
-        } catch (err){
+            if (jsonResponse.info.status == 200) {
+                delete jsonResponse.data.password
+                sessionStorage.setItem('userLogged', JSON.stringify(jsonResponse.data))
+                window.location.href = '/'
+                return
+            }
+            if (jsonResponse.info.status == 400) {
+                if (jsonResponse.info.msg == 'The user is already on the database') {
+                    return mainErr.current.innerHTML = jsonResponse.info.msg
+                } else {
+                    return mainErr.current.innerHTML = 'Invalid information'
+                }
+            }
+        } catch (err) {
+            mainErr.current.innerHTML = 'Smoething goes wrong please try again'
+            setTimeout(() => {
+                window.location.reload()
+            }, 3000);
         }
     }
 
     // ***** States *****
-    const [userImg, setUserImg] = useState("")
     const [name, setName] = useState("")
     const [surname, setSurname] = useState("")
     const [email, setEmail] = useState("")
@@ -46,7 +60,7 @@ function Register() {
     const refPassword = useRef()
     const refPasswordConfirm = useRef()
     // Errors
-    const userImgErr = useRef()
+    const mainErr = useRef()
     const nameErr = useRef()
     const surnameErr = useRef()
     const emailErr = useRef()
@@ -59,16 +73,6 @@ function Register() {
     const numPass = useRef()
 
     // ***** Catching Changes *****
-    const handleUserImgChange = (event) => {
-        const file = event.target.files[0]
-        if (!file.type.startsWith('image/')) {
-            userImgErr.current.innerHTML = 'You have to upload an image'
-            userImgErr.current.className = 'error-set-shown'
-            return
-        }
-        setUserImg(file)
-        userImgErr.current.className = 'error-set-hidden'
-    }
     const handleNameChange = (event) => {
         setName(event.target.value)
         nameErr.current.innerHTML = ""
@@ -219,7 +223,7 @@ function Register() {
             refPasswordConfirm.current.style.borderColor = 'red'
         }
     }
-    // ***********************************************************************************************************************************************
+    // Submit Function
     const submitFetch = (e) => {
         e.preventDefault()
         const data = {
@@ -274,32 +278,26 @@ function Register() {
                 }
                 if (element == 'password') {
                     refPassword.current.style.borderColor = 'red'
-                }
-                if (element == 'passwordConfirm') {
                     refPasswordConfirm.current.style.borderColor = 'red'
                 }
             })
         } else {
             if (password == passwordConfirm) {
-                fetchApi('http://localhost:3001/api/users/register', {
+                return fetchApi('http://localhost:3001/api/users/register', {
                     method: 'POST',
                     headers: {
-                      'Content-Type': 'application/json'
+                        'Content-Type': 'application/json'
                     },
                     body: JSON.stringify(data)
-                  })
+                })
             }
         }
     }
-    // ***********************************************************************************************************************************************
-
-
-
     return (
         <div className="App-register">
             <main>
                 <div className="main-error-div">
-                    <h4 id="main-error-register" className="error-set-hidden"></h4>
+                    <h4 ref={mainErr} id="main-error-register" className="error-set-hidden"></h4>
                 </div>
                 <form
                     className="form-register"
@@ -308,18 +306,6 @@ function Register() {
                 >
                     <p className="error-msg"></p>
                     <h4>Formulario Registro</h4>
-
-                    <div className="main-register-from-top-1">
-                        <label htmlFor="userImg-register">Ingrese una foto:</label>
-                        <h5 ref={userImgErr} className="error-set-hidden"></h5>
-                        <input
-                            type="file"
-                            id="userImg-register"
-                            name="userImg"
-                            onChange={handleUserImgChange}
-                        />
-                        <p className="error-msg"></p>
-                    </div>
                     <div className="register-top">
                         <div className="input-div">
                             <label className="first-label" htmlFor="name-register">
