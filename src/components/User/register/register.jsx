@@ -40,7 +40,8 @@ function Register() {
             }, 3000);
         }
     }
-
+    
+   
     // ***** States *****
     const [name, setName] = useState("")
     const [surname, setSurname] = useState("")
