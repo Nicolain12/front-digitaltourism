@@ -19,7 +19,6 @@ function Register() {
         try {
             const response = await fetch(endpoint, config)
             const jsonResponse = await response.json()
-            console.log(jsonResponse);
             if (jsonResponse.info.status == 200) {
                 delete jsonResponse.data.password
                 sessionStorage.setItem('userLogged', JSON.stringify(jsonResponse.data))
@@ -228,7 +227,6 @@ function Register() {
     const submitFetch = (e) => {
         e.preventDefault()
         const data = {
-            userImg,
             name,
             surname,
             email,

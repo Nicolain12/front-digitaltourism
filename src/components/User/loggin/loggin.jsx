@@ -3,21 +3,24 @@ import { Link } from 'react-router-dom'
 import './loggin.css'
 
 function Loggin() {
-  // *****************************************************************************************************
+
   async function fetchApi(endpoint, config) {
     try {
       const response = await fetch(endpoint, config)
+      console.log(response);
       const jsonResponse = await response.json()
-      if (jsonResponse.info.status == 200) {
-        console.log(jsonResponse);
-        if(jsonResponse.info.token){
+      console.log(jsonResponse);
+      if (jsonResponse.info.status === 200) {
+        if (jsonResponse.info.token) {
           console.log('TOKEN:');
           console.log(jsonResponse.info.token);
         }
+        console.log(jsonResponse);
         sessionStorage.setItem('userLogged', JSON.stringify(jsonResponse.data))
         window.location.href = '/'
+        return
       }
-      if (jsonResponse.info.status == 400) {
+      if (jsonResponse.info.status === 400) {
         refPasswordError.current.innerHTML = jsonResponse.info.msg
         if (jsonResponse.info.msg == 'Invalid password') {
           refPasswordError.current.innerHTML = 'invalid password'
@@ -25,8 +28,9 @@ function Loggin() {
         } if (jsonResponse.info.msg == 'Invalid information') {
           refEmailError.current.innerHTML = 'invalid information'
           refEmail.current.className = 'invalid-impunt'
-        } 
-      } 
+        }
+        return
+      }
     } catch (err) {
       refEmailError.current.innerHTML = 'Smoething goes wrong please try again'
       setTimeout(() => {
@@ -34,7 +38,8 @@ function Loggin() {
       }, 3000)
     }
   }
-  // *****************************************************************************************************
+
+
   function addValueToArray(array, value) {
     if (!array.includes(value)) {
       array.push(value)
@@ -109,14 +114,13 @@ function Loggin() {
     if (loggAuth.length == 0) {
       console.log('Fetch');
 
-        return fetchApi('http://localhost:3001/api/users/loggin', {
-          method: 'POST',
-          headers: {
-              'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(data)
+      fetchApi('http://localhost:3001/api/users/loggin', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
       })
-
     }
   }
 
