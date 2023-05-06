@@ -1,8 +1,21 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import './header.css';
 import { Link } from "react-router-dom";
 
 function Header() {
+    const refCreateProduct = useRef()
+    const refCart = useRef()
+    const refUser = useRef()
+    const refDivLinks = useRef()
+
+    const userLogged = sessionStorage.getItem('userLogged')
+    useEffect(() => {
+        if(!userLogged){    
+            refCart.current.style.display = 'none'
+            refCart.current.style.width = 0
+            refDivLinks.current.style.justifyContent = 'center'
+        }
+      }, []);
     return (
         <div className="App-header">
             <header className="App-header">
@@ -16,15 +29,15 @@ function Header() {
                         <li><Link to='/flights'>Vuelos</Link></li>
                         <li><Link to='/hotels'>Hoteles</Link></li>
                         <li><Link to='/packages'>Paquetes</Link></li>
-                        <li><Link to='/createChoose'>Crear Producto</Link></li>
+                        <li ref={refCreateProduct}><Link to='/createChoose'>Crear Producto</Link></li>
                     </ul>
                 </div>
 
-                <div className="div-links">
+                <div ref={refDivLinks} className="div-links">
                     <div className="div-i-1">
-                        <Link to='/cart'><i className="fa-solid fa-plane-up"></i></Link>
+                        <Link ref={refCart} to='/cart'><i className="fa-solid fa-plane-up"></i></Link>
                     </div>
-                    <div className="div-i-2">
+                    <div  ref={refUser} className="div-i-2">
                         <Link to='/choose '><i className="fa-solid fa-user"></i></Link>
                     </div>
                     <div className="burger-menu">

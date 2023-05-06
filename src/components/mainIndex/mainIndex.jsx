@@ -71,7 +71,7 @@ function MainIndex() {
 
                 </section>
                 <div className="title-div">
-                    <h2 className="articles-title">Paquetes mas comprados</h2>
+                    <h2 className="articles-title">Trending Packages</h2>
                 </div>
             </main>
         </div>

@@ -6,30 +6,47 @@ function Loggin() {
 
   async function fetchApi(endpoint, config) {
     try {
-      const response = await fetch(endpoint, config)
-      console.log(response);
-      const jsonResponse = await response.json()
+      const responseApi = await fetch(endpoint, config)
+      const jsonResponse = await responseApi.json()
       console.log(jsonResponse);
       if (jsonResponse.info.status === 200) {
         if (jsonResponse.info.token) {
-          console.log('TOKEN:');
-          console.log(jsonResponse.info.token);
+          sessionStorage.setItem('token', JSON.stringify(jsonResponse.info.token))
+          window.location.href = '/'
         }
-        console.log(jsonResponse);
-        sessionStorage.setItem('userLogged', JSON.stringify(jsonResponse.data))
-        window.location.href = '/'
+        if (jsonResponse.info.permanentToken){
+          localStorage.setItem('token', JSON.stringify(jsonResponse.info.permanentToken))
+          window.location.href = '/'
+        }
         return
       }
       if (jsonResponse.info.status === 400) {
         refPasswordError.current.innerHTML = jsonResponse.info.msg
-        if (jsonResponse.info.msg == 'Invalid password') {
-          refPasswordError.current.innerHTML = 'invalid password'
-          refPassword.current.className = 'invalid-impunt'
-        } if (jsonResponse.info.msg == 'Invalid information') {
-          refEmailError.current.innerHTML = 'invalid information'
-          refEmail.current.className = 'invalid-impunt'
+        if (jsonResponse.info.msg == 'Invalid password' || jsonResponse.info.msg == 'Invalid information' || jsonResponse.info.msg == "Cannot read properties of undefined (reading 'dataValues')") {
+          if (jsonResponse.info.msg == 'Invalid password') {
+            refPasswordError.current.innerHTML = 'invalid password'
+            refPassword.current.className = 'invalid-input'
+          }
+          if (jsonResponse.info.msg == "Cannot read properties of undefined (reading 'dataValues')"){
+            refEmailError.current.innerHTML = 'invalid information'
+          refPasswordError.current.innerHTML = ''
+            refEmail.current.className = 'invalid-input'
+          }
+          if (jsonResponse.info.msg == 'Invalid information') {
+            refEmailError.current.innerHTML = 'invalid information'
+            refEmail.current.className = 'invalid-input'
+          }
+          setPassword('')
+          return
+        } else {
+          refEmailError.current.innerHTML = 'Smoething goes wrong, please try again'
+          refPasswordError.current.innerHTML = ''
+          setTimeout(() => {
+            window.location.reload()
+            return
+          }, 3000)
         }
-        return
+
       }
     } catch (err) {
       refEmailError.current.innerHTML = 'Smoething goes wrong please try again'
