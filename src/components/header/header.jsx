@@ -10,12 +10,19 @@ function Header() {
 
     const userLogged = sessionStorage.getItem('userLogged')
     useEffect(() => {
-        if(!userLogged){    
+        if (!userLogged) {
             refCart.current.style.display = 'none'
             refCart.current.style.width = 0
             refDivLinks.current.style.justifyContent = 'center'
+            refCreateProduct.current.style.display = 'none'
+            refCreateProduct.current.style.width = 0
+        } else {
+            if (userLogged.admin) {
+                refCreateProduct.current.style.display = 'none'
+                refCreateProduct.current.style.width = 0
+            }
         }
-      }, []);
+    }, []);
     return (
         <div className="App-header">
             <header className="App-header">
@@ -37,7 +44,7 @@ function Header() {
                     <div className="div-i-1">
                         <Link ref={refCart} to='/cart'><i className="fa-solid fa-plane-up"></i></Link>
                     </div>
-                    <div  ref={refUser} className="div-i-2">
+                    <div ref={refUser} className="div-i-2">
                         <Link to='/choose '><i className="fa-solid fa-user"></i></Link>
                     </div>
                     <div className="burger-menu">

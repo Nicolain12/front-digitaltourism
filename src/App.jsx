@@ -31,6 +31,28 @@ import EditUser from './components/User/editUser/editUser'
 import { Routes, Route } from 'react-router-dom'
 
 function App() {
+  async function fetchApi(endpoint, config) {
+    try {
+        const responseApi = await fetch(endpoint, config)
+        const jsonResponse = await responseApi.json()
+        if (jsonResponse.info == 200){
+          return jsonResponse.data
+        } else {
+          return null
+        }
+
+    } catch (err) {
+      return null
+    }
+}
+
+  // useEffect(() => {
+  //   const token = sessionStorage.getItem('token')
+  //   const permanentToken = localStorage.getItem('token')
+  //   if(token || permanentToken){
+  //     const userData = fetchApi()
+  //   }
+  // }, []);
 
   return (
     <div className="App">
@@ -41,7 +63,7 @@ function App() {
 
         {/* ***************** PRODUCTS **************** */}
         <Route exact path="/productDelete" element={<ProductDelete />} />
-        
+
         {/* Flights */}
         <Route exact path="/flights" element={<Flights />} />
         <Route exact path="/flightsCreate" element={<FlightsCreate />} />
