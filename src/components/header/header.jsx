@@ -1,14 +1,15 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import './header.css';
 import { Link } from "react-router-dom";
 
 function Header() {
+    const [userPath, setUserPath] = useState('/choose')
     const refCreateProduct = useRef()
     const refCart = useRef()
     const refUser = useRef()
     const refDivLinks = useRef()
 
-    const userLogged = sessionStorage.getItem('userLogged')
+    const userLogged = JSON.parse(sessionStorage.getItem('userLogged'))
     useEffect(() => {
         if (!userLogged) {
             refCart.current.style.display = 'none'
@@ -17,7 +18,8 @@ function Header() {
             refCreateProduct.current.style.display = 'none'
             refCreateProduct.current.style.width = 0
         } else {
-            if (userLogged.admin) {
+            setUserPath(`/profile/${userLogged.id}`)
+            if (!userLogged.admin) {
                 refCreateProduct.current.style.display = 'none'
                 refCreateProduct.current.style.width = 0
             }
@@ -45,7 +47,7 @@ function Header() {
                         <Link ref={refCart} to='/cart'><i className="fa-solid fa-plane-up"></i></Link>
                     </div>
                     <div ref={refUser} className="div-i-2">
-                        <Link to='/choose '><i className="fa-solid fa-user"></i></Link>
+                        <Link to={userPath}><i className="fa-solid fa-user"></i></Link>
                     </div>
                     <div className="burger-menu">
                         <Link to='#'><i className="fas fa-bars"></i></Link>

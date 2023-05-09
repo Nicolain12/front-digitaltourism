@@ -8,7 +8,6 @@ function Loggin() {
     try {
       const responseApi = await fetch(endpoint, config)
       const jsonResponse = await responseApi.json()
-      console.log(jsonResponse);
       if (jsonResponse.info.status === 200) {
         if (jsonResponse.info.token) {
           sessionStorage.setItem('token', JSON.stringify(jsonResponse.info.token))
@@ -129,8 +128,6 @@ function Loggin() {
       addValueToArray(loggAuth, 'password')
     }
     if (loggAuth.length == 0) {
-      console.log('Fetch');
-
       fetchApi('http://localhost:3001/api/users/loggin', {
         method: 'POST',
         headers: {

@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+
 import './App.css';
 
 // Components
@@ -35,8 +36,8 @@ function App() {
     try {
         const responseApi = await fetch(endpoint, config)
         const jsonResponse = await responseApi.json()
-        if (jsonResponse.info == 200){
-          return jsonResponse.data
+        if (jsonResponse.info.status == 200){
+            sessionStorage.setItem('userLogged', JSON.stringify(jsonResponse.data))
         } else {
           return null
         }
@@ -46,13 +47,19 @@ function App() {
     }
 }
 
-  // useEffect(() => {
-  //   const token = sessionStorage.getItem('token')
-  //   const permanentToken = localStorage.getItem('token')
-  //   if(token || permanentToken){
-  //     const userData = fetchApi()
-  //   }
-  // }, []);
+useEffect(() => {
+  const token = sessionStorage.getItem('token');
+  const permanentToken = localStorage.getItem('token');
+  if (token || permanentToken) {
+    const headers = {};
+    if (token) headers.authorization = token;
+    if (permanentToken) headers.authorization = permanentToken
+    fetchApi('http://localhost:3001/api/users/token/byId', {
+      method: 'GET',
+      headers,
+    });
+  }
+}, []);
 
   return (
     <div className="App">

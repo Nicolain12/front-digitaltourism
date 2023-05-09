@@ -2,6 +2,8 @@ import React from 'react';
 import './profile.css';
 
 function Profile() {
+    const userLogged = JSON.parse(sessionStorage.getItem('userLogged'))
+
     return (
         <div className="App-profile">
             <main>
@@ -12,24 +14,24 @@ function Profile() {
                     <section className="main-info-profile">
                         <div className="name-profile">
                             <h5>Nombre:</h5>
-                            <p>The name goes here</p>
+                            <p>{userLogged.firstName}</p>
                         </div>
                         <div className="surname-profile">
                             <h5>Apellido:</h5>
-                            <p>the surname goes here</p>
+                            <p>{userLogged.lastName}</p>
                         </div>
                         <div className="email-profile">
                             <h5>Email:</h5>
-                            <p>The email goes here</p>
+                            <p>{userLogged.email}</p>
                         </div>
                         <div className="ageType-profile">
                             <div className="age">
                                 <h5>Edad:</h5>
-                                <p>The age goed here</p>
+                                <p>{userLogged.age}</p>
                             </div>
                             <div className="type">
                                 <h5>Tipo de usuario:</h5>
-                                <p>The type goes here</p>
+                                <p>{userLogged.admin? 'Admin' : 'User'}</p>
                             </div>
                         </div>
                     </section>
