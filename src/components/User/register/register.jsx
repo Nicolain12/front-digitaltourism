@@ -22,6 +22,7 @@ function Register() {
             if (jsonResponse.info.status == 200) {
                 delete jsonResponse.data.password
                 sessionStorage.setItem('token', JSON.stringify(jsonResponse.info.token))
+                sessionStorage.setItem('userLogged', JSON.stringify(jsonResponse.data))
                 window.location.href = '/'
                 return
             }

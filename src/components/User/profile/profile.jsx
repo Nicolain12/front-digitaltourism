@@ -1,5 +1,6 @@
 import React from 'react';
 import './profile.css';
+import { Link } from 'react-router-dom';
 
 function Profile() {
     const userLogged = JSON.parse(sessionStorage.getItem('userLogged'))
@@ -15,7 +16,7 @@ function Profile() {
             <main>
                 <div className="main-profile-div">
                     <section className="img-profile">
-                        <img src="/images/users/default.jpg" alt="Imagen del usuario"></img>
+                        <img src={`http://localhost:3001/images/users/${userLogged.image}`} alt="Imagen del usuario"></img>
                     </section>
                     <section className="main-info-profile">
                         <div className="name-profile">
@@ -43,7 +44,7 @@ function Profile() {
                     </section>
                 </div>
                 <div className="button-profile">
-                    <a className="edit-button-profile" href="/users/update">Edit User</a>
+                    <Link to={'/editUser'} className="edit-button-profile" href="/users/update">Edit User</Link>
                     <button className="loggout-button-profile" onClick={loggOutButton}>Logg Out</button>
                     <a className="delete-button-profile" href="/users/delete">Delete User</a>
                 </div>

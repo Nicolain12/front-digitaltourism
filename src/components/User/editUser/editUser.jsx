@@ -1,40 +1,131 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './editUser.css';
 
+
 function EditUser() {
+    async function fetchApi(endpoint, config) {
+        try {
+            const response = await fetch(endpoint, config);
+            const jsonResponse = await response.json();
+            if (jsonResponse.info.status === 200) {
+                sessionStorage.removeItem('userLogged')
+                sessionStorage.setItem('userLogged', JSON.stringify(jsonResponse.data))
+                window.location.href = `/profile/${userLogged.id}`
+            }
+            if (jsonResponse.info.status === 400) {
+                console.log(jsonResponse);
+            }
+        } catch (err) {
+            console.error(err);
+        }
+    }
+
+
+    const userLogged = JSON.parse(sessionStorage.getItem('userLogged'))
+    const [name, setName] = useState(userLogged.firstName)
+    const [surname, setSurname] = useState(userLogged.lastName)
+    const [email, setEmail] = useState(userLogged.email)
+    const [selectedImage, setSelectedImage] = useState(null);
+
+    const nameChangeHandle = (e) => {
+        setName(e.target.value)
+    }
+    const surnameChangeHandle = (e) => {
+        setSurname(e.target.value)
+    }
+    const emailChangeHandle = (e) => {
+        setEmail(e.target.value)
+    }
+    const handleImageChange = (e) => {
+        const file = e.target.files[0];
+        const reader = new FileReader();
+
+        reader.onload = () => {
+            setSelectedImage(reader.result);
+        };
+
+        if (file) {
+            reader.readAsDataURL(file);
+        }
+    };
+
+
+    const updateUserSubmit = (e) => {
+        e.preventDefault()
+        // It left check why the image is not being send to the server
+        const newUserData = {
+            name,
+            surname,
+            email,
+            image: selectedImage,
+        }
+        const headers = {
+            'Content-Type': 'application/json',
+        }
+
+        const permanentToken = localStorage.getItem('token');
+        const token = sessionStorage.getItem('token');
+        if (token) headers.authorization = token
+        if (permanentToken) headers.authorization = permanentToken
+
+        //******************** VALIDATIONS ************************
+        //*********************************************************
+
+        fetchApi(`http://localhost:3001/api/users/update/${userLogged.id}`, {
+            method: 'PUT',
+            headers,
+            body: JSON.stringify(newUserData),
+        })
+    }
+
     return (
-        <div className="App-editUser">
-             <main>
-                <form action="" enctype="multipart/form-data" method="POST" className="main-profile-div-EDIT">
+        <div onSubmit={updateUserSubmit} className="App-editUser">
+            <main>
+                <form className="main-profile-div-EDIT">
                     <section className="img-profile-EDIT">
-                        <label for="fileEdit">
-                            <img src="/images/users/default.jpg" alt="Imagen del usuario"></img>
-                            <p>Editar foto</p>
+                        <label htmlFor="fileEdit">
+                            {selectedImage ? <img src={selectedImage} alt="Selected Image" /> : <img src={`http://localhost:3001/images/users/${userLogged.image}`} alt="Imagen del usuario" />}
+                            <p>Edit Image</p>
                         </label>
-                        <input type="file" value="" name="fileEdit" id="fileEdit"></input>
+                        <input onChange={handleImageChange} type="file" defaultValue="" name="fileEdit" id="fileEdit" />
                     </section>
                     <section className="main-info-profile-EDIT">
                         <div className="name-edit">
-                            <label for="">Nombre:</label>
-                            <input type="text" value="" name="nameEdit" id="nameEdit"></input>
+                            <label htmlFor="nameEdit">Name:</label>
+                            <input
+                                onChange={nameChangeHandle}
+                                type="text"
+                                defaultValue={name}
+                                name="nameEdit"
+                                id="nameEdit"
+                            />
                         </div>
                         <div className="surname-edit">
-                            <label for="surnameEdit">Apellido:</label>
-                            <input type="text" value="" name="surnameEdit" id="surnameEdit"></input>
+                            <label htmlFor="surnameEdit">Surname:</label>
+                            <input
+                                onChange={surnameChangeHandle}
+                                type="text"
+                                defaultValue={surname}
+                                name="surnameEdit"
+                                id="surnameEdit"
+                            />
                         </div>
                         <div className="email-edit">
-                            <label for="emailEdit">Email:</label>
-                            <input type="email" value="" name="emailEdit" id="emailEdit"></input>
+                            <label htmlFor="emailEdit">Email:</label>
+                            <input
+                                onChange={emailChangeHandle}
+                                type="email"
+                                defaultValue={email}
+                                name="emailEdit"
+                                id="emailEdit"
+                            />
                         </div>
                         <div className="button-profile-edit">
-                            <button type="submit">Editar</button>
+                            <button type="submit">Update</button>
                         </div>
                     </section>
-
-
                 </form>
             </main>
-
         </div>
     );
 }
