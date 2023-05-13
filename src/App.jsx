@@ -34,32 +34,31 @@ import { Routes, Route } from 'react-router-dom'
 function App() {
   async function fetchApi(endpoint, config) {
     try {
-        const responseApi = await fetch(endpoint, config)
-        const jsonResponse = await responseApi.json()
-        if (jsonResponse.info.status == 200){
-            sessionStorage.setItem('userLogged', JSON.stringify(jsonResponse.data))
-        } else {
-          return null
-        }
+      const responseApi = await fetch(endpoint, config)
+      const jsonResponse = await responseApi.json()
+      if (jsonResponse.info.status == 200) {
+        sessionStorage.setItem('userLogged', JSON.stringify(jsonResponse.data))
+      } else {
+        return null
+      }
 
     } catch (err) {
       return null
     }
-}
-
-useEffect(() => {
-  const token = sessionStorage.getItem('token');
-  const permanentToken = localStorage.getItem('token');
-  if (token || permanentToken) {
-    const headers = {};
-    if (token) headers.authorization = token;
-    if (permanentToken) headers.authorization = permanentToken
-    fetchApi('http://localhost:3001/api/users/token/byId', {
-      method: 'GET',
-      headers,
-    });
   }
-}, []);
+
+  useEffect(() => {
+    const permanentToken = localStorage.getItem('token');
+    if (permanentToken) {
+      const headers = {
+        authorization: permanentToken
+      };
+      fetchApi('http://localhost:3001/api/users/token/byId', {
+        method: 'GET',
+        headers,
+      });
+    }
+  }, []);
 
   return (
     <div className="App">

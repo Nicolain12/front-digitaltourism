@@ -9,8 +9,8 @@ function Header() {
     const refUser = useRef()
     const refDivLinks = useRef()
 
-    const userLogged = JSON.parse(sessionStorage.getItem('userLogged'))
     useEffect(() => {
+        const userLogged = JSON.parse(sessionStorage.getItem('userLogged'))
         if (!userLogged) {
             refCart.current.style.display = 'none'
             refCart.current.style.width = 0
@@ -24,7 +24,9 @@ function Header() {
                 refCreateProduct.current.style.width = 0
             }
         }
-    }, []);
+    },[] )
+
+
     return (
         <div className="App-header">
             <header className="App-header">
@@ -35,10 +37,10 @@ function Header() {
                 </div>
                 <div className="div-pages">
                     <ul type="none">
-                        <li><Link to='/flights'>Vuelos</Link></li>
-                        <li><Link to='/hotels'>Hoteles</Link></li>
-                        <li><Link to='/packages'>Paquetes</Link></li>
-                        <li ref={refCreateProduct}><Link to='/createChoose'>Crear Producto</Link></li>
+                        <li><Link to='/flights'>Flights</Link></li>
+                        <li><Link to='/hotels'>Hotels</Link></li>
+                        <li><Link to='/packages'>Packages</Link></li>
+                        <li ref={refCreateProduct}><Link to='/createChoose'>Create Service</Link></li>
                     </ul>
                 </div>
 

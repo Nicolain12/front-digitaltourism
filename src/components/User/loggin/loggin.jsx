@@ -11,10 +11,12 @@ function Loggin() {
       if (jsonResponse.info.status === 200) {
         if (jsonResponse.info.token) {
           sessionStorage.setItem('token', JSON.stringify(jsonResponse.info.token))
-          window.location.href = '/'
+          sessionStorage.setItem('userLogged', JSON.stringify(jsonResponse.data))
+            window.location.href = '/'
         }
         if (jsonResponse.info.permanentToken){
           localStorage.setItem('token', JSON.stringify(jsonResponse.info.permanentToken))
+          sessionStorage.setItem('userLogged', JSON.stringify(jsonResponse.data))
           window.location.href = '/'
         }
         return

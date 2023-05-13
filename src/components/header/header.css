@@ -1,6 +1,7 @@
-.app-header{
+.app-header {
     width: 100%;
 }
+
 header {
     width: 100%;
     background-color: #304a73;
@@ -9,6 +10,11 @@ header {
     position: sticky;
     top: 0;
     z-index: 6;
+}
+
+.no-cart {
+    display: 'none';
+    width: 0
 }
 
 /*LOGO*/
@@ -190,4 +196,3 @@ header {
         font-size: 50px;
     }
 }
- 
