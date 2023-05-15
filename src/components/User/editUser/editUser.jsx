@@ -26,6 +26,7 @@ function EditUser() {
     const [surname, setSurname] = useState(userLogged.lastName)
     const [email, setEmail] = useState(userLogged.email)
     const [selectedImage, setSelectedImage] = useState(null);
+    const [imageToChange, setImageToChange] = useState(null);
 
     const nameChangeHandle = (e) => {
         setName(e.target.value)
@@ -38,45 +39,44 @@ function EditUser() {
     }
     const handleImageChange = (e) => {
         const file = e.target.files[0];
-        const reader = new FileReader();
-
-        reader.onload = () => {
-            setSelectedImage(reader.result);
-        };
-
         if (file) {
-            reader.readAsDataURL(file);
+          const imageUrl = URL.createObjectURL(file);
+          setSelectedImage(imageUrl);
+          setImageToChange(file)
         }
-    };
-
+      };
+      
 
     const updateUserSubmit = (e) => {
-        e.preventDefault()
-        // It left check why the image is not being send to the server
-        const newUserData = {
-            name,
-            surname,
-            email,
-            image: selectedImage,
-        }
-        const headers = {
-            'Content-Type': 'application/json',
-        }
+  e.preventDefault();
 
-        const permanentToken = localStorage.getItem('token');
-        const token = sessionStorage.getItem('token');
-        if (token) headers.authorization = token
-        if (permanentToken) headers.authorization = permanentToken
+  const headers = {};
 
-        //******************** VALIDATIONS ************************
-        //*********************************************************
+  const permanentToken = localStorage.getItem('token');
+  const token = sessionStorage.getItem('token');
+  if (token) headers.authorization = token;
+  if (permanentToken) headers.authorization = permanentToken;
 
-        fetchApi(`http://localhost:3001/api/users/update/${userLogged.id}`, {
-            method: 'PUT',
-            headers,
-            body: JSON.stringify(newUserData),
-        })
-    }
+  const newUserData = new FormData();
+
+  newUserData.append('name', name);
+  newUserData.append('surname', surname);
+  newUserData.append('email', email);
+
+  if (imageToChange) {
+    newUserData.append('fileEdit', imageToChange, imageToChange.name);
+  }
+
+  //******************** VALIDATIONS ************************
+  //*********************************************************
+
+  fetchApi(`http://localhost:3001/api/users/update/${userLogged.id}`, {
+    method: 'PUT',
+    headers,
+    body: newUserData,
+  });
+};
+
 
     return (
         <div onSubmit={updateUserSubmit} className="App-editUser">
