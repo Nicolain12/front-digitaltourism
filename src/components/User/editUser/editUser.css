@@ -1,3 +1,24 @@
+/* Errors */
+.error-hidden {
+    display: none;
+}
+
+.error-shown {
+    display: block;
+    width: 100%;
+    margin: 0%;
+    color: red;
+}
+
+.input-error {
+    margin-top: 0%;
+    margin-bottom: 2%;
+    height: 2rem;
+    width: 100%;
+    border-radius: 5px;
+    border: 3px solid red
+}
+
 .main-profile-div-EDIT {
 
     padding: 2%;
@@ -60,9 +81,7 @@
     align-items: flex-start;
 }
 
-.name-edit input,
-.surname-edit input,
-.email-edit input {
+.input-edit-user{
     margin-top: 5%;
     margin-bottom: 2%;
     height: 2rem;
@@ -85,7 +104,9 @@
     height: 2em;
 }
 
-.button-profile-edit button {
+
+
+.submitEditUser {
     color: white;
     background-color: #1f53c5;
     width: 40%;
@@ -96,7 +117,24 @@
     border: none;
 }
 
-.button-profile-edit button:hover {
+.submitEditUser:hover {
+    font-weight: 600;
+    box-shadow: 0 0 10px rgb(100, 100, 100);
+}
+
+.cancelEditUser {
+    color: white;
+    background-color: red;
+    margin-left: 2%;
+    width: 40%;
+    cursor: pointer;
+    height: 100%;
+    text-align: center;
+    font-size: 22px;
+    border: none;
+}
+
+.cancelEditUser:hover {
     font-weight: 600;
     box-shadow: 0 0 10px rgb(100, 100, 100);
 }

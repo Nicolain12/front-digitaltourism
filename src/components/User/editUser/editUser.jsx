@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import './editUser.css';
 
 
@@ -28,6 +28,14 @@ function EditUser() {
     const [selectedImage, setSelectedImage] = useState(null);
     const [imageToChange, setImageToChange] = useState(null);
 
+    const nameInputRef = useRef()
+    const nameRefError = useRef()
+    const surnameInputRef = useRef()
+    const surnameRefError = useRef()
+    const emailInputRef = useRef()
+    const emailRefError = useRef()
+    const imageRefError = useRef()
+
     const nameChangeHandle = (e) => {
         setName(e.target.value)
     }
@@ -40,42 +48,103 @@ function EditUser() {
     const handleImageChange = (e) => {
         const file = e.target.files[0];
         if (file) {
-          const imageUrl = URL.createObjectURL(file);
-          setSelectedImage(imageUrl);
-          setImageToChange(file)
+            const imageUrl = URL.createObjectURL(file);
+            setSelectedImage(imageUrl);
+            setImageToChange(file);
         }
-      };
-      
+    };
 
     const updateUserSubmit = (e) => {
-  e.preventDefault();
+        e.preventDefault();
+        const errors = []
 
-  const headers = {};
+        const headers = {};
 
-  const permanentToken = localStorage.getItem('token');
-  const token = sessionStorage.getItem('token');
-  if (token) headers.authorization = token;
-  if (permanentToken) headers.authorization = permanentToken;
+        const permanentToken = localStorage.getItem('token');
+        const token = sessionStorage.getItem('token');
+        if (token) headers.authorization = token;
+        if (permanentToken) headers.authorization = permanentToken;
 
-  const newUserData = new FormData();
+        const newUserData = new FormData();
 
-  newUserData.append('name', name);
-  newUserData.append('surname', surname);
-  newUserData.append('email', email);
+        newUserData.append('name', name);
+        newUserData.append('surname', surname);
+        newUserData.append('email', email);
 
-  if (imageToChange) {
-    newUserData.append('fileEdit', imageToChange, imageToChange.name);
-  }
+        if (imageToChange) {
+            const allowedExtensions = ['.jpg', '.jpeg', '.png', '.gif'];
+            const fileType = imageToChange.type.toLowerCase();
+            const fileExtension = imageToChange.name.toLowerCase().slice(imageToChange.name.lastIndexOf('.'));
+            if (!allowedExtensions.includes(fileExtension)) {
+                errors.push('image')
+                imageRefError.current.className = 'error-shown'
+            } else {
+                newUserData.append('fileEdit', imageToChange, imageToChange.name);
+                imageRefError.current.className = 'error-hidden'
+            }
+        }
 
-  //******************** VALIDATIONS ************************
-  //*********************************************************
+        // ********************VALIDATIONS****************************
+        const nameValidate = newUserData.get('name') ? /^[a-z]{3,}$/i.test(newUserData.get('name')) : null
+        const surnameValidate = newUserData.get('surname') ? /^[a-z]{3,}$/i.test(newUserData.get('surname')) : null
+        const emailValidate = newUserData.get('email') ? newUserData.get('email').length > 13 : null
+        const imageValidate = newUserData.get('fileEdit') ? true : false
 
-  fetchApi(`http://localhost:3001/api/users/update/${userLogged.id}`, {
-    method: 'PUT',
-    headers,
-    body: newUserData,
-  });
-};
+        console.log('------------ VALIDATION --------------');
+        console.log('image:');
+        console.log(imageValidate);
+        console.log('name:');
+        console.log(nameValidate);
+        console.log('surname:');
+        console.log(surnameValidate);
+        console.log('email:');
+        console.log(emailValidate);
+        console.log('errors:');
+        console.log(errors);
+        console.log('---------------------------------------');
+        if (!nameValidate) {
+            errors.push('name')
+            nameInputRef.current.className = 'input-error'
+            nameRefError.current.className = 'error-shown'
+        } else {
+            nameInputRef.current.className = 'input-edit-user'
+            nameRefError.current.className = 'error-hidden'
+        }
+        if (!surnameValidate) {
+            errors.push('surname')
+            surnameInputRef.current.className = 'input-error'
+            surnameRefError.current.className = 'error-shown'
+        } else {
+            surnameInputRef.current.className = 'input-edit-user'
+            surnameRefError.current.className = 'error-hidden'
+        }
+        if (!emailValidate) {
+            errors.push('email')
+            emailInputRef.current.className = 'input-error'
+            emailRefError.current.className = 'error-shown'
+        } else {
+            emailInputRef.current.className = 'input-edit-user'
+            emailRefError.current.className = 'error-hidden'
+        }
+        // ***********************************************************
+
+        if (errors < 1) {
+            fetchApi(`http://localhost:3001/api/users/update/${userLogged.id}`, {
+                method: 'PUT',
+                headers,
+                body: newUserData,
+            });
+        } else {
+            console.log(`errors: ${errors}`);
+        }
+
+
+
+    };
+
+    const cancelUpdate = () => {
+        window.location.href = `profile/${userLogged.id}`
+    }
 
 
     return (
@@ -88,11 +157,15 @@ function EditUser() {
                             <p>Edit Image</p>
                         </label>
                         <input onChange={handleImageChange} type="file" defaultValue="" name="fileEdit" id="fileEdit" />
+                        <h5 ref={imageRefError} className="error-hidden">Type of file not allowed</h5>
                     </section>
                     <section className="main-info-profile-EDIT">
                         <div className="name-edit">
                             <label htmlFor="nameEdit">Name:</label>
+                            <h5 ref={nameRefError} className="error-hidden">Not allowed, try again</h5>
                             <input
+                                className='input-edit-user'
+                                ref={nameInputRef}
                                 onChange={nameChangeHandle}
                                 type="text"
                                 defaultValue={name}
@@ -102,7 +175,10 @@ function EditUser() {
                         </div>
                         <div className="surname-edit">
                             <label htmlFor="surnameEdit">Surname:</label>
+                            <h5 ref={surnameRefError} className="error-hidden">Not allowed, try again</h5>
                             <input
+                                className='input-edit-user'
+                                ref={surnameInputRef}
                                 onChange={surnameChangeHandle}
                                 type="text"
                                 defaultValue={surname}
@@ -112,7 +188,10 @@ function EditUser() {
                         </div>
                         <div className="email-edit">
                             <label htmlFor="emailEdit">Email:</label>
+                            <h5 ref={emailRefError} className="error-hidden">Not allowed, try again</h5>
                             <input
+                                className='input-edit-user'
+                                ref={emailInputRef}
                                 onChange={emailChangeHandle}
                                 type="email"
                                 defaultValue={email}
@@ -121,7 +200,10 @@ function EditUser() {
                             />
                         </div>
                         <div className="button-profile-edit">
-                            <button type="submit">Update</button>
+                            <button className='submitEditUser' type="submit">Update</button>
+                            {/* ******************************************************************* */}
+                            <button onClick={cancelUpdate} className='cancelEditUser'>Cancel</button>
+                            {/* ******************************************************************* */}
                         </div>
                     </section>
                 </form>
