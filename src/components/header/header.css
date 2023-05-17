@@ -103,18 +103,6 @@ header {
     align-items: center;
 
 }
-.link-shown{
-    display: block;
-}
-.link-hidden{
-    display: none;
-}
-.button-shown{
-    display: block;
-}
-.button-hidden{
-    display: none;
-}
 
 .div-i-1,
 .div-i-2 {

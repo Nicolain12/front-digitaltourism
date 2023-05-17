@@ -4,27 +4,25 @@ import { Link } from "react-router-dom";
 import Popup from '../popups/Choose/choosePopup';
 
 function Header() {
-    const [userPath, setUserPath] = useState('/choose')
+    const [userPath, setUserPath] = useState(``)
     const [buttonPopup, setButtonPopup] = useState(false)
+    const [profileAllowed, setProfileAllowed ] = useState(false)
     const refCreateProduct = useRef()
     const refCart = useRef()
-    const refUser = useRef()
     const refDivLinks = useRef()
 
     useEffect(() => {
         const userLogged = JSON.parse(sessionStorage.getItem('userLogged'))
         if (!userLogged) {
+            setProfileAllowed(false)
             refCart.current.style.display = 'none'
             refCart.current.style.width = 0
             refDivLinks.current.style.justifyContent = 'center'
             refCreateProduct.current.style.display = 'none'
             refCreateProduct.current.style.width = 0
-            refButton.current.classNames = 'button-shown'
-            refLink.current.classNames = 'link-hidden'
         } else {
-            refButton.current.classNames = 'button-hidden'
-            refLink.current.classNames = 'link-shown'
             setUserPath(`/profile/${userLogged.id}`)
+            setProfileAllowed(true)
             if (!userLogged.admin) {
                 refCreateProduct.current.style.display = 'none'
                 refCreateProduct.current.style.width = 0
@@ -33,14 +31,16 @@ function Header() {
     }, [])
 
     const popupOpen = ()=>{
+        if(profileAllowed){
+            window.location.href = userPath
+        }else{
         if(buttonPopup){
             setButtonPopup(false)
         }else{
             setButtonPopup(true)
         }
     }
-const refLink = useRef()
-const refButton = useRef()
+    }
 
     return (
         <div className="App-header">
@@ -63,9 +63,8 @@ const refButton = useRef()
                         <div className="div-i-1">
                             <Link ref={refCart} to='/cart'><i className="fa-solid fa-plane-up"></i></Link>
                         </div>
-                        <div ref={refUser} className="div-i-2">
-                            <Link ref={refLink} className='link-hidden' to={userPath}><i className="fa-solid fa-user"></i></Link>
-                            <button ref={refButton} className='button-shown' onClick={popupOpen}><i className="fa-solid fa-user"></i></button>
+                        <div className="div-i-2">
+                            <button onClick={popupOpen}><i className="fa-solid fa-user"></i></button>
                         </div>
                         <div className="burger-menu">
                             <Link to='#'><i className="fas fa-bars"></i></Link>

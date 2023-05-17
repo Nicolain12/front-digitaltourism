@@ -21,10 +21,6 @@ function Register() {
             const jsonResponse = await response.json()
             if (jsonResponse.info.status == 200) {
                 delete jsonResponse.data.password
-                console.log('----------------------------');
-                console.log('jsonResponse:');
-                console.log(jsonResponse);
-                console.log('----------------------------');
                 sessionStorage.setItem('token', JSON.stringify(jsonResponse.info.token))
                 sessionStorage.setItem('userLogged', JSON.stringify(jsonResponse.data))
                 window.location.href = '/'
