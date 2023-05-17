@@ -103,6 +103,18 @@ header {
     align-items: center;
 
 }
+.link-shown{
+    display: block;
+}
+.link-hidden{
+    display: none;
+}
+.button-shown{
+    display: block;
+}
+.button-hidden{
+    display: none;
+}
 
 .div-i-1,
 .div-i-2 {
@@ -118,6 +130,22 @@ header {
     font-size: 30px;
     color: white;
     cursor: pointer;
+}
+
+.div-links button{
+    padding: 0;
+    background-color: #304a73;
+    border: none;
+}
+.div-links button i {
+    font-size: 30px;
+    color: white;
+    width: 100%;
+    background-color: #304a73;
+    cursor: pointer;
+}
+.div-links button i:hover {
+    font-size: 35px;
 }
 
 .burger-menu {

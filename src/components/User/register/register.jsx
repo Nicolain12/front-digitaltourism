@@ -21,6 +21,10 @@ function Register() {
             const jsonResponse = await response.json()
             if (jsonResponse.info.status == 200) {
                 delete jsonResponse.data.password
+                console.log('----------------------------');
+                console.log('jsonResponse:');
+                console.log(jsonResponse);
+                console.log('----------------------------');
                 sessionStorage.setItem('token', JSON.stringify(jsonResponse.info.token))
                 sessionStorage.setItem('userLogged', JSON.stringify(jsonResponse.data))
                 window.location.href = '/'
@@ -47,7 +51,7 @@ function Register() {
     const [surname, setSurname] = useState("")
     const [email, setEmail] = useState("")
     const [age, setAge] = useState("")
-    const [admin, setAdmin] = useState("")
+    const [admin, setAdmin] = useState(false)
     const [password, setPassword] = useState("")
     const [passwordConfirm, setPasswordConfirm] = useState("")
 
@@ -92,6 +96,7 @@ function Register() {
     }
     const handleAdminChange = (event) => {
         setAdmin(event.target.value)
+        console.log(event.target.value)
         adminErr.current.innerHTML = ""
     }
     const handlePasswordChange = (event) => {

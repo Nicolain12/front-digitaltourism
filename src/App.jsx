@@ -19,7 +19,6 @@ import Packages from './components/Packages/packagesList/packagesList'
 import PackageCreate from './components/Packages/packagesCreate/packageCreate'
 import PackageDetail from './components/Packages/packageDetail/packageDetail'
 import PackageUpdate from './components/Packages/packageUpdate/packageUpdate'
-import Choose from './components/User/choose/choose'
 import Profile from './components/User/profile/profile'
 import Loggin from './components/User/loggin/loggin'
 import Register from './components/User/register/register'
@@ -89,7 +88,6 @@ function App() {
         <Route exact path="/packageUpdate" element={<PackageUpdate />} />
 
         {/****************** USER ******************/}
-        <Route exact path="/choose" element={<Choose />} />
         <Route exact path="/profile/:id" element={<Profile />} />
         <Route exact path="/loggin" element={<Loggin />} />
         <Route exact path="/Register" element={<Register />} />

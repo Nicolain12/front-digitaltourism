@@ -50,7 +50,15 @@ function EditUser() {
         if (file) {
             const imageUrl = URL.createObjectURL(file);
             setSelectedImage(imageUrl);
-            setImageToChange(file);
+            const allowedExtensions = ['.jpg', '.jpeg', '.png', '.gif'];
+            const fileType = file.type.toLowerCase();
+            const fileExtension = file.name.toLowerCase().slice(file.name.lastIndexOf('.'));
+            if (!allowedExtensions.includes(fileExtension)) {
+                imageRefError.current.className = 'error-shown'
+            } else {
+                imageRefError.current.className = 'error-hidden'
+                setImageToChange(file)
+            }
         }
     };
 
