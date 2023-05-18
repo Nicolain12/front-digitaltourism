@@ -32,6 +32,7 @@
 .busca-paquete h4 {
     margin-left: 2%;
     background-color: white;
+    z-index: 3;
 }
 
 .div-filters {

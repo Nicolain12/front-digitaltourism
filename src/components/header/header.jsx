@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 import './header.css';
 import { Link } from "react-router-dom";
-import Popup from '../popups/Choose/choosePopup';
+import Popup from '../Popups/Choose/choosePopup';
 
 function Header() {
     const [userPath, setUserPath] = useState(``)

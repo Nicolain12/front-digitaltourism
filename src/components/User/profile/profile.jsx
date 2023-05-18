@@ -1,14 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './profile.css';
 import { Link } from 'react-router-dom';
+import LoggOut from '../../Popups/loggout/loggOut'
+import DeleteUser from '../../Popups/deleteUser/deleteUser'
 
 function Profile() {
     const userLogged = JSON.parse(sessionStorage.getItem('userLogged'))
-
+    const [buttonPopup, setButtonPopup] = useState(false)
+    const [buttonPopupDelete, setButtonPopupDelete] = useState(false)
     const loggOutButton = () => {
-        sessionStorage.clear()
-        localStorage.clear()
-        window.location.href = '/'
+        setButtonPopup(true)
+    }
+    const deleteButton = () => {
+        setButtonPopupDelete(true)
     }
 
     return (
@@ -46,10 +50,11 @@ function Profile() {
                 <div className="button-profile">
                     <Link to={'/editUser'} className="edit-button-profile" href="/users/update">Edit User</Link>
                     <button className="loggout-button-profile" onClick={loggOutButton}>Logg Out</button>
-                    <a className="delete-button-profile" href="/users/delete">Delete User</a>
+                    <a onClick={deleteButton} className="delete-button-profile" >Delete User</a>
                 </div>
+            <LoggOut trigger={buttonPopup} setTrigger={setButtonPopup}></LoggOut>
+            <DeleteUser trigger={buttonPopupDelete} setTrigger={setButtonPopupDelete}></DeleteUser>
             </main>
-
         </div>
     );
 }
