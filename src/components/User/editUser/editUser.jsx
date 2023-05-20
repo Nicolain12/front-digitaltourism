@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import './editUser.css';
+import { Link } from 'react-router-dom';
 
 
 function EditUser() {
@@ -45,11 +46,11 @@ function EditUser() {
     const emailChangeHandle = (e) => {
         setEmail(e.target.value)
     }
+    // ************************************************************************************************************************************************
+
     const handleImageChange = (e) => {
         const file = e.target.files[0];
         if (file) {
-            const imageUrl = URL.createObjectURL(file);
-            setSelectedImage(imageUrl);
             const allowedExtensions = ['.jpg', '.jpeg', '.png', '.gif'];
             const fileType = file.type.toLowerCase();
             const fileExtension = file.name.toLowerCase().slice(file.name.lastIndexOf('.'));
@@ -57,59 +58,38 @@ function EditUser() {
                 imageRefError.current.className = 'error-shown'
             } else {
                 imageRefError.current.className = 'error-hidden'
+                const imageUrl = URL.createObjectURL(file);
+                setSelectedImage(imageUrl);
                 setImageToChange(file)
             }
         }
     };
+    // ************************************************************************************************************************************************
 
     const updateUserSubmit = (e) => {
         e.preventDefault();
         const errors = []
-
         const headers = {};
-
         const permanentToken = localStorage.getItem('token');
         const token = sessionStorage.getItem('token');
         if (token) headers.authorization = token;
         if (permanentToken) headers.authorization = permanentToken;
-
         const newUserData = new FormData();
-
         newUserData.append('name', name);
         newUserData.append('surname', surname);
         newUserData.append('email', email);
+        // ************************************************************************************************************************************************
+        if (imageToChange != null) {
+            newUserData.append('fileEdit', imageToChange, imageToChange.name);
+            imageRefError.current.className = 'error-hidden'
+        } 
+        // ************************************************************************************************************************************************
 
-        if (imageToChange) {
-            const allowedExtensions = ['.jpg', '.jpeg', '.png', '.gif'];
-            const fileType = imageToChange.type.toLowerCase();
-            const fileExtension = imageToChange.name.toLowerCase().slice(imageToChange.name.lastIndexOf('.'));
-            if (!allowedExtensions.includes(fileExtension)) {
-                errors.push('image')
-                imageRefError.current.className = 'error-shown'
-            } else {
-                newUserData.append('fileEdit', imageToChange, imageToChange.name);
-                imageRefError.current.className = 'error-hidden'
-            }
-        }
-
-        // ********************VALIDATIONS****************************
+        // VALIDATIONS
         const nameValidate = newUserData.get('name') ? /^[a-z]{3,}$/i.test(newUserData.get('name')) : null
         const surnameValidate = newUserData.get('surname') ? /^[a-z]{3,}$/i.test(newUserData.get('surname')) : null
         const emailValidate = newUserData.get('email') ? newUserData.get('email').length > 13 : null
         const imageValidate = newUserData.get('fileEdit') ? true : false
-
-        console.log('------------ VALIDATION --------------');
-        console.log('image:');
-        console.log(imageValidate);
-        console.log('name:');
-        console.log(nameValidate);
-        console.log('surname:');
-        console.log(surnameValidate);
-        console.log('email:');
-        console.log(emailValidate);
-        console.log('errors:');
-        console.log(errors);
-        console.log('---------------------------------------');
         if (!nameValidate) {
             errors.push('name')
             nameInputRef.current.className = 'input-error'
@@ -210,7 +190,7 @@ function EditUser() {
                         <div className="button-profile-edit">
                             <button className='submitEditUser' type="submit">Update</button>
                             {/* ******************************************************************* */}
-                            <button onClick={cancelUpdate} className='cancelEditUser'>Cancel</button>
+                            <Link onClick={cancelUpdate} className='cancelEditUser'>Cancel</Link>
                             {/* ******************************************************************* */}
                         </div>
                     </section>

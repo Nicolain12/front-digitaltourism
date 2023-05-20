@@ -99,7 +99,10 @@
 .button-profile-edit {
     margin: 5% 2% 5% 0;
     text-align: center;
+    display: flex;
+    justify-content: space-around;
     color: white;
+    align-items: center;
     width: 100%;
     height: 2em;
 }
@@ -123,15 +126,18 @@
 }
 
 .cancelEditUser {
+    margin-top: 5%;
+    cursor: pointer;
+    margin-bottom: 5%;
+    text-decoration: none;
     color: white;
     background-color: red;
-    margin-left: 2%;
     width: 40%;
-    cursor: pointer;
-    height: 100%;
-    text-align: center;
-    font-size: 22px;
-    border: none;
+    height: 2em;
+    font-size: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .cancelEditUser:hover {
