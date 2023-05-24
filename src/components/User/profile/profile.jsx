@@ -6,10 +6,6 @@ import DeleteUser from '../../Popups/deleteUser/deleteUser'
 
 function Profile() {
     const userLogged = JSON.parse(sessionStorage.getItem('userLogged'))
-    console.log('----------------');
-    console.log('userLogged:');
-    console.log(userLogged);
-    console.log('----------------');
     const [buttonPopup, setButtonPopup] = useState(false)
     const [buttonPopupDelete, setButtonPopupDelete] = useState(false)
     const loggOutButton = () => {

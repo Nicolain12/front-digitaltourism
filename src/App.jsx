@@ -1,12 +1,11 @@
 import React, { useEffect } from 'react';
-
+import { Routes, Route } from 'react-router-dom'
 import './App.css';
 
 // Components
 import Header from './components/header/header';
 import Footer from './components/footer/footer';
 import MainIndex from './components/mainIndex/mainIndex';
-import ProductDelete from './components/productDelete/productDelete' // TO DO
 import Flights from './components/Flights/flightsList/flightsList'
 import FlightsCreate from './components/Flights/flightCreate/flightCreate'
 import FlightsDetail from './components/Flights/flightDetail/flightDetail'
@@ -22,13 +21,9 @@ import PackageUpdate from './components/Packages/packageUpdate/packageUpdate'
 import Profile from './components/User/profile/profile'
 import Loggin from './components/User/loggin/loggin'
 import Register from './components/User/register/register'
-import CreateChose from './components/createChoose/createChoose'
 import Cart from './components/cart/cart'
 import DeleteConfirmUser from './components/User/deleteConfirm/deleteConfirm'
 import EditUser from './components/User/editUser/editUser'
-
-// ***********************************************
-import { Routes, Route } from 'react-router-dom'
 
 function App() {
   async function fetchApi(endpoint, config) {
@@ -67,8 +62,6 @@ function App() {
         <Route exact path="/" element={<MainIndex />} />
 
         {/* ***************** PRODUCTS **************** */}
-        <Route exact path="/productDelete" element={<ProductDelete />} />
-
         {/* Flights */}
         <Route exact path="/flights" element={<Flights />} />
         <Route exact path="/flightsCreate" element={<FlightsCreate />} />
@@ -91,7 +84,6 @@ function App() {
         <Route exact path="/profile/:id" element={<Profile />} />
         <Route exact path="/loggin" element={<Loggin />} />
         <Route exact path="/Register" element={<Register />} />
-        <Route exact path="/createChoose" element={<CreateChose />} />
         <Route exact path="/cart" element={<Cart />} />
         <Route exact path="/deleteConfirmUser" element={<DeleteConfirmUser />} />
         <Route exact path="/editUser" element={<EditUser />} />
