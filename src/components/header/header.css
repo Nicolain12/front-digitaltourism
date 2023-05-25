@@ -126,14 +126,14 @@ header {
     border: none;
 }
 .div-links button i {
-    font-size: 30px;
+    font-size: 36px;
     color: white;
     width: 100%;
     background-color: #304a73;
     cursor: pointer;
 }
 .div-links button i:hover {
-    font-size: 35px;
+    font-size: 40px;
 }
 
 .burger-menu {

@@ -1,4 +1,4 @@
-.cf-error-input{
+.cf-error-input {
     width: 90%;
     margin-left: 2%;
     background: #24303c;
@@ -8,9 +8,22 @@
     font-size: 18px;
     color: white;
 }
+
+.cf-error-input-select {
+    width: 90%;
+    margin-left: 2%;
+    background: #24303c;
+    padding: 1%;
+    border-radius: 5px;
+    border: 1px solid red;
+    font-size: 18px;
+    color: white;
+}
+
 .cf-error-hidden {
     display: none;
 }
+
 .cf-error-shown {
     display: flex;
     width: 100%;
@@ -18,20 +31,39 @@
     margin: 1% 0 0 2%;
     color: red;
 }
+
+.cf-add-img-icon-error {
+    color: red;
+    font-size: 30px;
+    cursor: pointer;
+    margin: 0;
+}
+
+.cf-img-section-error {
+    width: 90%;
+    border: 2px dashed red;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+    margin: 2% 0%;
+    padding: 2%;
+}
+
 .cf-preview-image {
     position: relative;
     margin-right: 10px;
     margin-bottom: 10px;
-  }
-  
-  .cf-preview-image img {
+}
+
+.cf-preview-image img {
     width: 150px;
     height: 100px;
     object-fit: contain;
     /* object-fit: cover; */
-  }
-  
-  .cf-preview-image button {
+}
+
+.cf-preview-image button {
     position: absolute;
     top: 5px;
     right: 5px;
@@ -42,7 +74,8 @@
     padding: 5px 10px;
     font-size: 14px;
     cursor: pointer;
-  }
+}
+
 .cf-crate-flight {
     width: 100%;
     background: #24303c;
@@ -58,9 +91,11 @@
     width: 100%;
     align-items: center;
 }
+
 .cf-form-createFlight-top-1 input {
     display: none;
 }
+
 .cf-form-createFlight-top-1 {
     width: 100%;
     display: flex;
@@ -76,7 +111,7 @@
     color: white;
 }
 
-.cf-img-section{
+.cf-img-section {
     width: 90%;
     border: 2px dashed #1f53c5;
     display: flex;
@@ -87,16 +122,18 @@
     padding: 2%;
 }
 
-.cf-add-img-icon{
+.cf-add-img-icon {
     color: white;
     font-size: 30px;
     cursor: pointer;
     margin: 0;
     transition: all 0.5s;
 }
-.cf-add-img-icon:hover{
+
+.cf-add-img-icon:hover {
     color: #1f53c5;
 }
+
 .cf-form-createFlight-top-2 {
     width: 100%;
     display: flex;
@@ -127,7 +164,7 @@
     color: white;
 }
 
-.cf-form-createFlight-inputDiv select {
+.cf-form-createFlight-select {
     width: 90%;
     margin-left: 2%;
     background: #24303c;

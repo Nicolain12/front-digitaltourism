@@ -2,6 +2,20 @@ import React, { useState, useRef } from 'react';
 import './flightCreate.css';
 
 function FlightCreate() {
+    async function fetchApi(endpoint, config) {
+        try {
+            const response = await fetch(endpoint, config);
+            const jsonResponse = await response.json();
+            if (jsonResponse.info.status === 200) {
+                console.log(jsonResponse);
+            }
+            if (jsonResponse.info.status === 400) {
+                console.log(jsonResponse);
+            }
+        } catch (err) {
+            console.error(err);
+        }
+    }
     const [selectedImages, setSelectedImages] = useState([]);
     const [airline, setAirline] = useState('');
     const [description, setDescription] = useState('');
@@ -86,7 +100,8 @@ function FlightCreate() {
                 }, 2000);
             }
         });
-
+        refImagesInput.current.className = 'cf-img-section'
+        refImageIcon.current.className = 'cf-add-img-icon fa-solid fa-circle-plus'
         setSelectedImages([...selectedImages, ...validatedImages]);
     };
     const airlineChangeHandler = (e) => {
@@ -163,6 +178,11 @@ function FlightCreate() {
     }
     const cabinChangeHandler = (e) => {
         setCabin(e.target.value)
+        if (e.target.value == 'none') {
+            refCabinInput.current.className = 'cf-error-input-select'
+        } else {
+            refCabinInput.current.className = 'cf-form-createFlight-select'
+        }
     }
     const priceChangeHandler = (e) => {
         const price = e.target.value
@@ -184,76 +204,93 @@ function FlightCreate() {
 
     const submitFormHandler = (e) => {
         e.preventDefault();
-        const newFlightData = {
-            selectedImages,
-            airline,
-            description,
-            departure,
-            reach,
-            departureDate,
-            reachDate,
-            departureHour,
-            reachHour,
-            cabin,
-            price,
-        };
+        const newData = new FormData();
         const errors = [];
-
-
-
-
-
-
-
 
         // Perform validations
         if (selectedImages.length === 0) {
             errors.push('images');
-            refImagesInput.current.style.borderColor = 'red'
-            refImageIcon.current.style.color = 'red'
+            refImagesInput.current.className = 'cf-img-section-error'
+            refImageIcon.current.className = 'cf-add-img-icon-error fa-solid fa-circle-plus'
+        } else {
+            selectedImages.forEach(image => {
+                newData.append("productFile", image);
+            })
         }
         if (!isValidAirline(airline)) {
             errors.push('airline');
             refAirlineInput.current.className = 'cf-error-input'
+        } else {
+            newData.append('airline', airline);
         }
         if (!isValidDescription(description)) {
             errors.push('description');
             refDescriptionInput.current.className = 'cf-error-input'
+        } else {
+            newData.append('description', description);
         }
         if (!isValidPlace(departure)) {
             errors.push('departure');
             refDepartureInput.current.className = 'cf-error-input'
+        } else {
+            newData.append('departure', departure);
         }
         if (!isValidPlace(reach)) {
             errors.push('reach');
             refReachInput.current.className = 'cf-error-input'
+        } else {
+            newData.append('reach', reach);
         }
         if (!isValidDate(departureDate)) {
             errors.push('departureDate');
             refDepartureDateInput.current.className = 'cf-error-input'
+        } else {
+            newData.append('departureDate', departureDate);
         }
         if (!isValidDate(reachDate)) {
             errors.push('reachDate');
             refReachDateInput.current.className = 'cf-error-input'
+        } else {
+            newData.append('reachDate', reachDate);
         }
         if (!departureHour) {
             errors.push('departureHour');
             refDepartureHourInput.current.className = 'cf-error-input'
+        } else {
+            newData.append('departureHour', departureHour);
         }
         if (!reachHour) {
             errors.push('reachHour');
             refReachHourInput.current.className = 'cf-error-input'
+        } else {
+            newData.append('reachHour', reachHour);
+        }
+        if (cabin == 'none' || !cabin) {
+            errors.push('cabin');
+            refCabinInput.current.className = 'cf-error-input-select'
+        } else {
+            newData.append('cabin', cabin);
         }
         if (!isValidPrice(price) || !price) {
             errors.push('price');
             refPriceInput.current.className = 'cf-error-input'
+        } else {
+            newData.append('price', price);
         }
 
         if (errors.length === 0) {
-            console.log(newFlightData);
+            const headers = {};
+            const permanentToken = localStorage.getItem('token');
+            const token = sessionStorage.getItem('token');
+            if (token) headers.authorization = token;
+            if (permanentToken) headers.authorization = permanentToken;
+            fetchApi(`http://localhost:3001/api/products/create/flight`, {
+                method: 'POST',
+                headers,
+                body: newData,
+            });
         } else {
             console.log('Validation errors:', errors);
-            console.log('Data of error:', newFlightData);
         }
     };
 
@@ -269,7 +306,7 @@ function FlightCreate() {
                         <div className="cf-form-createFlight-top-1">
                             <input type="file" id="input-flight-create" name="productFile" multiple onChange={handleImageChange}></input>
                             <label className="cf-add-img-label-flight" >Select the images of the flight:</label>
-                            <h5 ref={refImagenError} className='cf-error-hidden'>File extension not alloed</h5>
+                            <h5 ref={refImagenError} className='cf-error-hidden'>File extension not allowed</h5>
                             <div ref={refImagesInput} className="cf-img-section">
                                 {selectedImages.map((image, index) => (
                                     <div key={index} className="cf-preview-image">
@@ -337,10 +374,11 @@ function FlightCreate() {
 
                                 <div className="cf-form-createFlight-inputDiv">
                                     <label className="cf-form-createFlight-label" htmlFor="cabin.">Cabin type:</label>
-                                    <select name="cabin" id="cabin" ref={refCabinInput} onChange={cabinChangeHandler}>
-                                        <option value="">1</option>
-                                        <option value="">2</option>
-                                        <option value="">3</option>
+                                    <select name="cabin" id="cabin" ref={refCabinInput} className='cf-form-createFlight-select' onChange={cabinChangeHandler}>
+                                        <option value="none">Select a cabin</option>
+                                        <option value="Economy">Economy</option>
+                                        <option value="Premium">Premium</option>
+                                        <option value="Premium VIP">Premium VIP</option>
                                     </select>
                                 </div>
                                 <div className="cf-form-createFlight-inputDiv">

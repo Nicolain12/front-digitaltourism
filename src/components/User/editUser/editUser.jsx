@@ -46,7 +46,6 @@ function EditUser() {
     const emailChangeHandle = (e) => {
         setEmail(e.target.value)
     }
-    // ************************************************************************************************************************************************
 
     const handleImageChange = (e) => {
         const file = e.target.files[0];
@@ -64,7 +63,6 @@ function EditUser() {
             }
         }
     };
-    // ************************************************************************************************************************************************
 
     const updateUserSubmit = (e) => {
         e.preventDefault();
@@ -78,12 +76,12 @@ function EditUser() {
         newUserData.append('name', name);
         newUserData.append('surname', surname);
         newUserData.append('email', email);
-        // ************************************************************************************************************************************************
+
         if (imageToChange != null) {
             newUserData.append('fileEdit', imageToChange, imageToChange.name);
             imageRefError.current.className = 'error-hidden'
         } 
-        // ************************************************************************************************************************************************
+
 
         // VALIDATIONS
         const nameValidate = newUserData.get('name') ? /^[a-z]{3,}$/i.test(newUserData.get('name')) : null
@@ -114,7 +112,6 @@ function EditUser() {
             emailInputRef.current.className = 'input-edit-user'
             emailRefError.current.className = 'error-hidden'
         }
-        // ***********************************************************
 
         if (errors < 1) {
             fetchApi(`http://localhost:3001/api/users/update/${userLogged.id}`, {
@@ -189,9 +186,7 @@ function EditUser() {
                         </div>
                         <div className="button-profile-edit">
                             <button className='submitEditUser' type="submit">Update</button>
-                            {/* ******************************************************************* */}
                             <Link onClick={cancelUpdate} className='cancelEditUser'>Cancel</Link>
-                            {/* ******************************************************************* */}
                         </div>
                     </section>
                 </form>
