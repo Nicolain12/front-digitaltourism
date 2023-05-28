@@ -13,10 +13,6 @@
     width: 100%;
 }
 
-.fd-carousel_detail-flight img {
-    width: 100%;
-}
-
 .fd-detail-flight-info {
     margin-top: 0;
     width: 100%;
@@ -181,7 +177,7 @@
 
     .fd-detail-flight-info,
     .fd-detail-flight-airline-info {
-        width: 90%;
+        width: 70%;
     }
 
     .fd-detail-flight-info-header {

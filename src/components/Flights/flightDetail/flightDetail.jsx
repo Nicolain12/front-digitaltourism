@@ -1,6 +1,7 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useLayoutEffect } from 'react';
 import './flightDetail.css';
 import { useParams } from 'react-router-dom';
+import Slider from '../../slider/slider';
 
 function FlightDetail() {
     const { id } = useParams();
@@ -35,8 +36,11 @@ function FlightDetail() {
                     method: 'GET',
                     headers,
                 });
-                setFlight(flightData.data);
-                setFlightImgs(flightData.data.image)
+                const parsedFlightData = {
+                    ...flightData.data,
+                };
+                parsedFlightData.image = JSON.parse(flightData.data.image)
+                setFlight(parsedFlightData);
             } catch (err) {
                 console.error(err);
             }
@@ -45,19 +49,31 @@ function FlightDetail() {
         fetchData();
     }, []);
 
-    console.log(flight);
-    console.log(flightImgs);
+    useEffect(() => {
+        const imagesToPush = []
+        if (typeof flight.image == 'object'); {
+            for (let key in flight.image) {
+                if (flight.image.hasOwnProperty(key)) {
+                    imagesToPush.push(flight.image[key])
+                }
+            }
+        }
+        setFlightImgs(imagesToPush)
+    }, [flight])
 
     return (
         <div className="App-flightDetail">
             <main className="fd-main-detail-flight">
                 <section className="fd-section-info">
 
-                    <div id="slider-root" ref={refSliderDiv} className="fd-carousel_detail-flight">
-                        {/********************** SLIDER HERE **********************/}
+                    <div ref={refSliderDiv} className="fd-carousel_detail-flight">
+                        {flightImgs.length == 0 ? <h3>Loading...</h3> : <Slider imgs={flightImgs} id={flight.user_id}></Slider>}
                     </div>
 
                     <div className="fd-detail-flight-info">
+                    <div className="fd-detail-flight-info-title">
+                            <h3>Trip information</h3>
+                        </div>
                         <div className="fd-detail-flight-info-maininfo">
                             <div className="fd-detail-flight-info-header">
                                 <h3>{flight.departure} ----- {flight.reach}</h3>
@@ -79,7 +95,7 @@ function FlightDetail() {
 
                     <div className="fd-detail-flight-info">
                         <div className="fd-detail-flight-info-title">
-                            <h3>Informacion de la aerolinea</h3>
+                            <h3>Airline information</h3>
                         </div>
 
                         <div className="fd-detail-flight-info-maininfo">
@@ -90,7 +106,7 @@ function FlightDetail() {
                                 <div className="fd-detail-flight-departure">
                                     <h5>Cabina: {flight.cabin}</h5>
                                     <div className="fd-detail-flight-description">
-                                        <h5>Descripcion</h5>
+                                        <h5>Description</h5>
                                         <p>{flight.description}</p>
                                     </div>
                                 </div>
