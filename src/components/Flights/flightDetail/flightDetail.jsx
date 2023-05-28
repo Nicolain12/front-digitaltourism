@@ -117,11 +117,11 @@ function FlightDetail() {
                 </section>
 
                 <section className="fd-detail-flight-button-section">
-                    <button className="fd-detail-flight-button btn-df-edit">Editar</button>
-                    <button className="fd-detail-flight-button btn-df-delete">Eliminar</button>
+                    <button className="fd-detail-flight-button btn-df-edit">UpDate</button>
+                    <button className="fd-detail-flight-button btn-df-delete">Delete</button>
                     <div className="fd-detail-flight-button-buy">
                         <p>Price: $999999</p>
-                        <button className="fd-detail-flight-button btn-df-buy">Comprar</button>
+                        <button className="fd-detail-flight-button btn-df-buy">Buy</button>
                     </div>
                 </section>
             </main>
