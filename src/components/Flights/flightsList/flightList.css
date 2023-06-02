@@ -1,4 +1,11 @@
 
+.App-flight-list{
+    background-color: #b0b7c7;
+}
+
+.fl-button-active{display: block;}
+.fl-button-hidde{display: none;}
+
 .main-flights {
     width: 100%;
     display: flex;
@@ -34,8 +41,10 @@
     height: 100%;
 }
 
-.img-flight img {
-    height: 100%;
+.img-flight-list {
+    width: 90%;
+    height: 90%;
+    border-radius: 20px;
 }
 
 .info-flight-div {
@@ -132,17 +141,15 @@
     font-size: 22px;
 }
 
-.info-flight-div-5 a {
-    text-decoration: none;
-    margin-bottom: 2%;
-    margin-right: 2%;
-}
 
-.info-flight-div-5 a i {
+.fa-plane-up.add-cart-flight {
     color: #304a73;
     font-size: 30px;
 }
-
+.fa-solid.fa-plane-circle-check.added-cart-flight {
+    color: #304a73;
+    font-size: 30px;
+}
 .add-cart-flight:hover {
     color: #1f53c5;
 }
@@ -158,7 +165,8 @@
 @media (min-width: 768px) {
     .article-flight {
         width: 80%;
-        /* height: 300px; */
+        max-width: 1200px;
+        max-height: 300px;
         height: 40%;
         flex-direction: row;
     }
@@ -169,8 +177,7 @@
         margin-bottom: 0
     }
 
-    .info-flight-div-5 p,
-    .info-flight-div-5 a {
+    .info-flight-div-5 p {
         display: flex;
         align-items: flex-end;
         margin-bottom: 0%;

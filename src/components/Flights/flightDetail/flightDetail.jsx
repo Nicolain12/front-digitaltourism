@@ -22,6 +22,7 @@ function FlightDetail() {
             console.error(err);
         }
     }
+    const userLogged = JSON.parse(sessionStorage.getItem('userLogged'))
 
     const refSliderDiv = useRef()
     useEffect(() => {
@@ -71,7 +72,7 @@ function FlightDetail() {
                     </div>
 
                     <div className="fd-detail-flight-info">
-                    <div className="fd-detail-flight-info-title">
+                        <div className="fd-detail-flight-info-title">
                             <h3>Trip information</h3>
                         </div>
                         <div className="fd-detail-flight-info-maininfo">
@@ -116,14 +117,18 @@ function FlightDetail() {
 
                 </section>
 
-                <section className="fd-detail-flight-button-section">
+
+                {userLogged.id == flight.user_id ? <section className="fd-detail-flight-button-section">
                     <button className="fd-detail-flight-button btn-df-edit">UpDate</button>
                     <button className="fd-detail-flight-button btn-df-delete">Delete</button>
+                </section> : <section className="fd-detail-flight-button-section">
                     <div className="fd-detail-flight-button-buy">
                         <p>Price: $999999</p>
                         <button className="fd-detail-flight-button btn-df-buy">Buy</button>
                     </div>
-                </section>
+                </section>}
+
+
             </main>
 
         </div>

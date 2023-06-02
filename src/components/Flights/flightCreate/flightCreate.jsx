@@ -7,7 +7,7 @@ function FlightCreate() {
             const response = await fetch(endpoint, config);
             const jsonResponse = await response.json();
             if (jsonResponse.info.status === 200) {
-                console.log(jsonResponse);
+               window.location.href = '/flights'
             }
             if (jsonResponse.info.status === 400) {
                 console.log(jsonResponse);

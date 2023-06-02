@@ -2,7 +2,7 @@ import React from 'react';
 import './hotelCreate.css';
 
 function HotelCreate() {
-    return (
+    return ( 
         <div className="App-hotelCreate">
              <main>
                 <form action="" method="POST" enctype="multipart/form-data" className="crate-hotel">
