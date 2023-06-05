@@ -1,15 +1,69 @@
+.App-hotelCreate{
+    width: 100vw;
+}   
 
-.crate-hotel {
+.ch-error-input{
+    width: 90%;
+    margin-left: 2%;
+    background: #24303c;
+    padding: 1%;
+    border-radius: 5px;
+    border: 1px solid red;
+    font-size: 18px;
+    color: white;
+}
+
+.ch-error-input-select{
+    width: 90%;
+    margin-left: 2%;
+    background: #24303c;
+    padding: 1%;
+    border-radius: 5px;
+    border: 1px solid red;
+    font-size: 18px;
+    color: white;
+}
+
+.ch-error-hidden {
+    display: none;
+}
+
+.ch-error-shown {
+    display: flex;
+    width: 100%;
+    justify-content: flex-start;
+    margin: 1% 0 0 2%;
+    color: red;
+}
+
+.ch-img-section-error {
+    width: 90%;
+    border: 2px dashed red;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+    margin: 2% 0%;
+    padding: 2%;
+}
+
+.ch-add-img-icon-error {
+    color: red;
+    font-size: 30px;
+    cursor: pointer;
+    margin: 0;
+}
+
+.ch-crate-hotel {
     width: 100%;
     background: #24303c;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 2%;
 }
 
 
-.create-hotel-top {
+.ch-create-hotel-top {
     display: flex;
     flex-direction: column;
     padding: 2%;
@@ -17,73 +71,96 @@
     align-items: center;
 }
 
-.create-hotel-top-1 {
+.ch-create-hotel-top-1 {
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+.ch-img-section{
+    width: 90%;
+    border: 2px dashed #1f53c5;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+    margin: 2% 0%;
+    padding: 2%;
+}
+
+.ch-add-img-icon {
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    margin: 0;
+    transition: all 0.5s;
+}
+
+.ch-add-img-icon:hover {
+    color: #1f53c5;
 }
 
 #input-hotel-create {
     display: none;
 }
 
-.add-img-label-hotel {
+.ch-add-img-label-hotel {
     display: flex;
     justify-content: flex-start;
     width: 100%;
 }
 
-.create-hotel-top-1 label {
+.ch-create-hotel-top-1 label {
     color: #ffffff;
 }
 
-.crate-hotel-img-i {
+.ch-crate-hotel-img-i {
     width: 100%;
     display: flex;
     justify-content: center;
 }
 
-.create-hotel-top-1 label i {
+.ch-create-hotel-top-1 label i {
     color: white;
     font-size: 45px;
     cursor: pointer;
     margin-top: 2%;
 }
 
-.create-hotel-top-1 label i:hover {
+.ch-create-hotel-top-1 label i:hover {
     color: #1f53c5;
     font-size: 34px;
 }
 
-.create-hotel-top-2 {
+.ch-create-hotel-top-2 {
     width: 100%;
     display: flex;
     flex-direction: column;
 }
 
-.crate-hotel-top-2 section {
+.ch-crate-hotel-top-2 section {
     width: 100%;
     display: flex;
     flex-direction: column;
 }
 
-.create-hotel-inputDiv {
+.ch-create-hotel-inputDiv {
     width: 100%;
     display: flex;
     flex-direction: column;
     margin: 2% 0;
 }
 
-.create-hotel-label {
+.ch-create-hotel-label {
     color: white;
+    margin-bottom: 2%;
 }
 
-.create-hotel-input {
-    margin: 1%;
-    width: 100%;
+.ch-create-hotel-input {
+    width: 90%;
+    margin-left: 2%;
     background: #24303c;
-    padding: 3%;
+    padding: 1%;
     border-radius: 5px;
     border: 1px solid #1f53c5;
     font-size: 18px;
@@ -92,26 +169,26 @@
 
 
 
-.create-hotel-service select {
-    width: 100%;
-    margin: 1%;
+.ch-input-select{
+    width: 90%;
+    margin-left: 2%;
     background: #24303c;
-    padding: 3%;
+    padding: 1%;
     border-radius: 5px;
     border: 1px solid #1f53c5;
     font-size: 18px;
     color: white;
-
 }
 
-.crate-hotel-button {
+.ch-crate-hotel-button {
     width: 100%;
     display: flex;
     justify-content: center;
 }
 
-.crate-hotel-button button {
+.ch-crate-hotel-button button {
     width: 30%;
+    margin: 0 0 2% 0;
     cursor: pointer;
     background: #1f53c5;
     height: 2rem;
@@ -120,54 +197,41 @@
     font-size: 16px;
 }
 
-.crate-hotel-button button:hover {
+.ch-crate-hotel-button button:hover {
     box-shadow: 0 0 30px rgb(100, 100, 100);
     font-weight: 600;
 }
 
 @media (min-width: 768px) {
 
-    .create-hotel-top-1 {
-        flex-direction: row;
-        align-items: center;
-        justify-content: flex-start;
-    }
-
-    .create-hotel-top-1 label {
-        display: flex;
-        justify-content: flex-start;
-        width: 40%;
-    }
-
-    .create-hotel-top-1 label i {
+    .ch-create-hotel-top-1 label i {
         color: white;
         font-size: 40px;
     }
 
-    .create-hotel-top-1 label i:hover {
+    .ch-create-hotel-top-1 label i:hover {
         color: #1f53c5;
         font-size: 34px;
     }
 
-    .create-hotel-name-spot,
-    .create-hotel-service {
+    .ch-create-hotel-name-spot,
+    .ch-create-hotel-service {
         display: flex;
         flex-direction: row;
         justify-content: space-between;
-        margin: 2% 0;
     }
 
-    .create-hotel-name-spot div,
-    .create-hotel-service div {
+    .ch-create-hotel-name-spot div,
+    .ch-create-hotel-service div {
         width: 45%;
     }
 
 
-    .form-createFlight-inputDiv {
+    .ch-form-createFlight-inputDiv {
         width: 40%;
     }
 
-    .crate-hotel-button button {
+    .ch-crate-hotel-button button {
         width: 20%;
         height: 3rem;
         font-size: 26px;
@@ -175,24 +239,13 @@
 }
 
 @media (min-width: 1024px) {
-    .create-hotel-top-1 {
-        flex-direction: column;
-        align-items: flex-start;
-        justify-content: flex-start;
-    }
 
-    .create-hotel-top-1 label {
-        display: flex;
-        width: 20%;
-        justify-content: center;
-    }
-
-    .create-hotel-top-1 label i {
+    .ch-create-hotel-top-1 label i {
         color: white;
         font-size: 50px;
     }
 
-    .create-hotel-top-1 label i:hover {
+    .ch-create-hotel-top-1 label i:hover {
         color: #1f53c5;
         font-size: 54px;
     }

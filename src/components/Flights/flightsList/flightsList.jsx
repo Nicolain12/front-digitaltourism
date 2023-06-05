@@ -43,7 +43,6 @@ function FlightList() {
 
     const [flightsData, setFlightsData] = useState([])
 
-const refCartPlane = useRef()
     useEffect(() => {
         async function fetchData() {
             try {
@@ -68,10 +67,6 @@ const articleClick = (id)=>{
     const userLogged = JSON.parse(sessionStorage.getItem('userLogged'))
     if(userLogged) window.location.href = `/flightsDetail/${id}`
     if(!userLogged) window.location.href = `/loggin`
-}
-
-const planeButton = () => {
-
 }
     return flightsData.length == 0 ? (<h2>Loading...</h2>) : (
         <div className="App-flight-list">

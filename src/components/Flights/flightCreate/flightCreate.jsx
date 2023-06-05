@@ -15,7 +15,7 @@ function FlightCreate() {
         } catch (err) {
             console.error(err);
         }
-    }
+    } 
     const [selectedImages, setSelectedImages] = useState([]);
     const [airline, setAirline] = useState('');
     const [description, setDescription] = useState('');
@@ -105,7 +105,7 @@ function FlightCreate() {
         setSelectedImages([...selectedImages, ...validatedImages]);
     };
     const airlineChangeHandler = (e) => {
-        const airline = e.target.value
+        const airline = e.target.value.charAt(0).toUpperCase() + e.target.value.slice(1)
         setAirline(airline)
         if (!isValidAirline(airline)) {
             refAirlineInput.current.className = 'cf-error-input'
@@ -114,7 +114,7 @@ function FlightCreate() {
         }
     }
     const descriptionChangeHandler = (e) => {
-        const description = e.target.value
+        const description = e.target.value.charAt(0).toUpperCase() + e.target.value.slice(1)
         setDescription(description)
         if (!isValidDescription(description)) {
             refDescriptionInput.current.className = 'cf-error-input'
@@ -324,12 +324,12 @@ function FlightCreate() {
                             <div className="cf-form-createFlight-top-2-div">
                                 <div className="cf-form-createFlight-inputDiv">
                                     <label className="cf-form-createFlight-label" htmlFor="airline">Airline:</label>
-                                    <input className="cf-form-createFlight-input" type="text" id="airline" ref={refAirlineInput} onChange={airlineChangeHandler} name="airline" ></input>
+                                    <input className="cf-form-createFlight-input" type="text" id="airline" value={airline} ref={refAirlineInput} onChange={airlineChangeHandler} name="airline" ></input>
 
                                 </div>
                                 <div className="cf-form-createFlight-inputDiv">
                                     <label className="cf-form-createFlight-label" htmlFor="description">Description:</label>
-                                    <input className="cf-form-createFlight-input" type="text" id="description" ref={refDescriptionInput} onChange={descriptionChangeHandler} name="description"></input>
+                                    <input className="cf-form-createFlight-input" type="text" id="description" value={description} ref={refDescriptionInput} onChange={descriptionChangeHandler} name="description"></input>
 
                                 </div>
                             </div>
@@ -337,11 +337,11 @@ function FlightCreate() {
                             <div className="cf-form-createFlight-top-2-div">
                                 <div className="cf-form-createFlight-inputDiv">
                                     <label className="cf-form-createFlight-label" htmlFor="departure"><i className="fa-solid fa-plane-dexparture"></i></label>
-                                    <input className="cf-form-createFlight-input" type="text" id="departure" ref={refDepartureInput} onChange={departureChangeHandler} name="departure" placeholder="Departure"></input>
+                                    <input className="cf-form-createFlight-input" type="text" id="departure" value={departure} ref={refDepartureInput} onChange={departureChangeHandler} name="departure" placeholder="Departure"></input>
                                 </div>
                                 <div className="cf-form-createFlight-inputDiv">
                                     <label className="cf-form-createFlight-label" htmlFor="reach"><i className="fa-solid fa-location-dot"></i></label>
-                                    <input className="cf-form-createFlight-input" type="text" id="reach" ref={refReachInput} onChange={reachChangeHandler} name="reach" placeholder="Reach"></input>
+                                    <input className="cf-form-createFlight-input" type="text" id="reach" value={reach} ref={refReachInput} onChange={reachChangeHandler} name="reach" placeholder="Reach"></input>
 
                                 </div>
                             </div>
@@ -349,11 +349,11 @@ function FlightCreate() {
                             <div className="cf-form-createFlight-top-2-div">
                                 <div className="cf-form-createFlight-inputDiv">
                                     <label className="cf-form-createFlight-label" htmlFor="departureDate">Departure date</label>
-                                    <input className="cf-form-createFlight-input" type="date" id="departureDate" ref={refDepartureDateInput} onChange={departureDateChangeHandler} name="departureDate"></input>
+                                    <input className="cf-form-createFlight-input" type="date" id="departureDate" value={departureDate} ref={refDepartureDateInput} onChange={departureDateChangeHandler} name="departureDate"></input>
                                 </div>
                                 <div className="cf-form-createFlight-inputDiv">
                                     <label className="cf-form-createFlight-label" htmlFor="reachDate">Return date</label>
-                                    <input className="cf-form-createFlight-input" type="date" id="reachDate" ref={refReachDateInput} onChange={reachDateChangeHandler} name="reachDate"></input>
+                                    <input className="cf-form-createFlight-input" type="date" id="reachDate" value={reachDate} ref={refReachDateInput} onChange={reachDateChangeHandler} name="reachDate"></input>
                                 </div>
                             </div>
 
@@ -361,11 +361,11 @@ function FlightCreate() {
 
                                 <div className="cf-form-createFlight-inputDiv">
                                     <label className="cf-form-createFlight-label" htmlFor="departureHour">Departure hour</label>
-                                    <input className="cf-form-createFlight-input" type="time" id="departureHour" ref={refDepartureHourInput} onChange={departureHourChangeHandler} name="departureHour"></input>
+                                    <input className="cf-form-createFlight-input" type="time" id="departureHour" value={departureHour} ref={refDepartureHourInput} onChange={departureHourChangeHandler} name="departureHour"></input>
                                 </div>
                                 <div className="cf-form-createFlight-inputDiv">
                                     <label className="cf-form-createFlight-label" htmlFor="reachHour">Return hour</label>
-                                    <input className="cf-form-createFlight-input" type="time" id="reachHour" ref={refReachHourInput} onChange={reachHourChangeHandler} name="reachHour"></input>
+                                    <input className="cf-form-createFlight-input" type="time" id="reachHour" value={reachHour} ref={refReachHourInput} onChange={reachHourChangeHandler} name="reachHour"></input>
                                 </div>
 
                             </div>
@@ -374,7 +374,7 @@ function FlightCreate() {
 
                                 <div className="cf-form-createFlight-inputDiv">
                                     <label className="cf-form-createFlight-label" htmlFor="cabin.">Cabin type:</label>
-                                    <select name="cabin" id="cabin" ref={refCabinInput} className='cf-form-createFlight-select' onChange={cabinChangeHandler}>
+                                    <select name="cabin" id="cabin" value={cabin} ref={refCabinInput} className='cf-form-createFlight-select' onChange={cabinChangeHandler}>
                                         <option value="none">Select a cabin</option>
                                         <option value="Economy">Economy</option>
                                         <option value="Premium">Premium</option>
@@ -383,7 +383,7 @@ function FlightCreate() {
                                 </div>
                                 <div className="cf-form-createFlight-inputDiv">
                                     <label className="cf-form-createFlight-label" htmlFor="price">Price:</label>
-                                    <input className="cf-form-createFlight-input" type="number" id="price" ref={refPriceInput} onChange={priceChangeHandler} name="price"></input>
+                                    <input className="cf-form-createFlight-input" type="number" id="price" value={price} ref={refPriceInput} onChange={priceChangeHandler} name="price"></input>
                                 </div>
 
                             </div>
