@@ -71,7 +71,7 @@ function App() {
         {/* Hotels */}
         <Route exact path="/hotels" element={<Hotels />} />
         <Route exact path="/hotelCreate" element={<HotelCreate />} />
-        <Route exact path="/hotelDetail" element={<HotelDetail />} />
+        <Route exact path="/hotelDetail/:id" element={<HotelDetail />} />
         <Route exact path="/hotelUpdate" element={<HotelUpdate />} />
 
         {/* Packages */}

@@ -1,70 +1,69 @@
-.section-info {
+.App-hotelDetail{
+    background-color: #b0b7c7;
+}
+.hd-section-info {
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.carousel_detail-flight {
+.hd-carousel_detail-flight {
     margin-bottom: 0;
     width: 100%;
 }
 
-.carousel_detail-flight img {
-    width: 100%;
-}
-
-.detail-flight-info {
+.hd-detail-flight-info {
     margin-top: 0;
     width: 100%;
     display: flex;
     flex-direction: column;
 }
 
-.detail-flight-info-title {
+.hd-detail-flight-info-title {
     width: 100%;
     display: flex;
     justify-content: flex-start;
     padding-left: 2%;
 }
 
-.detail-flight-info-maininfo {
+.hd-detail-flight-info-maininfo {
     width: 100%;
     display: flex;
     flex-direction: column;
 }
 
-.detail-flight-info-header {
+.hd-detail-flight-info-header {
     background-color: #1f53c5;
     display: flex;
     justify-content: center;
 }
 
-.detail-flight-info-header h3 {
+.hd-detail-flight-info-header h3 {
     color: white;
 }
 
-.detail-flight-info-data {
+.hd-detail-flight-info-data {
     background-color: white;
     display: flex;
 }
 
-.detail-flight-departure,
-.detail-flight-reach {
+.hd-detail-flight-departure,
+.hd-detail-flight-reach {
     width: 100%;
     padding: 2%;
 }
 
-.detail-flight-departure h5 {
+.hd-detail-flight-departure h5 {
     margin-top: 0;
 }
 
-.detail-flight-h4 {
+.hd-detail-flight-h4 {
     width: 100%;
     margin: 0;
 }
 
-.detail-flight-date {
+.hd-detail-flight-date {
     width: 100%;
     display: flex;
     justify-content: center;
@@ -72,121 +71,124 @@
 
 }
 
-.detail-flight-hour {
+.hd-detail-flight-hour {
     width: 100%;
     display: flex;
     justify-content: center;
     border-left: #000 1px solid;
 }
 
-.detail-flight-airline-info {
+.hd-detail-flight-airline-info {
     width: 100%;
 }
 
-.detail-flight-button-section {
-    width: 100%;
+.hd-detail-flight-button-section {
     display: flex;
     flex-direction: column-reverse;
     align-items: center;
 }
 
-.btn-df-edit,
-.btn-df-delete {
+.hd-btn-df-edit,
+.hd-btn-df-delete {
     margin-top: 2%;
 }
 
-.btn-df-edit {
+.hd-btn-df-edit {
     margin-bottom: 2%;
 }
 
-.detail-flight-button-buy {
+.hd-detail-flight-button-buy {
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 100%;
 }
 
-.detail-flight-button-buy p {
+.hd-detail-flight-button-buy p {
     width: 30%;
     margin: 2%;
 }
 
-.btn-df-edit,
-.btn-df-buy {
+.hd-btn-df-edit,
+.hd-btn-df-buy {
     width: 30%;
     cursor: pointer;
     background: #1f53c5;
+    padding: 1%;
     height: 2rem;
     border: none;
     color: white;
     font-size: 16px;
 }
 
-.btn-df-delete {
+.hd-btn-df-delete {
     width: 30%;
     cursor: pointer;
     background: red;
+    padding: 2%;
     height: 2rem;
     border: none;
     color: white;
     font-size: 16px;
 }
 
-.btn-df-edit:hover,
-.btn-df-buy:hover,
-.btn-df-delete:hover {
+.hd-btn-df-edit:hover,
+.hd-btn-df-buy:hover,
+.hd-btn-df-delete:hover {
     box-shadow: 0 0 30px rgb(100, 100, 100);
     font-weight: 600;
 }
 
 @media (min-width: 768px) {
 
-    .detail-flight-button {
+    .hd-detail-flight-button {
         width: 20%;
         height: 3rem;
         font-size: 26px;
     }
 
-    .detail-flight-button-section {
+    .hd-detail-flight-button-section {
         flex-direction: row;
         justify-content: space-around;
         align-items: flex-end;
-        margin: 2% 0;
+        padding: 2%;
     }
 
-    .detail-flight-button-buy {
+    .hd-detail-flight-button-buy {
         width: 30%;
     }
 
-    .detail-flight-button-buy p {
+    .hd-detail-flight-button-buy p {
         width: 100%;
         margin: 2%;
     }
 
-    .btn-df-edit,
-    .btn-df-buy,
-    .btn-df-delete {
+    .hd-btn-df-edit,
+    .hd-btn-df-buy,
+    .hd-btn-df-delete {
         margin: 0;
+        padding: 2%;
+        height: 2rem;
     }
 
-    .btn-df-buy {
-        width: 100%;
+    .hd-btn-df-buy {
+        width: 90%;
     }
 }
 
 @media (min-width: 768px) {
 
-    .detail-flight-info,
-    .detail-flight-airline-info {
-        width: 90%;
+    .hd-detail-flight-info,
+    .hd-detail-flight-airline-info {
+        width: 70%;
     }
 
-    .detail-flight-info-header {
+    .hd-detail-flight-info-header {
         border-top-left-radius: 15px;
         border-top-right-radius: 15px;
     }
 
-    .detail-flight-info-data {
+    .hd-detail-flight-info-data {
         border-bottom-left-radius: 15px;
         border-bottom-right-radius: 15px;
     }
@@ -194,26 +196,25 @@
 
 @media (min-width: 1024px) {
 
-    .detail-flight-info-title h3,
-    .detail-flight-info-header h3,
-    .detail-flight-h4,
-    .detail-flight-date,
-    .detail-flight-hour,
-    .detail-flight-departure h5,
-    .detail-flight-description h5,
-    .detail-flight-description p,
-    .btn-df-edit,
-    .btn-df-buy,
-    .btn-df-delete,
-    .detail-flight-button-buy p {
+    .hd-detail-flight-info-title h3,
+    .hd-detail-flight-info-header h3,
+    .hd-detail-flight-h4,
+    .hd-detail-flight-date,
+    .hd-detail-flight-hour,
+    .hd-detail-flight-departure h5,
+    .hd-detail-flight-description h5,
+    .hd-detail-flight-description p,
+    .hd-btn-df-edit,
+    .hd-btn-df-buy,
+    .hd-btn-df-delete,
+    .hd-detail-flight-button-buy p {
         font-size: 26px;
     }
-
 }
 
 /* DETAILHOTEL (has same css) */
 /* DETAILPACKAGE (has same css) */
-.detail-package-separation {
+.hd-detail-package-separation {
     width: 100%;
     display: flex;
     justify-content: center;
@@ -221,13 +222,14 @@
     margin-top: 2%;
 }
 
-.detail-package-separation h2 {
+.hd-detail-package-separation h2 {
     font-size: 24px;
     margin: 2%;
 }
 
+
 @media (min-width: 768px) {
-    .detail-package-separation h2 {
+    .hd-detail-package-separation h2 {
         font-size: 30px;
     }
 }

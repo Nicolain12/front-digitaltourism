@@ -45,8 +45,7 @@ function FlightDetail() {
             } catch (err) {
                 console.error(err);
             }
-        }
-
+        } 
         fetchData();
     }, []);
 
@@ -68,7 +67,7 @@ function FlightDetail() {
                 <section className="fd-section-info">
 
                     <div ref={refSliderDiv} className="fd-carousel_detail-flight">
-                        {flightImgs.length == 0 ? <h3>Loading...</h3> : <Slider imgs={flightImgs} id={flight.user_id}></Slider>}
+                        {flightImgs.length == 0 ? <h3>Loading...</h3> : <Slider type={'flight'} imgs={flightImgs} id={flight.user_id}></Slider>}
                     </div>
 
                     <div className="fd-detail-flight-info">

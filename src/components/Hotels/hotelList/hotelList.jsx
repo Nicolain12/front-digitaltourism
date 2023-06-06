@@ -60,12 +60,19 @@ function HotelList() {
         }
         fetchData();
     }, []);
+
+    const articleClick = (id) => {
+        const userLogged = JSON.parse(sessionStorage.getItem('userLogged'))
+        if (userLogged) window.location.href = `/hotelDetail/${id}`
+        if (!userLogged) window.location.href = `/loggin`
+    }
+
     return (
         <div className="App-hotel-list">
             <main>
                 <div className="main-div-hotel">
                     {hotels.map((hotel) => (
-                        <article key={hotel.id} className="main-article-hotel">
+                        <article onClick={() => {articleClick(hotel.id)}} key={hotel.id} className="main-article-hotel">
                             <div className="hotel-img">
                                 <ImageCarousel imgArray={objToArray(JSON.parse(hotel.image))} id={hotel.user_id} />
                             </div>
@@ -85,7 +92,7 @@ function HotelList() {
                             <div className="price-hotel">
                                 <p>$ {hotel.price}</p>
                                 <a href=""><i className="fa-solid fa-plane-up add-cart-flight"></i></a>
-                                <a href=""><i className="fa-solid fa-plane-circle-check added-cart-flight"></i></a>
+                                {/* <a href=""><i className="fa-solid fa-plane-circle-check added-cart-flight"></i></a> */}
                             </div>
                         </article>
                     ))}
