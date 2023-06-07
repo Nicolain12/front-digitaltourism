@@ -66,7 +66,7 @@ function HotelCreate() {
     };
     const isValidPrice = (value) => !isNaN(value);
 
-    // Handle input changes
+    // Handle input changes 
     const handleImageChange = (event) => {
         const files = Array.from(event.target.files);
 

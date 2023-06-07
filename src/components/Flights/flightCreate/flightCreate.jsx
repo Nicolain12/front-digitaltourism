@@ -196,7 +196,8 @@ function FlightCreate() {
 
 
 
-    const removeImage = (index) => {
+    const removeImage = (index, event) => {
+        event.preventDefault()
         const updatedImages = [...selectedImages];
         updatedImages.splice(index, 1);
         setSelectedImages(updatedImages);
@@ -294,7 +295,7 @@ function FlightCreate() {
         }
     };
 
-
+ 
 
     return (
         <div className="App-flightCreate">
@@ -311,7 +312,7 @@ function FlightCreate() {
                                 {selectedImages.map((image, index) => (
                                     <div key={index} className="cf-preview-image">
                                         <img src={URL.createObjectURL(image)} alt={`Image ${index}`} />
-                                        <button onClick={() => removeImage(index)}><i className="fa-solid fa-xmark"></i></button>
+                                        <button onClick={(event) => removeImage(index, event)}><i className="fa-solid fa-xmark"></i></button>
                                     </div>
                                 ))}
                                 <label htmlFor="input-flight-create"><i ref={refImageIcon} className="cf-add-img-icon fa-solid fa-circle-plus"></i></label>

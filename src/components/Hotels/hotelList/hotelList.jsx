@@ -38,7 +38,7 @@ function HotelList() {
 
         return <img className='img-flight-list' src={`http://localhost:3001/images/hotels/product_${id}/${imgArray[currentImageIndex]}`} alt="" />;
     }
-
+ 
     const [hotels, setHotels] = useState([])
 
     useEffect(() => {

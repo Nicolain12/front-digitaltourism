@@ -118,12 +118,12 @@ function HotelDetail() {
 
                 </section>
                 {userLogged.id == hotel.user_id ? <section className="hd-detail-flight-button-section">
-                    <button className="hd-detail-flight-button btn-df-edit">Editar</button>
-                    <button className="hd-detail-flight-button btn-df-delete">Eliminar</button>
+                    <button className="hd-detail-flight-button btn-df-edit">Edit</button>
+                    <button className="hd-detail-flight-button btn-df-delete">Delete</button>
                 </section> : <section className="hd-detail-flight-button-section">
                     <div className="hd-detail-flight-button-buy">
-                        <p>Price: $999999</p>
-                        <button className="hd-detail-flight-button btn-df-buy">Comprar</button>
+                        <p>Price: ${hotel.price}</p>
+                        <button className="hd-detail-flight-button btn-df-buy">Buy</button>
                     </div>
                 </section>}
             </main>

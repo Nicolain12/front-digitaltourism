@@ -118,11 +118,11 @@ function FlightDetail() {
 
 
                 {userLogged.id == flight.user_id ? <section className="fd-detail-flight-button-section">
-                    <button className="fd-detail-flight-button btn-df-edit">UpDate</button>
+                    <button className="fd-detail-flight-button btn-df-edit">Edit</button>
                     <button className="fd-detail-flight-button btn-df-delete">Delete</button>
                 </section> : <section className="fd-detail-flight-button-section">
                     <div className="fd-detail-flight-button-buy">
-                        <p>Price: $999999</p>
+                        <p>Price: ${flight.price}</p>
                         <button className="fd-detail-flight-button btn-df-buy">Buy</button>
                     </div>
                 </section>}
