@@ -204,7 +204,6 @@ function HotelCreate() {
 
     return (
         <div className="App-hotelCreate">
-            <main>
                 <form className="ch-crate-hotel" onSubmit={handleSubmit}>
 
                     <div className="ch-create-hotel-top">
@@ -215,7 +214,7 @@ function HotelCreate() {
                             <h5 ref={refErrorImg} className='ch-error-hidden'>File extension not allowed</h5>
                             <div ref={refInputImg} className="ch-img-section">
                                 {selectedImages.map((image, index) => (
-                                    <div key={index} className="cf-preview-image">
+                                    <div key={index} className="ch-preview-image">
                                         <img src={URL.createObjectURL(image)} alt={`Image ${index}`} />
                                         <button onClick={(event) => removeImg(index, event)}><i className="fa-solid fa-xmark"></i></button>
                                     </div>
@@ -270,7 +269,6 @@ function HotelCreate() {
                     </div>
 
                 </form>
-            </main>
         </div>
     )
 }

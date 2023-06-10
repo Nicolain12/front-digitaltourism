@@ -7,7 +7,7 @@ function PackageCreate() {
             const response = await fetch(endpoint, config)
             const jsonResponse = await response.json()
             if (jsonResponse.info.status === 200) {
-               window.location.href = '/packages'
+                window.location.href = '/packages'
             }
             if (jsonResponse.info.status === 400) {
                 console.log(jsonResponse)
@@ -15,7 +15,7 @@ function PackageCreate() {
         } catch (err) {
             console.error(err)
         }
-    } 
+    }
     // USE STATES
     const [discount, setDiscount] = useState('')
     // fight
@@ -107,15 +107,16 @@ function PackageCreate() {
 
     //  Change handler
     const handleDiscount = (e) => {
-        const discount = e.target.files
-
-        if (discount >= 1 && discount <= 100) {
-            setDiscount(discount)
-            refDiscount.current.className = 'cp-create-package-discount-input'
+        const discount = parseInt(e.target.value);
+    
+        if (!isNaN(discount) && discount >= 1 && discount <= 100) {
+            setDiscount(discount);
+            refDiscount.current.className = 'cp-create-package-discount-input';
         } else {
-            refDiscount.current.className = 'cp-error-input'
+            refDiscount.current.className = 'cp-error-input';
         }
-    }
+    };
+    
     // flight
     const flightHandleImageChange = (e) => {
         const files = Array.from(e.target.files)
@@ -307,7 +308,8 @@ function PackageCreate() {
     // HANDLE SUBMIT
     const handlePackageSubmit = (e) => {
         e.preventDefault()
-        const newData = new FormData()
+        const newDataFlight = new FormData()
+        const newDataHotel = new FormData()
         const errorsFlight = []
         const errorsHotel = []
 
@@ -318,68 +320,68 @@ function PackageCreate() {
             refFlightImgsIcon.current.className = 'cp-add-img-icon-error fa-solid fa-circle-plus'
         } else {
             selectedImagesFlight.forEach(image => {
-                newData.append("productFileF", image) 
+                newDataFlight.append("productFile", image)
             })
         }
         if (!isValidAirline(airline)) {
             errorsFlight.push('airline')
             refFlightAirlineInput.current.className = 'cp-error-input'
         } else {
-            newData.append('airline', airline)
+            newDataFlight.append('airline', airline)
         }
         if (!isValidDescription(descriptionFlight)) {
             errorsFlight.push('description')
             refFlightDescriptionInput.current.className = 'cp-error-input'
         } else {
-            newData.append('descriptionF', description) 
+            newDataFlight.append('description', descriptionFlight)
         }
         if (!isValidPlace(departure)) {
             errorsFlight.push('departure')
             refFlightDepartureInput.current.className = 'cp-error-input'
         } else {
-            newData.append('departure', departure)
+            newDataFlight.append('departure', departure)
         }
         if (!isValidPlace(reach)) {
             errorsFlight.push('reach')
             refFlightReachInput.current.className = 'cp-error-input'
         } else {
-            newData.append('reach', reach)
+            newDataFlight.append('reach', reach)
         }
         if (!isValidDate(departureDate)) {
             errorsFlight.push('departureDate')
             refFlightDepartureDateInput.current.className = 'cp-error-input'
         } else {
-            newData.append('departureDate', departureDate)
+            newDataFlight.append('departureDate', departureDate)
         }
         if (!isValidDate(reachDate)) {
             errorsFlight.push('reachDate')
             refFlightReachDateInput.current.className = 'cp-error-input'
         } else {
-            newData.append('reachDate', reachDate)
+            newDataFlight.append('reachDate', reachDate)
         }
         if (!departureHour) {
             errorsFlight.push('departureHour')
             refFlightDepartureHourInput.current.className = 'cp-error-input'
         } else {
-            newData.append('departureHour', departureHour)
+            newDataFlight.append('departureHour', departureHour)
         }
         if (!reachHour) {
             errorsFlight.push('reachHour')
             refFlightReachHourInput.current.className = 'cp-error-input'
         } else {
-            newData.append('reachHour', reachHour)
+            newDataFlight.append('reachHour', reachHour)
         }
         if (cabin == 'none' || !cabin) {
             errorsFlight.push('cabin')
             refFlightCabinInput.current.className = 'cp-error-input-select'
         } else {
-            newData.append('cabin', cabin)
+            newDataFlight.append('cabin', cabin)
         }
         if (!isValidPrice(priceFlight) || !priceFlight) {
             errorsFlight.push('price')
             refFlightPriceInput.current.className = 'cp-error-input'
         } else {
-            newData.append('priceF', price) 
+            newDataFlight.append('price', priceFlight)
         }
 
         // Validations  HOTEL
@@ -389,61 +391,91 @@ function PackageCreate() {
             refHotelImgsIcon.current.className = 'cp-add-img-icon-error fa-solid fa-circle-plus'
         } else {
             selectedImagesHotel.forEach(image => {
-                newData.append("productFileH", image)
+                newDataHotel.append("productFile", image)
             })
         }
         if (!isValidName(name)) {
             errorsHotel.push('name')
             refHotelNameInput.current.className = 'cp-error-input'
         } else {
-            newData.append('name', name)
+            newDataHotel.append('name', name)
         }
         if (!isValidDescription(descriptionHotel)) {
             errorsHotel.push('description')
             refHotelDescriptionInput.current.className = 'cp-error-input'
         } else {
-            newData.append('descriptionH', description)
+            newDataHotel.append('description', descriptionHotel)
         }
         if (!isValidPlace(spot)) {
             errorsHotel.push('spot')
             refHotelUbiInput.current.className = 'cp-error-input'
         } else {
-            newData.append('spot', spot)
+            newDataHotel.append('spot', spot)
         }
         if (service == 'none' || !service) {
             errorsHotel.push('service')
             refHotelServiceInput.current.className = 'cp-error-input-select'
         } else {
-            newData.append('service', service)
+            newDataHotel.append('service', service)
         }
         if (!isValidPrice(priceHotel) || !priceHotel) {
             errorsHotel.push('price')
             refHotelPriceInput.current.className = 'cp-error-input'
         } else {
-            newData.append('priceH', price)
+            newDataHotel.append('price', priceHotel)
         }
 
-        console.log(newData);
+        if (errorsFlight.length === 0 && errorsHotel.length === 0) {
+            const headers = {}
+            const permanentToken = localStorage.getItem('token')
+            const token = sessionStorage.getItem('token')
+            if (token) headers.authorization = token
+            if (permanentToken) headers.authorization = permanentToken
+            async function fetchSend(flightData, hotelData) {
+                const flightUpload = await fetchApi(`http://localhost:3001/api/products/create/flight`, {
+                    method: 'POST',
+                    headers,
+                    body: flightData,
+                });
+                const hotelUpload = await fetchApi(`http://localhost:3001/api/products/create/hotel`, {
+                    method: 'POST',
+                    headers,
+                    body: hotelData,
+                })
+                const newPackageData = new FormData()
+                newPackageData.append('flight_id', flightUpload.data.id)
+                newPackageData.append('priceF', flightUpload.data.price)
+                newPackageData.append('departureDate', flightUpload.data.departure_date)
+                newPackageData.append('reachDate', flightUpload.data.reach_date)
+                newPackageData.append('priceF', flightUpload.data.price)
+                newPackageData.append('hotel_id', hotelUpload.data.id)
+                newPackageData.append('priceH', hotelUpload.data.price)
+                const packageUpload = await fetchApi(`http://localhost:3001/api/products/create/package`, {
+                    method: 'POST',
+                    headers,
+                    body: newPackageData,
+                })
 
+                if (packageUpload.info.status == 200) window.location.href = '/packages'
+                if(packageUpload.info.status != 200) console.log(packageUpload);
+            }
 
-        if (errorsFlight.length === 0 && errorsHotel.length === 0 ) {
-            console.log('FETCH');
-            // const headers = {}
-            // const permanentToken = localStorage.getItem('token')
-            // const token = sessionStorage.getItem('token')
-            // if (token) headers.authorization = token
-            // if (permanentToken) headers.authorization = permanentToken
-            // fetchApi(`http://localhost:3001/api/products/create/package`, {
-            //     method: 'POST',
-            //     headers,
-            //     body: newData,
-            // })
+            fetchSend(newDataFlight, newDataHotel)
         } else {
             console.log('Validation flights errors:', errorsFlight)
             console.log('Validation hotels errors:', errorsHotel)
         }
     }
 
+    const handleFileIconClickFlight = () => {
+        const fileInput = document.getElementById('input-flight-create');
+        fileInput.click();
+      };
+
+      const handleFileIconClickHotel = () => {
+        const fileInput = document.getElementById('input-hotel-create');
+        fileInput.click();
+      };
 
     return (
         <div className="App-packageCreate">
@@ -459,17 +491,17 @@ function PackageCreate() {
                         <div className="cp-create-package-flight">
 
                             <div className="cp-form-pack-flight-top-1">
-                                <input onChange={flightHandleImageChange} value={selectedImagesFlight} multiple type="file" id="input-flight-create" name="productFile" ></input>
+                                <input onChange={flightHandleImageChange} multiple type="file" id="input-flight-create" name="productFile" ></input>
                                 <label className="cp-add-img-label-pack-flight" htmlFor="input-flight-create">Images of the flight:</label>
                                 <h5 ref={refFlightErrorImgs} className='cp-error-hidden'>File extension not allowed</h5>
                                 <div ref={refFlightImgsInput} className="cp-img-section">
                                     {selectedImagesFlight.map((image, index) => (
                                         <div key={index} className="cp-preview-image">
                                             <img src={URL.createObjectURL(image)} alt={`Image ${index}`} />
-                                            <button onClick={(e) => removeImg(index, e)}><i className="fa-solid fa-xmark"></i></button>
+                                            <button onClick={(e) => removeImgFlight(index, e)}><i className="fa-solid fa-xmark"></i></button>
                                         </div>
                                     ))}
-                                    <i ref={refFlightImgsIcon} className="cp-add-img-icon fa-solid fa-circle-plus"></i>
+                                    <i ref={refFlightImgsIcon} onClick={handleFileIconClickFlight} className="cp-add-img-icon fa-solid fa-circle-plus"></i>
                                 </div>
                             </div>
                             <div className="cp-form-pack-flight-top-2">
@@ -526,9 +558,9 @@ function PackageCreate() {
                                         <label className="cp-form-pack-flight-label" htmlFor="cabin.">Cabin Type:</label>
                                         <select ref={refFlightCabinInput} onChange={flightCabinChangeHandler} value={cabin} className='cp-form-pack-flight-select' name="cabin" id="cabin">
                                             <option value="">Select one</option>
-                                            <option value="">Economy</option>
-                                            <option value="">Premium</option>
-                                            <option value="">Premium VIP</option>
+                                            <option value="Economy">Economy</option>
+                                            <option value="Premium">Premium</option>
+                                            <option value="Premium VIP">Premium VIP</option>
                                         </select>
                                     </div>
                                     <div className="cp-form-pack-flight-inputDiv">
@@ -545,17 +577,17 @@ function PackageCreate() {
                         <h2>Hotel</h2>
                         <div className="cp-create-package-hotel">
                             <div className="cp-form-pack-flight-top-1">
-                                <input onChange={hotelHandleImageChange} value={selectedImagesHotel} multiple type="file" id="input-flight-create" name="productFile" ></input>
+                                <input onChange={hotelHandleImageChange} multiple type="file" id="input-hotel-create" name="productFile" ></input>
                                 <label className="cp-add-img-label-pack-flight" htmlFor="input-flight-create">Images of the hotel:</label>
                                 <h5 ref={refHotelErrorImgs} className='cp-error-hidden'>File extension not allowed</h5>
                                 <div ref={refHotelImgsInput} className="cp-img-section">
                                     {selectedImagesHotel.map((image, index) => (
                                         <div key={index} className="cp-preview-image">
                                             <img src={URL.createObjectURL(image)} alt={`Image ${index}`} />
-                                            <button onClick={(e) => removeImg(index, e)}><i className="fa-solid fa-xmark"></i></button>
+                                            <button onClick={(e) => removeImgHotel(index, e)}><i className="fa-solid fa-xmark"></i></button>
                                         </div>
                                     ))}
-                                    <i ref={refHotelImgsIcon} className="cp-add-img-icon fa-solid fa-circle-plus"></i>
+                                    <i ref={refHotelImgsIcon} onClick={handleFileIconClickHotel} className="cp-add-img-icon fa-solid fa-circle-plus"></i>
                                 </div>
                             </div>
 

@@ -1,5 +1,8 @@
 .App-hotelCreate{
     width: 100vw;
+    display: flex;
+    justify-content: center;
+    background: #24303c;
 }   
 
 .ch-error-input{
@@ -55,7 +58,7 @@
 }
 
 .ch-crate-hotel {
-    width: 100%;
+    width: 90%;
     background: #24303c;
     display: flex;
     flex-direction: column;
@@ -87,6 +90,33 @@
     margin: 2% 0%;
     padding: 2%;
 }
+
+.ch-preview-image {
+    position: relative;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+.ch-preview-image img {
+    width: 150px;
+    height: 100px;
+    object-fit: contain;
+    /* object-fit: cover; */
+}
+
+.ch-preview-image button {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    border-radius: 20px;
+    background-color: #1f53c5;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
 
 .ch-add-img-icon {
     color: white;

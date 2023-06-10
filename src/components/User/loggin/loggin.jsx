@@ -144,7 +144,7 @@ function Loggin() {
     <div className="App-loggin">
       <main className="logginmain">
         <form className="form-login" id="form-login" onSubmit={handleSubmit}>
-          <h4>Iniciar sesión </h4>
+          <h4> Logg in </h4>
           <h6 className="error-msg" ref={refEmailError}></h6>
           <input
             className="controls"
@@ -152,7 +152,7 @@ function Loggin() {
             type="email"
             name="email"
             id="email"
-            placeholder="Ingrese su Correo"
+            placeholder="Email"
             ref={refEmail}
             onChange={handleEmailChange}
           />
@@ -164,7 +164,7 @@ function Loggin() {
             type="password"
             name="password"
             id="password"
-            placeholder="Ingrese su Contraseña"
+            placeholder="Password"
             onChange={handlePasswordChange}
           />
           <label htmlFor="remember">
@@ -175,12 +175,12 @@ function Loggin() {
               checked={remember}
               onChange={handleRememberChange}
             />
-            Recordarme
+            Remember me
           </label>
           <div className="button-loggin-div">
-            <button id="button-loggin" className="botons" type="submit">Iniciar sesion</button>
+            <button id="button-loggin" className="botons" type="submit">loggin</button>
           </div>
-          <p> ¿Se te olvidó tu contraseña?<Link to="#"> Click Aqui</Link></p>
+          <p> forgot password?<Link to="#"> Click here</Link></p>
         </form>
       </main>
     </div>

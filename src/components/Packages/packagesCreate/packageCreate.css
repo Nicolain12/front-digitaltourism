@@ -1,5 +1,7 @@
-.cp-App-packageCreate {
-    width: 100vw;
+.App-packageCreate {
+    display: flex;
+    justify-content: center;
+    background: #24303c;
 }
 
 /* Errors */
@@ -80,8 +82,35 @@
     color: #1f53c5;
 }
 
+.cp-preview-image {
+    position: relative;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+.cp-preview-image img {
+    width: 150px;
+    height: 100px;
+    object-fit: contain;
+    /* object-fit: cover; */
+}
+
+.cp-preview-image button {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    border-radius: 20px;
+    background-color: #1f53c5;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+
 .cp-crate-package {
-    width: 100%;
+    width: 90%;
     background: #24303c;
     display: flex;
     flex-direction: column;
