@@ -1,3 +1,7 @@
+.App-package-list {
+    background-color: #b0b7c7;
+}
+
 .main-packages {
     width: 100%;
     display: flex;
@@ -9,7 +13,7 @@
     cursor: pointer;
     width: 80%;
     margin: 3% 0;
-    padding: 2%;
+    padding: 0 1%;
     background-color: #ffffff;
     border-bottom: 5px solid rgb(100, 100, 100);
     border-right: 5px solid rgb(100, 100, 100);
@@ -23,6 +27,20 @@
 .package-article:hover {
     border-bottom: 1px solid rgb(100, 100, 100);
     border-right: 1px solid rgb(100, 100, 100);
+}
+
+.img-div-pack {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 95%;
+    height: 100%;
+}
+
+.img-package-list {
+    width: 350px;
+    height: 250px;
+    border-radius: 20px;
 }
 
 .Departure-reach-pack {
@@ -114,6 +132,15 @@
 .hotel-info-start h5 {
     margin-top: 3%;
 }
+.flight-info-start {
+    text-align: center;
+    font-weight: 600;
+    font-size: 18px;
+}
+
+.flight-info-start h5 {
+    margin-top: 3%;
+}
 
 .name-hotel-pack {
     display: flex;
@@ -167,12 +194,18 @@
 @media (min-width: 768px) {
     .package-article {
         width: 80%;
-        height: 40%;
+        height: 550px;
     }
+
+    .img-package-list {
+        width: 600px;
+        height: 400px;
+    }
+
 
     .Departure-reach-pack {
         border-bottom: #000 1px solid;
-        margin-bottom: 3%;
+        margin-bottom: 1%;
     }
 
     .second-pack-main-div {
@@ -183,11 +216,6 @@
         margin-left: 2%;
         justify-content: space-between;
         margin-bottom: 0
-    }
-
-    .img-div-pack img {
-        width: fit-content;
-        height: 100%;
     }
 
     .info-pack-div-5 p,
