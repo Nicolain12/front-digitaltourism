@@ -15,6 +15,16 @@
     font-size: 18px;
     color: white;
 }
+.cp-error-input-discount {
+    width: 50%;
+    background: #24303c;
+    margin-left: 5%;
+    padding: 1%;
+    border-radius: 5px;
+    border: 1px solid red;
+    font-size: 18px;
+    color: white;
+}
 
 .cp-error-input-select {
     width: 90%;

@@ -7,7 +7,7 @@ function PackageCreate() {
             const response = await fetch(endpoint, config)
             const jsonResponse = await response.json()
             if (jsonResponse.info.status === 200) {
-                window.location.href = '/packages'
+                return jsonResponse
             }
             if (jsonResponse.info.status === 400) {
                 console.log(jsonResponse)
@@ -108,15 +108,16 @@ function PackageCreate() {
     //  Change handler
     const handleDiscount = (e) => {
         const discount = parseInt(e.target.value);
-    
+
         if (!isNaN(discount) && discount >= 1 && discount <= 100) {
             setDiscount(discount);
             refDiscount.current.className = 'cp-create-package-discount-input';
         } else {
-            refDiscount.current.className = 'cp-error-input';
+            setDiscount(discount);
+            refDiscount.current.className = 'cp-error-input-discount';
         }
     };
-    
+
     // flight
     const flightHandleImageChange = (e) => {
         const files = Array.from(e.target.files)
@@ -313,6 +314,14 @@ function PackageCreate() {
         const errorsFlight = []
         const errorsHotel = []
 
+        if (!isNaN(discount) && discount >= 1 && discount <= 100) {
+            refDiscount.current.className = 'cp-create-package-discount-input';
+        } else {
+            errorsHotel.push('discount')
+            errorsFlight.push('discount')            
+            refDiscount.current.className = 'cp-error-input-discount';
+        }
+
         // Validations FLIGHT
         if (selectedImagesFlight.length === 0) {
             errorsFlight.push('images')
@@ -442,20 +451,26 @@ function PackageCreate() {
                     headers,
                     body: hotelData,
                 })
+                const dataFlightId = flightUpload.data.id
+                const dataFlightPrice = flightUpload.data.price
+                const dataDepartureDate = flightUpload.data.departure_date
+                const dataReachDate = flightUpload.data.reach_date
+                const dataHotelPrice = hotelUpload.data.price
+                const dataHotelId = hotelUpload.data.id
                 const newPackageData = new FormData()
-                newPackageData.append('flight_id', flightUpload.data.id)
-                newPackageData.append('priceF', flightUpload.data.price)
-                newPackageData.append('departureDate', flightUpload.data.departure_date)
-                newPackageData.append('reachDate', flightUpload.data.reach_date)
-                newPackageData.append('priceF', flightUpload.data.price)
-                newPackageData.append('hotel_id', hotelUpload.data.id)
-                newPackageData.append('priceH', hotelUpload.data.price)
-                const packageUpload = await fetchApi(`http://localhost:3001/api/products/create/package`, {
+                newPackageData.append('flight_id', dataFlightId)
+                newPackageData.append('priceF', dataFlightPrice)
+                newPackageData.append('departureDate', dataDepartureDate)
+                newPackageData.append('reachDate', dataReachDate)
+                newPackageData.append('discount', discount)
+                newPackageData.append('hotel_id', dataHotelId)
+                newPackageData.append('priceH', dataHotelPrice)
+                const packageUpload = await fetchApi(`http://localhost:3001/api/products/create/package `, {
                     method: 'POST',
                     headers,
                     body: newPackageData,
                 })
-
+                
                 if (packageUpload.info.status == 200) window.location.href = '/packages'
                 if(packageUpload.info.status != 200) console.log(packageUpload);
             }
@@ -470,12 +485,12 @@ function PackageCreate() {
     const handleFileIconClickFlight = () => {
         const fileInput = document.getElementById('input-flight-create');
         fileInput.click();
-      };
+    };
 
-      const handleFileIconClickHotel = () => {
+    const handleFileIconClickHotel = () => {
         const fileInput = document.getElementById('input-hotel-create');
         fileInput.click();
-      };
+    };
 
     return (
         <div className="App-packageCreate">
@@ -523,7 +538,7 @@ function PackageCreate() {
                                         <input ref={refFlightDepartureInput} onChange={flightDepartureChangeHandler} value={departure} className="cp-form-pack-flight-input" type="text" id="departure" name="departure" ></input>
                                     </div>
                                     <div className="cp-form-pack-flight-inputDiv">
-                                        <label className="cp-form-pack-flight-label" htmlFor="reach">Return:</label>
+                                        <label className="cp-form-pack-flight-label" htmlFor="reach">Reach:</label>
                                         <input ref={refFlightReachInput} onChange={flightReachChangeHandler} value={reach} className="cp-form-pack-flight-input" type="text" id="reach" name="reach" ></input>
                                     </div>
                                 </div>
