@@ -4,6 +4,8 @@ import './slider.css';
 function Slider(props) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const images = props.imgs;
+  console.log(images);
+
 
   const goToPreviousImage = () => {
     setCurrentImageIndex((prevIndex) => {
@@ -17,6 +19,14 @@ function Slider(props) {
 
   if (props.type == 'flight') imgFolder = `http://localhost:3001/images/flights/product_${props.id}`
   if (props.type == 'hotel') imgFolder = `http://localhost:3001/images/hotels/product_${props.id}`
+  if (props.type == 'package') {
+    images[0].forEach(element => {
+      console.log(element);
+    });
+    images[1].forEach(element => {
+      console.log(element);
+    });
+  } 
 
   const goToNextImage = () => {
     setCurrentImageIndex((prevIndex) => {

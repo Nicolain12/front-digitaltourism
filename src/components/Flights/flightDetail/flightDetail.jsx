@@ -41,6 +41,15 @@ function FlightDetail() {
                     ...flightData.data,
                 };
                 parsedFlightData.image = JSON.parse(flightData.data.image)
+                const imagesToPush = []
+                if (typeof parsedFlightData.image == 'object'); {
+                    for (let key in parsedFlightData.image) {
+                        if (parsedFlightData.image.hasOwnProperty(key)) {
+                            imagesToPush.push(parsedFlightData.image[key])
+                        }
+                    }
+                }
+                setFlightImgs(imagesToPush)
                 setFlight(parsedFlightData);
             } catch (err) {
                 console.error(err);
@@ -49,17 +58,6 @@ function FlightDetail() {
         fetchData();
     }, []);
 
-    useEffect(() => {
-        const imagesToPush = []
-        if (typeof flight.image == 'object'); {
-            for (let key in flight.image) {
-                if (flight.image.hasOwnProperty(key)) {
-                    imagesToPush.push(flight.image[key])
-                }
-            }
-        }
-        setFlightImgs(imagesToPush)
-    }, [flight])
 
     return (
         <div className="App-flightDetail">

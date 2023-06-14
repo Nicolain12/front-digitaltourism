@@ -77,7 +77,7 @@ function App() {
         {/* Packages */}
         <Route exact path="/packages" element={<Packages />} />
         <Route exact path="/packageCreate" element={<PackageCreate />} />
-        <Route exact path="/packageDetail" element={<PackageDetail />} />
+        <Route exact path="/packageDetail/:id" element={<PackageDetail />} />
         <Route exact path="/packageUpdate" element={<PackageUpdate />} />
 
         {/****************** USER ******************/}

@@ -55,7 +55,6 @@ function PackagesList() {
                     headers,
                 });
                 setPackageData(packageData.data);
-                console.log(packageData);
             } catch (err) {
                 console.error(err);
             }
@@ -68,6 +67,8 @@ function PackagesList() {
         if (userLogged) window.location.href = `/packageDetail/${id}`
         if (!userLogged) window.location.href = `/loggin`
     }
+
+    
     return packageData.length == 0 ? (<h2>Loading...</h2>) : (
         <div className="App-package-list">
             <div className="main-packages">

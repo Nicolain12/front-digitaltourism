@@ -43,6 +43,15 @@ function HotelDetail() {
                     ...hotelData.data,
                 };
                 parsedHotelData.image = JSON.parse(hotelData.data.image)
+                const imagesToPush = []
+                if (typeof parsedHotelData.image == 'object'); {
+                    for (let key in parsedHotelData.image) {
+                        if (parsedHotelData.image.hasOwnProperty(key)) {
+                            imagesToPush.push(parsedHotelData.image[key])
+                        }
+                    }
+                }
+                setHotelImgs(imagesToPush)
                 setHotel(parsedHotelData);
             } catch (err) {
                 console.error(err);
@@ -51,18 +60,6 @@ function HotelDetail() {
 
         fetchData();
     }, []);
-
-    useEffect(() => {
-        const imagesToPush = []
-        if (typeof hotel.image == 'object'); {
-            for (let key in hotel.image) {
-                if (hotel.image.hasOwnProperty(key)) {
-                    imagesToPush.push(hotel.image[key])
-                }
-            }
-        }
-        setHotelImgs(imagesToPush)
-    }, [hotel])
 
     return (
         <div className="App-hotelDetail">
