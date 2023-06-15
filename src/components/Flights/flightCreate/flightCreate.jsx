@@ -81,8 +81,7 @@ function FlightCreate() {
     const refReachHourInput = useRef()
     const refCabinInput = useRef()
     const refPriceInput = useRef()
-
-
+    const formRef = useRef(null);
 
     const handleImageChange = (event) => {
         const files = Array.from(event.target.files);
@@ -196,6 +195,8 @@ function FlightCreate() {
 
 
 
+
+
     const removeImage = (index, event) => {
         event.preventDefault()
         const updatedImages = [...selectedImages];
@@ -300,7 +301,7 @@ function FlightCreate() {
     return (
         <div className="App-flightCreate">
             <main>
-                <form onSubmit={submitFormHandler} className="cf-crate-flight">
+                <form ref={formRef} onSubmit={submitFormHandler} className="cf-crate-flight">
 
                     <div className="cf-form-createFlight-top">
 
@@ -312,7 +313,7 @@ function FlightCreate() {
                                 {selectedImages.map((image, index) => (
                                     <div key={index} className="cf-preview-image">
                                         <img src={URL.createObjectURL(image)} alt={`Image ${index}`} />
-                                        <button onClick={(event) => removeImage(index, event)}><i className="fa-solid fa-xmark"></i></button>
+                                        <a onClick={(event) => removeImage(index, event)}><i className="fa-solid fa-xmark"></i></a>
                                     </div>
                                 ))}
                                 <label htmlFor="input-flight-create"><i ref={refImageIcon} className="cf-add-img-icon fa-solid fa-circle-plus"></i></label>

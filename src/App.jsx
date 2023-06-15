@@ -66,7 +66,7 @@ function App() {
         <Route exact path="/flights" element={<Flights />} />
         <Route exact path="/flightsCreate" element={<FlightsCreate />} />
         <Route exact path="/flightsDetail/:id" element={<FlightsDetail />} />
-        <Route exact path="/flightsUpdate" element={<FlightsUpdate />} />
+        <Route exact path="/flightsUpdate/:id" element={<FlightsUpdate />} />
 
         {/* Hotels */}
         <Route exact path="/hotels" element={<Hotels />} />

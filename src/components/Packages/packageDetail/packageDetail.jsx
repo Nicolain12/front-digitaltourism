@@ -64,8 +64,6 @@ function PackageDetail() {
                 setPackageImgsF(imagesFlightToPush)
                 setPackageImgsH(imagesHotelToPush)
                 setPackageProduct(parsedPackageData)
-                console.log(parsedPackageData); //********************************************
-                console.log(imagesToPush);
             } catch (err) {
                 console.error(err)
             }
@@ -73,31 +71,32 @@ function PackageDetail() {
         fetchData()
     }, [])
 
-
-    return (
+    return (packageProduct.flight ? 
         <div className="App-packageDetail">
             <main className="main-detail-flight">
                 <section className="section-info">
 
                     <div ref={refSliderDiv} className="carousel_detail-flight">
-                    {packageImgsF.length == 0 || packageImgsH.length == 0 ? <h3>Loading...</h3> : <Slider type={'package'} imgs={[[...packageImgsF], [...packageImgsH]]} id={packageProduct.package.user_id}></Slider>}
+                    {packageImgsF.length == 0 || packageImgsH.length == 0 ? 
+                    <h3>Loading...</h3> : 
+                    <Slider type={'package'} imgs={[[...packageImgsF], [...packageImgsH]]} id={packageProduct.package.user_id}></Slider>}
                     </div>
 
                     <div className="detail-flight-info">
                         <div className="detail-flight-info-maininfo">
                             <div className="detail-flight-info-header">
-                                <h3>Departure ---- Reach</h3>
+                                <h3>{packageProduct.flight.departure} ---- {packageProduct.flight.reach}</h3>
                             </div>
                             <div className="detail-flight-info-data">
                                 <div className="detail-flight-departure">
-                                    <h4 className="detail-flight-h4">Salida:</h4>
-                                    <p className="detail-flight-date">Date</p>
-                                    <p className="detail-flight-hour">Hour</p>
+                                    <h4 className="detail-flight-h4">Departure:</h4>
+                                    <p className="detail-flight-date">{packageProduct.flight.departure_date}</p>
+                                    <p className="detail-flight-hour">{packageProduct.flight.departure_hour}</p>
                                 </div>
                                 <div className="detail-flight-reach">
-                                    <h4 className="detail-flight-h4">Llegada:</h4>
-                                    <p className="detail-flight-date">Date</p>
-                                    <p className="detail-flight-hour">Hour</p>
+                                    <h4 className="detail-flight-h4">Return:</h4>
+                                    <p className="detail-flight-date">{packageProduct.flight.reach_date}</p>
+                                    <p className="detail-flight-hour">{packageProduct.flight.reach_hour}</p>
                                 </div>
                             </div>
                         </div>
@@ -105,22 +104,18 @@ function PackageDetail() {
 
                     <div className="detail-flight-info">
                         <div className="detail-flight-info-title">
-                            <h3>Informacion de la aerolinea</h3>
+                            <h3>Airline information</h3>
                         </div>
 
                         <div className="detail-flight-info-maininfo">
                             <div className="detail-flight-info-header">
-                                <h3>Airline: "Airline"</h3>
+                                <h3>Airline: {packageProduct.flight.airline}</h3>
                             </div>
                             <div className="detail-flight-info-data">
                                 <div className="detail-flight-departure">
-                                    <h5>Cabina: "Tal Cabina"</h5>
+                                    <h5>Cabin: {packageProduct.flight.cabin}</h5>
                                     <div className="detail-flight-description">
-                                        <h5>Descripcion</h5>
-                                        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                                            Officiis minima maxime voluptatibus, magni delectus culpa, assumenda eum m
-                                            inus deserunt enim nulla, quam debitis modi et perspiciatis sint consequatur
-                                            sapiente praesentium.</p>
+                                        <p>{packageProduct.flight.description}</p>
                                     </div>
                                 </div>
                             </div>
@@ -140,11 +135,11 @@ function PackageDetail() {
                             <div className="detail-flight-info-data">
                                 <div className="detail-flight-departure">
                                     <h4 className="detail-flight-h4">Hotel</h4>
-                                    <p className="detail-flight-date">Nombre del hotel</p>
+                                    <p className="detail-flight-date">{packageProduct.hotel.name}</p>
                                 </div>
                                 <div className="detail-flight-reach">
-                                    <h4 className="detail-flight-h4">Ubicacion</h4>
-                                    <p className="detail-flight-date">Ubicacion del Hotel</p>
+                                    <h4 className="detail-flight-h4">Ubication</h4>
+                                    <p className="detail-flight-date">{packageProduct.hotel.spot}</p>
                                 </div>
                             </div>
                         </div>
@@ -152,12 +147,14 @@ function PackageDetail() {
 
                     <div className="detail-flight-info">
                         <div className="detail-flight-info-title">
-                            <h3>Informacion del servicio</h3>
+                            <h3>service information</h3>
                         </div>
 
                         <div className="detail-flight-info-maininfo">
                             <div className="detail-flight-info-header">
-                                <h3> Estrellas</h3>
+                                <h3>Service quality: {Array.from({ length: packageProduct.hotel.service }).map((_, index) => (
+                                    <i key={index} className="fa-solid fa-star"></i>
+                                ))}</h3>
 
                             </div>
                             <div className="detail-flight-info-data">
@@ -165,11 +162,8 @@ function PackageDetail() {
                                     <div >
                                     </div>
                                     <div className="detail-flight-description">
-                                        <h5>Descripcion</h5>
-                                        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                                            Officiis minima maxime voluptatibus, magni delectus culpa, assumenda eum m
-                                            inus deserunt enim nulla, quam debitis modi et perspiciatis sint consequatur
-                                            sapiente praesentium.</p>
+                                        <h5>Description</h5>
+                                        <p>{packageProduct.hotel.description}</p>
                                     </div>
                                 </div>
                             </div>
@@ -177,18 +171,25 @@ function PackageDetail() {
                     </div>
 
                 </section>
-                <section className="detail-flight-button-section">
-                    <button className="detail-flight-button btn-df-edit">Editar</button>
-                    <button className="detail-flight-button btn-df-delete">Eliminar</button>
-                    <div className="detail-flight-button-buy">
-                        <p>Price: $999999</p>
-                        <button className="detail-flight-button btn-df-buy">Comprar</button>
+              
+                    
+                   
+          
+
+                {userLogged.id == packageProduct.package.user_id ?  <section className="detail-flight-button-section">
+                <button className="detail-flight-button btn-df-edit">Update</button>
+                    <button className="detail-flight-button btn-df-delete">Delete</button>
+                </section> : <section className="detail-flight-button-section">
+                <div className="detail-flight-button-buy">
+                        <p>Price: ${packageProduct.package.price}</p>
+                        <button className="detail-flight-button btn-df-buy">Buy</button>
                     </div>
-                </section>
+                </section>}
+
             </main>
 
         </div>
-    )
+    : <h1>Loading...</h1>)
 }
 
 export default PackageDetail

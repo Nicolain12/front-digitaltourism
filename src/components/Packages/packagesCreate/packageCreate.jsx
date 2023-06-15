@@ -513,7 +513,7 @@ function PackageCreate() {
                                     {selectedImagesFlight.map((image, index) => (
                                         <div key={index} className="cp-preview-image">
                                             <img src={URL.createObjectURL(image)} alt={`Image ${index}`} />
-                                            <button onClick={(e) => removeImgFlight(index, e)}><i className="fa-solid fa-xmark"></i></button>
+                                            <a onClick={(e) => removeImgFlight(index, e)}><i className="fa-solid fa-xmark"></i></a>
                                         </div>
                                     ))}
                                     <i ref={refFlightImgsIcon} onClick={handleFileIconClickFlight} className="cp-add-img-icon fa-solid fa-circle-plus"></i>
@@ -599,7 +599,7 @@ function PackageCreate() {
                                     {selectedImagesHotel.map((image, index) => (
                                         <div key={index} className="cp-preview-image">
                                             <img src={URL.createObjectURL(image)} alt={`Image ${index}`} />
-                                            <button onClick={(e) => removeImgHotel(index, e)}><i className="fa-solid fa-xmark"></i></button>
+                                            <a onClick={(e) => removeImgHotel(index, e)}><i className="fa-solid fa-xmark"></i></a>
                                         </div>
                                     ))}
                                     <i ref={refHotelImgsIcon} onClick={handleFileIconClickHotel} className="cp-add-img-icon fa-solid fa-circle-plus"></i>

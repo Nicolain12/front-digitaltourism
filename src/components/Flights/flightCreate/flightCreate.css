@@ -63,7 +63,7 @@
     /* object-fit: cover; */
 }
 
-.cf-preview-image button {
+.cf-preview-image a {
     position: absolute;
     top: 5px;
     right: 5px;

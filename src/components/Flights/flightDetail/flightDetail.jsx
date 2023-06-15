@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef, useLayoutEffect } from 'react';
 import './flightDetail.css';
+import { Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import Slider from '../../slider/slider';
 
@@ -58,7 +59,9 @@ function FlightDetail() {
         fetchData();
     }, []);
 
-
+const toEditFlight = ()=>{
+    window.location.href = `/flightsUpdate/${flight.id}`
+}
     return (
         <div className="App-flightDetail">
             <main className="fd-main-detail-flight">
@@ -116,7 +119,7 @@ function FlightDetail() {
 
 
                 {userLogged.id == flight.user_id ? <section className="fd-detail-flight-button-section">
-                    <button className="fd-detail-flight-button btn-df-edit">Edit</button>
+                    <button onClick={toEditFlight} className="fd-detail-flight-button btn-df-edit">Edit</button>
                     <button className="fd-detail-flight-button btn-df-delete">Delete</button>
                 </section> : <section className="fd-detail-flight-button-section">
                     <div className="fd-detail-flight-button-buy">

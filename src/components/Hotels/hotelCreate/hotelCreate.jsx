@@ -216,7 +216,7 @@ function HotelCreate() {
                                 {selectedImages.map((image, index) => (
                                     <div key={index} className="ch-preview-image">
                                         <img src={URL.createObjectURL(image)} alt={`Image ${index}`} />
-                                        <button onClick={(event) => removeImg(index, event)}><i className="fa-solid fa-xmark"></i></button>
+                                        <a onClick={(event) => removeImg(index, event)}><i className="fa-solid fa-xmark"></i></a>
                                     </div>
                                 ))}
                                 <label htmlFor="input-hotel-create"><i ref={refImageIcon} className="ch-add-img-icon fa-solid fa-circle-plus"></i></label>

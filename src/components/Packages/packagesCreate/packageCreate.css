@@ -105,7 +105,7 @@
     /* object-fit: cover; */
 }
 
-.cp-preview-image button {
+.cp-preview-image a {
     position: absolute;
     top: 5px;
     right: 5px;
