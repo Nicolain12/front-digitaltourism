@@ -70,6 +70,9 @@ function PackageDetail() {
         }
         fetchData()
     }, [])
+    const toEditPackage = ()=>{
+        window.location.href = `/packagesUpdate/${packageProduct.package.id}`
+    }
 
     return (packageProduct.flight ? 
         <div className="App-packageDetail">
@@ -177,7 +180,7 @@ function PackageDetail() {
           
 
                 {userLogged.id == packageProduct.package.user_id ?  <section className="detail-flight-button-section">
-                <button className="detail-flight-button btn-df-edit">Update</button>
+                <button onClick={toEditPackage} className="detail-flight-button btn-df-edit">Update</button>
                     <button className="detail-flight-button btn-df-delete">Delete</button>
                 </section> : <section className="detail-flight-button-section">
                 <div className="detail-flight-button-buy">

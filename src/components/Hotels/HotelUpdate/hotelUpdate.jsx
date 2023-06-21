@@ -269,19 +269,6 @@ function HotelUpdate() {
         }
     };
 
-    const showImgStatus = (e) => {
-        e.preventDefault()
-        console.log('-------------------------------------')
-        console.log('oldImages:')
-        console.log(oldImages)
-        console.log('-------------------------------------')
-        console.log('newImages:')
-        console.log(newImages)
-        console.log('-------------------------------------')
-        console.log('removeImages:')
-        console.log(removeImages)
-        console.log('-------------------------------------')
-    }
 
     return (
         <div className="App-hotelUpdate">
@@ -309,7 +296,6 @@ function HotelUpdate() {
                             <label htmlFor="input-hotel-create"><i ref={refImageIcon} className="uh-add-img-icon fa-solid fa-circle-plus"></i></label>
                         </div>
 
-                        <button onClick={showImgStatus}>Show image status</button>
                     </div>
 
                     <div className="uh-create-hotel-top-2">

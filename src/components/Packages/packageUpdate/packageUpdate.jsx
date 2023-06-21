@@ -1,164 +1,802 @@
-import React from 'react';
-import './packageUpdate.css';
+import React, { useState, useRef, useEffect } from 'react'
+import { useParams } from 'react-router-dom'
+import './packageUpdate.css'
 
 function PackageUpdate() {
+    const { id } = useParams();
+    async function fetchApi(endpoint, config) {
+        try {
+            const response = await fetch(endpoint, config)
+            const jsonResponse = await response.json()
+            if (jsonResponse.info.status === 200) {
+                return jsonResponse
+            }
+            if (jsonResponse.info.status === 400) {
+                console.log(jsonResponse)
+            }
+        } catch (err) {
+            console.error(err)
+        }
+    }
+    // USE STATES
+    const [discount, setDiscount] = useState('')
+    const [userId, setUserId] = useState('');
+    const [flightId, setFlightId] = useState('');
+    const [hotelId, setHotelId] = useState('');
+    // fight
+    const [oldImagesFlight, setOldImagesFlight] = useState([]);
+    const [newImagesFlight, setNewImagesFlight] = useState([]);
+    const [removeImagesFlight, setRemoveImagesFlight] = useState([]);
+    const [airline, setAirline] = useState('')
+    const [descriptionFlight, setDescriptionFlight] = useState('')
+    const [departure, setDeparture] = useState('')
+    const [reach, setReach] = useState('')
+    const [departureDate, setDepartureDate] = useState('')
+    const [reachDate, setReachDate] = useState('')
+    const [departureHour, setDepartureHour] = useState('')
+    const [reachHour, setReachHour] = useState('')
+    const [cabin, setCabin] = useState('')
+    const [priceFlight, setPriceFlight] = useState(0)
+    //hotels
+    const [oldImagesHotel, setOldImagesHotel] = useState([]);
+    const [newImagesHotel, setNewImagesHotel] = useState([]);
+    const [removeImagesHotel, setRemoveImagesHotel] = useState([]);
+    const [name, setName] = useState('')
+    const [spot, setSpot] = useState('')
+    const [descriptionHotel, setDescriptionHotel] = useState('')
+    const [service, setService] = useState('')
+    const [priceHotel, setPriceHotel] = useState('')
+
+    // Use ref
+    const refDiscount = useRef()
+    //flight
+    const refFlightImgsInput = useRef()
+    const refFlightImgsIcon = useRef()
+    const refFlightErrorImgs = useRef()
+    const refFlightAirlineInput = useRef()
+    const refFlightDescriptionInput = useRef()
+    const refFlightDepartureInput = useRef()
+    const refFlightReachInput = useRef()
+    const refFlightDepartureDateInput = useRef()
+    const refFlightReachDateInput = useRef()
+    const refFlightDepartureHourInput = useRef()
+    const refFlightReachHourInput = useRef()
+    const refFlightCabinInput = useRef()
+    const refFlightPriceInput = useRef()
+    //hotel
+    const refHotelErrorImgs = useRef()
+    const refHotelImgsInput = useRef()
+    const refHotelImgsIcon = useRef()
+    const refHotelNameInput = useRef()
+    const refHotelUbiInput = useRef()
+    const refHotelDescriptionInput = useRef()
+    const refHotelServiceInput = useRef()
+    const refHotelPriceInput = useRef()
+
+    const allowedCountries = ["Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Antigua and Barbuda", "Argentina", "Armenia", "Australia", "Austria", "Azerbaijan",
+        "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bhutan", "Bolivia", "Bosnia and Herzegovina", "Botswana", "Brazil", "Brunei", "Bulgaria", "Burkina Faso", "Burundi", "Cabo Verde",
+        "Cambodia", "Cameroon", "Canada", "Central African Republic", "Chad", "Chile", "China", "Colombia", "Comoros", "Congo", "Costa Rica", "Croatia", "Cuba", "Cyprus", "Czech Republic", "Democratic Republic of the Congo",
+        "Denmark", "Djibouti", "Dominica", "Dominican Republic", "East Timor", "Ecuador", "Egypt", "El Salvador",
+        "Equatorial Guinea", "Eritrea", "Estonia", "Eswatini", "Ethiopia",
+        "Fiji", "Finland", "France",
+        "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Greece", "Grenada", "Guatemala", "Guinea", "Guinea-Bissau", "Guyana",
+        "Haiti", "Honduras", "Hungary",
+        "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland", "Israel", "Italy", "Ivory Coast",
+        "Jamaica", "Japan", "Jordan",
+        "Kazakhstan", "Kenya", "Kiribati", "Kosovo", "Kuwait", "Kyrgyzstan",
+        "Laos", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania", "Luxembourg",
+        "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Marshall Islands", "Mauritania", "Mauritius", "Mexico", "Micronesia", "Moldova", "Monaco", "Mongolia", "Montenegro", "Morocco", "Mozambique", "Myanmar",
+        "Namibia", "Nauru", "Nepal", "Netherlands", "New Zealand", "Nicaragua", "Niger", "Nigeria", "North Korea", "North Macedonia", "Norway",
+        "Oman",
+        "Pakistan", "Palau", "Palestine", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Poland", "Portugal",
+        "Qatar",
+        "Romania", "Russia", "Rwanda",
+        "Saint Kitts and Nevis", "Saint Lucia", "Saint Vincent and the Grenadines", "Samoa", "San Marino", "Sao Tome and Principe", "Saudi Arabia", "Senegal", "Serbia", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "Solomon Islands", "Somalia", "South Africa", "South Korea", "South Sudan", "Spain", "Sri Lanka", "Sudan", "Suriname", "Sweden", "Switzerland", "Syria",
+        "Taiwan", "Tajikistan", "Tanzania", "Thailand", "Togo", "Tonga", "Trinidad and Tobago", "Tunisia", "Turkey", "Turkmenistan", "Tuvalu",
+        "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "United States", "Uruguay", "Uzbekistan",
+        "Vanuatu", "Vatican City", "Venezuela", "Vietnam",
+        "Yemen",
+        "Zambia", "Zimbabwe"]
+
+    // Validation functions
+    const isValidAirline = (value) => /^[a-zA-Z\s]{5,}$/.test(value)
+    const isValidDescription = (value) => value.length >= 15
+    const isValidPlace = (value) => {
+        if (allowedCountries.includes(value)) return true
+        if (!allowedCountries.includes(value)) return false
+    }
+    const isValidDate = (value) => {
+        const selectedDate = new Date(value)
+        const today = new Date()
+
+        return selectedDate >= today
+    }
+    const isValidPrice = (value) => !isNaN(value)
+    const isValidName = (value) => /^[a-zA-Z\s]{3,}$/.test(value)
+
+    //Use effect
+    useEffect(() => {
+        async function fetchData() {
+            try {
+                const headers = {}
+                const permanentToken = localStorage.getItem('token')
+                const token = sessionStorage.getItem('token')
+                if (token) headers.authorization = token
+                if (permanentToken) headers.authorization = permanentToken
+                const packageData = await fetchApi(`http://localhost:3001/api/products/package/${id}`, {
+                    method: 'GET',
+                    headers,
+                })
+                const parsedPackageData = {
+                    ...packageData.data,
+                }
+                parsedPackageData.flight.image = JSON.parse(packageData.data.flight.image)
+                parsedPackageData.hotel.image = JSON.parse(packageData.data.hotel.image)
+                const imagesFlightToPush = []
+                const imagesHotelToPush = []
+                if (typeof parsedPackageData.flight.image == 'object'); {
+                    for (let key in parsedPackageData.flight.image) {
+                        if (parsedPackageData.flight.image.hasOwnProperty(key)) {
+                            imagesFlightToPush.push(parsedPackageData.flight.image[key])
+                        }
+                    }
+                }
+                if (typeof parsedPackageData.hotel.image == 'object'); {
+                    for (let key in parsedPackageData.hotel.image) {
+                        if (parsedPackageData.hotel.image.hasOwnProperty(key)) {
+                            imagesHotelToPush.push(parsedPackageData.hotel.image[key])
+                        }
+                    }
+                }
+                setDiscount(parsedPackageData.package.discount)
+                setUserId(parsedPackageData.package.user_id)
+                setFlightId(parsedPackageData.flight.id)
+                setHotelId(parsedPackageData.hotel.id)
+                setOldImagesFlight(imagesFlightToPush)
+                setOldImagesHotel(imagesHotelToPush)
+                setAirline(parsedPackageData.flight.airline)
+                setDescriptionFlight(parsedPackageData.flight.description)
+                setDeparture(parsedPackageData.flight.departure)
+                setReach(parsedPackageData.flight.reach)
+                setDepartureDate(parsedPackageData.flight.departure_date)
+                setReachDate(parsedPackageData.flight.reach_date)
+                setDepartureHour(parsedPackageData.flight.departure_hour)
+                setReachHour(parsedPackageData.flight.reach_hour)
+                setCabin(parsedPackageData.flight.cabin)
+                setPriceFlight(parsedPackageData.flight.price)
+                setName(parsedPackageData.hotel.name)
+                setSpot(parsedPackageData.hotel.spot)
+                setDescriptionHotel(parsedPackageData.hotel.description)
+                setService(parsedPackageData.hotel.service)
+                setPriceHotel(parsedPackageData.hotel.price)
+                console.log(parsedPackageData);
+            } catch (err) {
+                console.error(err)
+            }
+        }
+        fetchData()
+    }, [])
+
+    //  Change handler
+    const handleDiscount = (e) => {
+        const discount = parseInt(e.target.value);
+
+        if (!isNaN(discount) && discount >= 1 && discount <= 100) {
+            setDiscount(discount);
+            refDiscount.current.className = 'up-create-package-discount-input';
+        } else {
+            setDiscount(discount);
+            refDiscount.current.className = 'up-error-input-discount';
+        }
+    };
+
+    // flight
+    const flightHandleImageChange = (e) => {
+        const files = Array.from(e.target.files)
+
+        const allowedExtensions = /\.(jpg|jpeg|png|gif)$/i
+        const validatedImages = []
+
+        files.forEach((file) => {
+            if (allowedExtensions.test(file.name)) {
+                validatedImages.push(file)
+            } else {
+                refFlightErrorImgs.current.className = 'up-error-shown'
+                setTimeout(() => {
+                    refFlightErrorImgs.current.className = 'up-error-hidden'
+                }, 2000)
+            }
+        })
+        refFlightImgsInput.current.className = 'up-img-section'
+        refFlightImgsIcon.current.className = 'up-add-img-icon fa-solid fa-circle-plus'
+        setNewImagesFlight([...newImagesFlight, ...validatedImages]);
+    }
+    const flightAirlineChangeHandler = (e) => {
+        const airline = e.target.value.charAt(0).toUpperCase() + e.target.value.slice(1)
+        setAirline(airline)
+        if (!isValidAirline(airline)) {
+            refFlightAirlineInput.current.className = 'up-error-input'
+        } else {
+            refFlightAirlineInput.current.className = 'up-form-pack-flight-input'
+        }
+    }
+    const flightDescriptionChangeHandler = (e) => {
+        const description = e.target.value.charAt(0).toUpperCase() + e.target.value.slice(1)
+        setDescriptionFlight(description)
+        if (!isValidDescription(description)) {
+            refFlightDescriptionInput.current.className = 'up-error-input'
+        } else {
+            refFlightDescriptionInput.current.className = 'up-form-pack-flight-input'
+        }
+    }
+    const flightDepartureChangeHandler = (e) => {
+        const departure = e.target.value.charAt(0).toUpperCase() + e.target.value.slice(1)
+        setDeparture(departure)
+        if (!isValidPlace(departure)) {
+            refFlightDepartureInput.current.className = 'up-error-input'
+        } else {
+            refFlightDepartureInput.current.className = 'up-form-pack-flight-input'
+        }
+    }
+    const flightReachChangeHandler = (e) => {
+        const reach = e.target.value.charAt(0).toUpperCase() + e.target.value.slice(1)
+        setReach(reach)
+        if (!isValidPlace(reach)) {
+            refFlightReachInput.current.className = 'up-error-input'
+        } else {
+            refFlightReachInput.current.className = 'up-form-pack-flight-input'
+        }
+    }
+    const flightDepartureDateChangeHandler = (e) => {
+        const departureDate = e.target.value
+        setDepartureDate(departureDate)
+        if (!isValidDate(departureDate)) {
+            refFlightDepartureDateInput.current.className = 'up-error-input'
+        } else {
+            refFlightDepartureDateInput.current.className = 'up-form-pack-flight-input'
+        }
+    }
+    const flightReachDateChangeHandler = (e) => {
+        const reachDate = e.target.value
+        setReachDate(reachDate)
+        if (!isValidDate(reachDate)) {
+            refFlightReachDateInput.current.className = 'up-error-input'
+        } else {
+            refFlightReachDateInput.current.className = 'up-form-pack-flight-input'
+        }
+    }
+    const flightDepartureHourChangeHandler = (e) => {
+        const departureHour = e.target.value
+        setDepartureHour(departureHour)
+        if (!departureHour) {
+            refFlightDepartureHourInput.current.className = 'up-error-input'
+        } else {
+            refFlightDepartureHourInput.current.className = 'up-form-pack-flight-input'
+        }
+    }
+    const flightReachHourChangeHandler = (e) => {
+        const reachHour = e.target.value
+        setReachHour(reachHour)
+        if (!reachHour) {
+            refFlightReachHourInput.current.className = 'up-error-input'
+        } else {
+            refFlightReachHourInput.current.className = 'up-form-pack-flight-input'
+        }
+    }
+    const flightCabinChangeHandler = (e) => {
+        setCabin(e.target.value)
+        if (e.target.value == 'none') {
+            refFlightCabinInput.current.className = 'up-error-input-select'
+        } else {
+            refFlightCabinInput.current.className = 'up-form-pack-flight-select'
+        }
+    }
+    const flightPriceChangeHandler = (e) => {
+        const price = e.target.value
+        setPriceFlight(price)
+        if (!isValidPrice(price)) {
+            refFlightPriceInput.current.className = 'up-error-input'
+        } else {
+            refFlightPriceInput.current.className = 'up-form-pack-flight-input'
+        }
+    }
+
+    // Hotel
+    const hotelHandleImageChange = (e) => {
+        const files = Array.from(e.target.files)
+
+        const allowedExtensions = /\.(jpg|jpeg|png|gif)$/i
+        const validatedImages = []
+
+        files.forEach((file) => {
+            if (allowedExtensions.test(file.name)) {
+                validatedImages.push(file)
+            } else {
+                refHotelErrorImgs.current.className = 'up-error-shown'
+                setTimeout(() => {
+                    refHotelErrorImgs.current.className = 'up-error-hidden'
+                }, 2000)
+            }
+        })
+        refHotelImgsInput.current.className = 'up-img-section'
+        refHotelImgsIcon.current.className = 'up-add-img-icon fa-solid fa-circle-plus'
+        setNewImagesHotel([...newImagesHotel, ...validatedImages]);
+    }
+    const hotelHandleNameChange = (e) => {
+        const hotelName = e.target.value.charAt(0).toUpperCase() + e.target.value.slice(1)
+        setName(hotelName)
+        if (!isValidName(hotelName)) {
+            refHotelNameInput.current.className = 'up-error-input'
+        } else {
+            refHotelNameInput.current.className = 'up-pack-hotel-input'
+        }
+    }
+    const hotelHandleSpotChange = (e) => {
+        const hotelSpot = e.target.value.charAt(0).toUpperCase() + e.target.value.slice(1)
+        setSpot(hotelSpot)
+        if (!isValidPlace(hotelSpot)) {
+            refHotelUbiInput.current.className = 'up-error-input'
+        } else {
+            refHotelUbiInput.current.className = 'up-pack-hotel-input'
+        }
+    }
+    const hotelHandleDescriptionChange = (e) => {
+        const hotelDescription = e.target.value.charAt(0).toUpperCase() + e.target.value.slice(1)
+        setDescriptionHotel(hotelDescription)
+        if (!isValidDescription(hotelDescription)) {
+            refHotelDescriptionInput.current.className = 'up-error-input'
+        } else {
+            refHotelDescriptionInput.current.className = 'up-pack-hotel-input'
+        }
+    }
+    const hotelHandleServiceChange = (e) => {
+        const service = e.target.value
+        setService(service)
+    }
+    const hotelHandlePriceChange = (e) => {
+        const hotelPrice = e.target.value
+        setPriceHotel(hotelPrice)
+        if (!isValidPrice(hotelPrice)) {
+            refHotelPriceInput.current.className = 'up-error-input'
+        } else {
+            refHotelPriceInput.current.className = 'up-pack-hotel-input'
+        }
+    }
+
+    // images remove
+    //flight
+    const removeImageFlight = (index, event) => {
+        event.preventDefault();
+        const updatedImages = [...oldImagesFlight];
+        const removedImage = updatedImages.splice(index, 1)[0];
+        const updatedRenovedImages = [...removeImagesFlight, removedImage]
+        setOldImagesFlight(updatedImages);
+        setRemoveImagesFlight(updatedRenovedImages)
+    };
+    const removeNewImageFlight = (index, event) => {
+        event.preventDefault()
+        const updatedImages = [...newImagesFlight];
+        updatedImages.splice(index, 1);
+        setNewImagesFlight(updatedImages);
+    };
+
+    // hotel
+    const removeImageHotel = (index, event) => {
+        event.preventDefault();
+        const updatedImages = [...oldImagesHotel];
+        const removedImage = updatedImages.splice(index, 1)[0];
+        const updatedRenovedImages = [...removeImagesHotel, removedImage]
+        setOldImagesHotel(updatedImages);
+        setRemoveImagesHotel(updatedRenovedImages)
+    };
+    const removeNewImageHotel = (index, event) => {
+        event.preventDefault()
+        const updatedImages = [...newImagesHotel];
+        updatedImages.splice(index, 1);
+        setNewImagesHotel(updatedImages);
+    };
+
+    // HANDLE SUBMIT
+    const handlePackageSubmit = (e) => {
+        e.preventDefault()
+        const newDataFlight = new FormData()
+        const newDataHotel = new FormData()
+        const errorsFlight = []
+        const errorsHotel = []
+
+        if (!isNaN(discount) && discount >= 1 && discount <= 100) {
+            refDiscount.current.className = 'up-create-package-discount-input';
+        } else {
+            errorsHotel.push('discount')
+            errorsFlight.push('discount')
+            refDiscount.current.className = 'up-error-input-discount';
+        }
+
+        // Validations FLIGHT
+        if (oldImagesFlight.length === 0 && newImagesFlight.length === 0) {
+            errorsFlight.push('images')
+            refFlightImgsInput.current.className = 'up-img-section-error'
+            refFlightImgsIcon.current.className = 'up-add-img-icon-error fa-solid fa-circle-plus'
+        } else {
+            oldImagesFlight.forEach(image => {
+                newDataFlight.append("oldImages", image);
+            })
+            newImagesFlight.forEach(image => {
+                newDataFlight.append("productFile", image);
+            })
+            removeImagesFlight.forEach(image => {
+                newDataFlight.append("removeImages", image);
+            })
+        }
+        if (!isValidAirline(airline)) {
+            errorsFlight.push('airline')
+            refFlightAirlineInput.current.className = 'up-error-input'
+        } else {
+            newDataFlight.append('airline', airline)
+        }
+        if (!isValidDescription(descriptionFlight)) {
+            errorsFlight.push('description')
+            refFlightDescriptionInput.current.className = 'up-error-input'
+        } else {
+            newDataFlight.append('description', descriptionFlight)
+        }
+        if (!isValidPlace(departure)) {
+            errorsFlight.push('departure')
+            refFlightDepartureInput.current.className = 'up-error-input'
+        } else {
+            newDataFlight.append('departure', departure)
+        }
+        if (!isValidPlace(reach)) {
+            errorsFlight.push('reach')
+            refFlightReachInput.current.className = 'up-error-input'
+        } else {
+            newDataFlight.append('reach', reach)
+        }
+        if (!isValidDate(departureDate)) {
+            errorsFlight.push('departureDate')
+            refFlightDepartureDateInput.current.className = 'up-error-input'
+        } else {
+            newDataFlight.append('departureDate', departureDate)
+        }
+        if (!isValidDate(reachDate)) {
+            errorsFlight.push('reachDate')
+            refFlightReachDateInput.current.className = 'up-error-input'
+        } else {
+            newDataFlight.append('reachDate', reachDate)
+        }
+        if (!departureHour) {
+            errorsFlight.push('departureHour')
+            refFlightDepartureHourInput.current.className = 'up-error-input'
+        } else {
+            newDataFlight.append('departureHour', departureHour)
+        }
+        if (!reachHour) {
+            errorsFlight.push('reachHour')
+            refFlightReachHourInput.current.className = 'up-error-input'
+        } else {
+            newDataFlight.append('reachHour', reachHour)
+        }
+        if (cabin == 'none' || !cabin) {
+            errorsFlight.push('cabin')
+            refFlightCabinInput.current.className = 'up-error-input-select'
+        } else {
+            newDataFlight.append('cabin', cabin)
+        }
+        if (!isValidPrice(priceFlight) || !priceFlight) {
+            errorsFlight.push('price')
+            refFlightPriceInput.current.className = 'up-error-input'
+        } else {
+            newDataFlight.append('price', priceFlight)
+        }
+
+        // Validations  HOTEL
+        if (oldImagesHotel.length === 0 && newImagesHotel.length === 0) {
+            errorsHotel.push('images')
+            refHotelImgsInput.current.className = 'up-img-section-error'
+            refHotelImgsIcon.current.className = 'up-add-img-icon-error fa-solid fa-circle-plus'
+        } else {
+            oldImagesHotel.forEach(image => {
+                newDataHotel.append("oldImages", image);
+            })
+            newImagesHotel.forEach(image => {
+                newDataHotel.append("productFile", image);
+            })
+            removeImagesHotel.forEach(image => {
+                newDataHotel.append("removeImages", image);
+            })
+        }
+        if (!isValidName(name)) {
+            errorsHotel.push('name')
+            refHotelNameInput.current.className = 'up-error-input'
+        } else {
+            newDataHotel.append('name', name)
+        }
+        if (!isValidDescription(descriptionHotel)) {
+            errorsHotel.push('description')
+            refHotelDescriptionInput.current.className = 'up-error-input'
+        } else {
+            newDataHotel.append('description', descriptionHotel)
+        }
+        if (!isValidPlace(spot)) {
+            errorsHotel.push('spot')
+            refHotelUbiInput.current.className = 'up-error-input'
+        } else {
+            newDataHotel.append('spot', spot)
+        }
+        if (service == 'none' || !service) {
+            errorsHotel.push('service')
+            refHotelServiceInput.current.className = 'up-error-input-select'
+        } else {
+            newDataHotel.append('service', service)
+        }
+        if (!isValidPrice(priceHotel) || !priceHotel) {
+            errorsHotel.push('price')
+            refHotelPriceInput.current.className = 'up-error-input'
+        } else {
+            newDataHotel.append('price', priceHotel)
+        }
+
+        if (errorsFlight.length === 0 && errorsHotel.length === 0) {
+            const headers = {}
+            const permanentToken = localStorage.getItem('token')
+            const token = sessionStorage.getItem('token')
+            if (token) headers.authorization = token
+            if (permanentToken) headers.authorization = permanentToken
+            async function fetchSend(flightData, hotelData) {
+                const flightUpload = await fetchApi(`http://localhost:3001/api/products/update/flight/${flightId}`, {
+                    method: 'PUT',
+                    headers,
+                    body: flightData,
+                });
+                const hotelUpload = await fetchApi(`http://localhost:3001/api/products/update/hotel/${hotelId}`, {
+                    method: 'PUT',
+                    headers,
+                    body: hotelData,
+                })
+                const dataFlightId = flightId
+                const dataFlightPrice = priceFlight
+                const dataDepartureDate = departureDate
+                const dataReachDate = reachDate
+                const dataHotelPrice = priceHotel
+                const dataHotelId = hotelId
+                const newPackageData = new FormData()
+                newPackageData.append('flight_id', dataFlightId)
+                newPackageData.append('priceF', dataFlightPrice)
+                newPackageData.append('departureDate', dataDepartureDate)
+                newPackageData.append('reachDate', dataReachDate)
+                newPackageData.append('discount', discount)
+                newPackageData.append('hotel_id', dataHotelId)
+                newPackageData.append('priceH', dataHotelPrice)
+                const packageUpload = await fetchApi(`http://localhost:3001/api/products/update/package/${id} `, {
+                    method: 'PUT',
+                    headers,
+                    body: newPackageData,
+                })
+
+                if (packageUpload.info.status == 200) window.location.href = `/packageDetail/${id}`
+                if(packageUpload.info.status != 200) console.log(packageUpload);
+            }
+
+            fetchSend(newDataFlight, newDataHotel)
+        } else {
+            console.log('Validation flights errors:', errorsFlight)
+            console.log('Validation hotels errors:', errorsHotel)
+        }
+    }
+
+    const handleFileIconClickFlight = () => {
+        const fileInput = document.getElementById('input-flight-create');
+        fileInput.click();
+    };
+
+    const handleFileIconClickHotel = () => {
+        const fileInput = document.getElementById('input-hotel-create');
+        fileInput.click();
+    };
+
+    const showImgStatus = (e) => {
+        e.preventDefault()
+        console.log('-------------------------------------')
+        console.log('FLIGHTS')
+        console.log('-------------------------------------')
+        console.log('oldImages:')
+        console.log(oldImagesFlight)
+        console.log('-------------------------------------')
+        console.log('newImages:')
+        console.log(newImagesFlight)
+        console.log('-------------------------------------')
+        console.log('removeImages:')
+        console.log(removeImagesFlight)
+        console.log('-------------------------------------')
+        console.log('HOTELS')
+        console.log('-------------------------------------')
+        console.log('oldImages:')
+        console.log(oldImagesHotel)
+        console.log('-------------------------------------')
+        console.log('newImages:')
+        console.log(newImagesHotel)
+        console.log('-------------------------------------')
+        console.log('removeImages:')
+        console.log(removeImagesHotel)
+        console.log('-------------------------------------')
+    }
     return (
-        <div className="App-packageUpdate">
-            <main>
-                <form action="" method="POST" enctype="multipart/form-data" className="crate-package">
+        <div className="App-packageCreate">
+            <form onSubmit={handlePackageSubmit} className="up-crate-package">
 
-                    <div className="create-package-discount">
-                        <label for="discount">Ingrese el descuento (%):</label>
-                        <input value="" type="number" name="discount" id="discount"></input>
-                    </div>
-                    <div className="create-package-main-div">
-                        <section>
-                            <h2>Vuelo</h2>
-                            <div className="create-package-flight">
+                <div className="up-create-package-discount">
+                    <label htmlFor="discount">Discount (%):</label>
+                    <input ref={refDiscount} onChange={handleDiscount} value={discount} className='up-create-package-discount-input' type="number" name="discount" id="discount"></input>
+                </div>
+                <button onClick={showImgStatus}>Show image status</button>
+                <div className="up-create-package-main-div">
+                    <section>
+                        <h2>Flight</h2>
+                        <div className="up-create-package-flight">
 
-                                <div className="form-pack-flight-top-1">
-                                    <input value="" type="file" id="input-flight-create" name="productFile" required></input>
-                                        <label className="add-img-label-pack-flight" for="input-flight-create">Ingrese una foto
-                                            del producto:</label>
-                                        <label for="input-flight-create"><i className="fa-solid fa-image"></i></label>
-                                </div>
-                                <div className="form-pack-flight-top-2">
-
-                                    <div className="form-pack-flight-top-2-div">
-                                        <div className="form-pack-flight-inputDiv">
-                                            <label className="form-pack-flight-label" for="airline">Aerolinea:</label>
-                                            <input value="" className="form-pack-flight-input" type="text" id="airline" name="airline" placeholder="Aerolinea"></input>
+                            <div className="up-form-pack-flight-top-1">
+                                <input onChange={flightHandleImageChange} multiple type="file" id="input-flight-create" name="productFile" ></input>
+                                <label className="up-add-img-label-pack-flight" htmlFor="input-flight-create">Images of the flight:</label>
+                                <h5 ref={refFlightErrorImgs} className='up-error-hidden'>File extension not allowed</h5>
+                                <div ref={refFlightImgsInput} className="up-img-section">
+                                    {oldImagesFlight.length > 0 ? oldImagesFlight.map((image, index) => (
+                                        <div key={index} className="uf-preview-image">
+                                            <img src={`http://localhost:3001/images/flights/product_${userId}/${image}`} alt={`Image ${index}`} />
+                                            <a onClick={(event) => removeImageFlight(index, event)}><i className="fa-solid fa-xmark"></i></a>
                                         </div>
-                                        <div className="form-pack-flight-inputDiv">
-                                            <label className="form-pack-flight-label" for="description">Descripcion:</label>
-                                            <input value="" className="form-pack-flight-input" type="text" id="description" name="description" placeholder="Descripcion"></input>
+                                    )) : null}
+                                    {newImagesFlight.length > 0 ? newImagesFlight.map((image, index) => (
+                                        <div key={index} className="cf-preview-image">
+                                            <img src={URL.createObjectURL(image)} alt={`Image ${index}`} />
+                                            <a onClick={(event) => removeNewImageFlight(index, event)}><i className="fa-solid fa-xmark"></i></a>
                                         </div>
-                                    </div>
-
-                                    <div className="form-pack-flight-top-2-div">
-                                        <div className="form-pack-flight-inputDiv">
-                                            <label className="form-pack-flight-label" for="departure"><i
-                                                className="fa-solid fa-plane-departure"></i></label>
-                                            <input value="" className="form-pack-flight-input" type="text" id="departure" name="departure" placeholder="Origen"></input>
-                                        </div>
-                                        <div className="form-pack-flight-inputDiv">
-                                            <label className="form-pack-flight-label" for="reach"><i
-                                                className="fa-solid fa-location-dot"></i></label>
-                                            <input value="" className="form-pack-flight-input" type="text" id="reach" name="reach" placeholder="Destino"></input>
-                                        </div>
-                                    </div>
-
-                                    <div className="form-pack-flight-top-2-div">
-                                        <div className="form-pack-flight-inputDiv">
-                                            <label className="form-pack-flight-label" for="departureDate">Fecha de
-                                                ida</label>
-                                            <input value="" className="form-pack-flight-input" type="date" id="departureDate" name="departureDate"></input>
-                                        </div>
-                                        <div className="form-pack-flight-inputDiv">
-                                            <label className="form-pack-flight-label" for="reachDate">Fecha de
-                                                vuelta</label>
-                                            <input value="" className="form-pack-flight-input" type="date" id="reachDate" name="reachDate"></input>
-                                        </div>
-                                    </div>
-
-                                    <div className="form-pack-flight-top-2-div">
-
-                                        <div className="form-pack-flight-inputDiv">
-                                            <label className="form-pack-flight-label" for="departureHour">Hora de
-                                                salida</label>
-                                            <input value="" className="form-pack-flight-input" type="time" id="departureHour" name="departureHour"></input>
-                                        </div>
-                                        <div className="form-pack-flight-inputDiv">
-                                            <label className="form-pack-flight-label" for="reachHour">Hora de
-                                                llegada</label>
-                                            <input value="" className="form-pack-flight-input" type="time" id="reachHour" name="reachHour"></input>
-                                        </div>
-
-                                    </div>
-
-                                    <div className="form-pack-flight-top-2-div">
-
-                                        <div className="form-pack-flight-inputDiv">
-                                            <label className="form-pack-flight-label" for="cabin.">Tipo de cabina:</label>
-                                            <select name="cabin" id="cabin">
-                                                <option value="">1</option>
-                                                <option value="">2</option>
-                                                <option value="">3</option>
-                                            </select>
-                                        </div>
-                                        <div className="form-pack-flight-inputDiv">
-                                            <label className="form-pack-flight-label" for="price">Precio:</label>
-                                            <input value="" className="form-pack-flight-input" type="number" id="price" name="price"></input>
-                                        </div>
-
-                                    </div>
-
+                                    )) : null}
+                                    <i ref={refFlightImgsIcon} onClick={handleFileIconClickFlight} className="up-add-img-icon fa-solid fa-circle-plus"></i>
                                 </div>
                             </div>
-                        </section>
-                        <section className="section-pack-2">
-                            <h2>Hotel</h2>
-                            <div className="create-package-hotel">
-                                <div className="form-pack-flight-top-1">
-                                    <input value="" type="file" id="input-flight-create" name="productFile" required></input>
-                                        <label className="add-img-label-pack-flight" for="input-flight-create">Ingrese una foto
-                                            del
-                                            producto:</label>
-                                        <label for="input-flight-create"><i className="fa-solid fa-image"></i></label>
+                            <div className="up-form-pack-flight-top-2">
+
+                                <div className="up-form-pack-flight-top-2-div">
+                                    <div className="up-form-pack-flight-inputDiv">
+                                        <label className="up-form-pack-flight-label" htmlFor="airline">Airline:</label>
+                                        <input ref={refFlightAirlineInput} onChange={flightAirlineChangeHandler} value={airline} className="up-form-pack-flight-input" type="text" id="airline" name="airline" ></input>
+                                    </div>
+                                    <div className="up-form-pack-flight-inputDiv">
+                                        <label className="up-form-pack-flight-label" htmlFor="descriptionF">Description:</label>
+                                        <input ref={refFlightDescriptionInput} onChange={flightDescriptionChangeHandler} value={descriptionFlight} className="up-form-pack-flight-input" type="text" id="descriptionF" name="descriptionF" ></input>
+                                    </div>
                                 </div>
 
-                                <div className="pack-hotel-top-2">
-                                    
-                                    <section className="pack-hotel-name-spot">
-                                        <div className="pack-hotel-inputDiv">
-                                            <label className="pack-hotel-label" for="name">Nombre:</label>
-                                            <input value="" className="pack-hotel-input" type="text" id="name" name="name"></input>
-                                        </div>
-                                        <div className="pack-hotel-inputDiv">
-                                            <label className="pack-hotel-label" for="spot">Ubicacion:</label>
-                                            <input value="" className="pack-hotel-input" type="text" id="spot" name="spot"></input>
-                                        </div>
-                                    </section>
-                                    
-                                    <section className="pack-hotel-description">
-                                        <div className="pack-hotel-inputDiv">
-                                            <label className="pack-hotel-label" for="descriptionH">Agregue una
-                                                descripcion:</label>
-                                            <input value="" className="pack-hotel-input" type="textarea" name="descriptionH" id="descriptionH"></input>
-                                        </div>
-                                    </section>
-                                    
-                                    <section className="pack-hotel-service ">
-                                        <div className="pack-hotel-inputDiv">
-                                            <label className="pack-hotel-label" for="service">Calidad de servico:</label>
-                                            <select name="service" id="service">
-                                                <option value="1">1</option>
-                                                <option value="2">2</option>
-                                                <option value="3">3</option>
-                                                <option value="4">4</option>
-                                                <option value="5">5</option>
-                                            </select>
-                                        </div>
-                                        <div className="pack-hotel-inputDiv">
-                                            <label className="pack-hotel-label" for="price">Precio por noche:</label>
-                                            <input value="" className="pack-hotel-input" type="number" name="price" id="price"></input>
-                                        </div>
-                                    </section>
-                                    
+                                <div className="up-form-pack-flight-top-2-div">
+                                    <div className="up-form-pack-flight-inputDiv">
+                                        <label className="up-form-pack-flight-label" htmlFor="departure">Departure:</label>
+                                        <input ref={refFlightDepartureInput} onChange={flightDepartureChangeHandler} value={departure} className="up-form-pack-flight-input" type="text" id="departure" name="departure" ></input>
+                                    </div>
+                                    <div className="up-form-pack-flight-inputDiv">
+                                        <label className="up-form-pack-flight-label" htmlFor="reach">Reach:</label>
+                                        <input ref={refFlightReachInput} onChange={flightReachChangeHandler} value={reach} className="up-form-pack-flight-input" type="text" id="reach" name="reach" ></input>
+                                    </div>
+                                </div>
 
+                                <div className="up-form-pack-flight-top-2-div">
+                                    <div className="up-form-pack-flight-inputDiv">
+                                        <label className="up-form-pack-flight-label" htmlFor="departureDate">Departure Date:</label>
+                                        <input ref={refFlightDepartureDateInput} onChange={flightDepartureDateChangeHandler} value={departureDate} className="up-form-pack-flight-input" type="date" id="departureDate" name="departureDate"></input>
+                                    </div>
+                                    <div className="up-form-pack-flight-inputDiv">
+                                        <label className="up-form-pack-flight-label" htmlFor="reachDate">Return Date:</label>
+                                        <input ref={refFlightReachDateInput} onChange={flightReachDateChangeHandler} value={reachDate} className="up-form-pack-flight-input" type="date" id="reachDate" name="reachDate"></input>
+                                    </div>
+                                </div>
+
+                                <div className="up-form-pack-flight-top-2-div">
+
+                                    <div className="up-form-pack-flight-inputDiv">
+                                        <label className="up-form-pack-flight-label" htmlFor="departureHour">Departure Hour:</label>
+                                        <input ref={refFlightDepartureHourInput} onChange={flightDepartureHourChangeHandler} value={departureHour} className="up-form-pack-flight-input" type="time" id="departureHour" name="departureHour"></input>
+                                    </div>
+                                    <div className="up-form-pack-flight-inputDiv">
+                                        <label className="up-form-pack-flight-label" htmlFor="reachHour">Return Hour:</label>
+                                        <input ref={refFlightReachHourInput} onChange={flightReachHourChangeHandler} value={reachHour} className="up-form-pack-flight-input" type="time" id="reachHour" name="reachHour"></input>
+                                    </div>
+
+                                </div>
+
+                                <div className="up-form-pack-flight-top-2-div">
+
+                                    <div className="up-form-pack-flight-inputDiv">
+                                        <label className="up-form-pack-flight-label" htmlFor="cabin.">Cabin Type:</label>
+                                        <select ref={refFlightCabinInput} onChange={flightCabinChangeHandler} value={cabin} className='up-form-pack-flight-select' name="cabin" id="cabin">
+                                            <option value="">Select one</option>
+                                            <option value="Economy">Economy</option>
+                                            <option value="Premium">Premium</option>
+                                            <option value="Premium VIP">Premium VIP</option>
+                                        </select>
+                                    </div>
+                                    <div className="up-form-pack-flight-inputDiv">
+                                        <label className="up-form-pack-flight-label" htmlFor="priceF">Price:</label>
+                                        <input ref={refFlightPriceInput} onChange={flightPriceChangeHandler} value={priceFlight} className="up-form-pack-flight-input" type="number" id="priceF" name="priceF"></input>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </section>
+                    <section className="up-section-pack-2">
+                        <h2>Hotel</h2>
+                        <div className="up-create-package-hotel">
+                            <div className="up-form-pack-flight-top-1">
+                                <input onChange={hotelHandleImageChange} multiple type="file" id="input-hotel-create" name="productFile" ></input>
+                                <label className="up-add-img-label-pack-flight" htmlFor="input-flight-create">Images of the hotel:</label>
+                                <h5 ref={refHotelErrorImgs} className='up-error-hidden'>File extension not allowed</h5>
+                                <div ref={refHotelImgsInput} className="up-img-section">
+                                    {oldImagesHotel.length > 0 ? oldImagesHotel.map((image, index) => (
+                                        <div key={index} className="uf-preview-image">
+                                            <img src={`http://localhost:3001/images/hotels/product_${userId}/${image}`} alt={`Image ${index}`} />
+                                            <a onClick={(event) => removeImageHotel(index, event)}><i className="fa-solid fa-xmark"></i></a>
+                                        </div>
+                                    )) : null}
+                                    {newImagesHotel.length > 0 ? newImagesHotel.map((image, index) => (
+                                        <div key={index} className="cf-preview-image">
+                                            <img src={URL.createObjectURL(image)} alt={`Image ${index}`} />
+                                            <a onClick={(event) => removeNewImageHotel(index, event)}><i className="fa-solid fa-xmark"></i></a>
+                                        </div>
+                                    )) : null}
+                                    <i ref={refHotelImgsIcon} onClick={handleFileIconClickHotel} className="up-add-img-icon fa-solid fa-circle-plus"></i>
                                 </div>
                             </div>
-                        </section>
-                    </div>
 
-                    <div className="pack-hotel-button">
-                        <button className="" type="submit">Crear</button>
-                    </div>
+                            <div className="up-pack-hotel-top-2">
 
-                </form>
-            </main>
+                                <section className="up-pack-hotel-name-spot">
+                                    <div className="up-pack-hotel-inputDiv">
+                                        <label className="up-pack-hotel-label" htmlFor="name">Name:</label>
+                                        <input ref={refHotelNameInput} onChange={hotelHandleNameChange} value={name} className="up-pack-hotel-input" type="text" id="name" name="name"></input>
+                                    </div>
+                                    <div className="up-pack-hotel-inputDiv">
+                                        <label className="up-pack-hotel-label" htmlFor="spot">Location:</label>
+                                        <input ref={refHotelUbiInput} onChange={hotelHandleSpotChange} value={spot} className="up-pack-hotel-input" type="text" id="spot" name="spot"></input>
+                                    </div>
+                                </section>
+
+                                <section className="up-pack-hotel-description">
+                                    <div className="up-pack-hotel-inputDiv">
+                                        <label className="up-pack-hotel-label" htmlFor="descriptionH">Description:</label>
+                                        <input ref={refHotelDescriptionInput} onChange={hotelHandleDescriptionChange} value={descriptionHotel} className="up-pack-hotel-input" type="textarea" name="descriptionH" id="descriptionH"></input>
+                                    </div>
+                                </section>
+
+                                <section className="up-pack-hotel-service ">
+                                    <div className="up-pack-hotel-inputDiv">
+                                        <label className="up-pack-hotel-label" htmlFor="service">Service:</label>
+                                        <select ref={refHotelServiceInput} onChange={hotelHandleServiceChange} value={service} className='up-form-pack-flight-select' name="service" id="service">
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                        </select>
+                                    </div>
+                                    <div className="up-pack-hotel-inputDiv">
+                                        <label className="up-pack-hotel-label" htmlFor="priceH">Price By Night:</label>
+                                        <input ref={refHotelPriceInput} onChange={hotelHandlePriceChange} value={priceHotel} className="up-pack-hotel-input" type="number" name="priceH" id="priceH"></input>
+                                    </div>
+                                </section>
+
+
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+                <div className="up-pack-hotel-button">
+                    <button type="submit">Create</button>
+                </div>
+
+            </form>
         </div>
-    );
+    )
 }
 
-export default PackageUpdate;
+export default PackageUpdate
