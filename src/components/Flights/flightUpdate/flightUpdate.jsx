@@ -141,7 +141,6 @@ function FlightCreate() {
 
         const allowedExtensions = /\.(jpg|jpeg|png|gif)$/i;
         const validatedImages = [];
-
         files.forEach((file) => {
             if (allowedExtensions.test(file.name)) {
                 validatedImages.push(file);
@@ -154,7 +153,7 @@ function FlightCreate() {
         });
         refImagesInput.current.className = 'uf-img-section'
         refImageIcon.current.className = 'uf-add-img-icon fa-solid fa-circle-plus'
-        setNewImages([...validatedImages]);
+        setNewImages([ ...newImages, ...validatedImages]);
     };
     const airlineChangeHandler = (e) => {
         const airline = e.target.value.charAt(0).toUpperCase() + e.target.value.slice(1)
@@ -253,8 +252,8 @@ function FlightCreate() {
         const updatedRenovedImages = [...removeImages, removedImage]
         setOldImages(updatedImages);
         setRemoveImages(updatedRenovedImages)
-      };
-      
+    };
+
 
 
     const removeNewImage = (index, event) => {
@@ -270,14 +269,13 @@ function FlightCreate() {
         const errors = [];
 
         // Perform validations
-        // -------------------------------------------------------------------
         if (oldImages.length === 0 && newImages.length === 0) {
             errors.push('images');
             refImagesInput.current.className = 'cf-img-section-error'
             refImageIcon.current.className = 'cf-add-img-icon-error fa-solid fa-circle-plus'
         } else {
             oldImages.forEach(image => {
-                newData.append("oldImage", image);
+                newData.append("oldImages", image);
             })
             newImages.forEach(image => {
                 newData.append("productFile", image);
@@ -286,7 +284,6 @@ function FlightCreate() {
                 newData.append("removeImages", image);
             })
         }
-        // -------------------------------------------------------------------
         if (!isValidAirline(airline)) {
             errors.push('airline');
             refAirlineInput.current.className = 'uf-error-input'
@@ -349,26 +346,28 @@ function FlightCreate() {
         }
 
         if (errors.length === 0) {
-            const headers = {};
-            const permanentToken = localStorage.getItem('token');
-            const token = sessionStorage.getItem('token');
-            if (token) headers.authorization = token;
-            if (permanentToken) headers.authorization = permanentToken;
-            // fetchApi(`http://localhost:3001/api/products/create/flight`, {
-            //     method: 'POST',
-            //     headers,
-            //     body: newData,
-            // });
+            async function fetchSend(data) {
+                const headers = {};
+                const permanentToken = localStorage.getItem('token');
+                const token = sessionStorage.getItem('token');
+                if (token) headers.authorization = token;
+                if (permanentToken) headers.authorization = permanentToken;
+                const fetchResponse = await fetchApi(`http://localhost:3001/api/products/update/flight/${id}`, {
+                    method: 'PUT',
+                    headers,
+                    body: data,
+                });
+                if(fetchResponse.info.status === 200) window.location.href = `/flightsDetail/${id}`
+                if(fetchResponse.info.status === 400) console.log(fetchResponse);
+            }
+
+            fetchSend(newData)
         } else {
             console.log('Validation errors:', errors);
         }
     };
 
-const showImgStatus = ()=>{
-    console.log(oldImages)
-    console.log(newImages)
-    console.log(removeImages)
-}
+
 
     return (
         <div className="App-flightUpdate">
@@ -387,7 +386,7 @@ const showImgStatus = ()=>{
                                         <img src={`http://localhost:3001/images/flights/product_${userId}/${image}`} alt={`Image ${index}`} />
                                         <a onClick={(event) => removeImage(index, event)}><i className="fa-solid fa-xmark"></i></a>
                                     </div>
-                                )): null}
+                                )) : null}
                                 {newImages.length > 0 ? newImages.map((image, index) => (
                                     <div key={index} className="cf-preview-image">
                                         <img src={URL.createObjectURL(image)} alt={`Image ${index}`} />
@@ -396,8 +395,6 @@ const showImgStatus = ()=>{
                                 )) : null}
                                 <label htmlFor="input-flight-create"><i ref={refImageIcon} className="uf-add-img-icon fa-solid fa-circle-plus"></i></label>
                             </div>
-                            <button onClick={showImgStatus}>Show image status</button>
-
                         </div>
 
                         <div className="uf-form-createFlight-top-2">

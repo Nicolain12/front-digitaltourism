@@ -60,6 +60,9 @@ function HotelDetail() {
 
         fetchData();
     }, []);
+    const toEditHotel = ()=>{
+        window.location.href = `/hotelsUpdate/${hotel.id}`
+    }
 
     return (
         <div className="App-hotelDetail">
@@ -115,7 +118,7 @@ function HotelDetail() {
 
                 </section>
                 {userLogged.id == hotel.user_id ? <section className="hd-detail-flight-button-section">
-                    <button className="hd-detail-flight-button btn-df-edit">Edit</button>
+                    <button onClick={toEditHotel} className="hd-detail-flight-button btn-df-edit">Edit</button>
                     <button className="hd-detail-flight-button btn-df-delete">Delete</button>
                 </section> : <section className="hd-detail-flight-button-section">
                     <div className="hd-detail-flight-button-buy">

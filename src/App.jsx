@@ -72,7 +72,7 @@ function App() {
         <Route exact path="/hotels" element={<Hotels />} />
         <Route exact path="/hotelCreate" element={<HotelCreate />} />
         <Route exact path="/hotelDetail/:id" element={<HotelDetail />} />
-        <Route exact path="/hotelUpdate" element={<HotelUpdate />} />
+        <Route exact path="/hotelsUpdate/:id" element={<HotelUpdate />} />
 
         {/* Packages */}
         <Route exact path="/packages" element={<Packages />} />
