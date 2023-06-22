@@ -22,7 +22,6 @@ import Profile from './components/User/profile/profile'
 import Loggin from './components/User/loggin/loggin'
 import Register from './components/User/register/register'
 import Cart from './components/cart/cart'
-import DeleteConfirmUser from './components/User/deleteConfirm/deleteConfirm'
 import EditUser from './components/User/editUser/editUser'
 
 function App() {
@@ -85,7 +84,6 @@ function App() {
         <Route exact path="/loggin" element={<Loggin />} />
         <Route exact path="/Register" element={<Register />} />
         <Route exact path="/cart" element={<Cart />} />
-        <Route exact path="/deleteConfirmUser" element={<DeleteConfirmUser />} />
         <Route exact path="/editUser" element={<EditUser />} />
 
 

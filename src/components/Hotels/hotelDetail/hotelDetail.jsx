@@ -2,11 +2,15 @@ import React, { useState, useRef, useEffect } from 'react';
 import './hotelDetail.css';
 import { useParams } from 'react-router-dom';
 import Slider from '../../slider/slider';
-
-
+import DeleteProduct from '../../Popups/deleteProduct/deleteProduct';
+import IsPack from '../../Popups/isPack/isPack';
 
 function HotelDetail() {
     const { id } = useParams();
+    const [packPopup, setPackPopup] = useState(false)
+    const [packId, setPackId] = useState('')
+    const [isPack, setIsPack] = useState(false);
+    const [buttonPopup, setButtonPopup] = useState(false)
     const [hotel, setHotel] = useState({});
     const [hotelImgs, setHotelImgs] = useState([]);
     async function fetchApi(endpoint, config) {
@@ -26,7 +30,7 @@ function HotelDetail() {
     }
     const userLogged = JSON.parse(sessionStorage.getItem('userLogged'))
 
-
+ 
     useEffect(() => {
         async function fetchData() {
             try {
@@ -53,6 +57,10 @@ function HotelDetail() {
                 }
                 setHotelImgs(imagesToPush)
                 setHotel(parsedHotelData);
+                if (hotelData.info.packId) {
+                    setIsPack(true)
+                    setPackId(hotelData.info.packId)
+                }
             } catch (err) {
                 console.error(err);
             }
@@ -61,9 +69,19 @@ function HotelDetail() {
         fetchData();
     }, []);
     const toEditHotel = ()=>{
+        if (isPack) {
+            setPackPopup(true)
+        } else {
         window.location.href = `/hotelsUpdate/${hotel.id}`
+        }
     }
-
+    const deleteButton = () => {
+        if (isPack) {
+            setPackPopup(true)
+        } else {
+            setButtonPopup(true)
+        }
+    }
     return (
         <div className="App-hotelDetail">
             <main className="hd-main-detail-flight">
@@ -119,13 +137,15 @@ function HotelDetail() {
                 </section>
                 {userLogged.id == hotel.user_id ? <section className="hd-detail-flight-button-section">
                     <button onClick={toEditHotel} className="hd-detail-flight-button btn-df-edit">Edit</button>
-                    <button className="hd-detail-flight-button btn-df-delete">Delete</button>
+                    <button onClick={deleteButton} className="hd-detail-flight-button btn-df-delete">Delete</button>
                 </section> : <section className="hd-detail-flight-button-section">
                     <div className="hd-detail-flight-button-buy">
                         <p>Price: ${hotel.price}</p>
                         <button className="hd-detail-flight-button btn-df-buy">Buy</button>
                     </div>
                 </section>}
+                <DeleteProduct product={'hotel'} id={id} trigger={buttonPopup} setTrigger={setButtonPopup}></DeleteProduct>
+                <IsPack packId={packId} trigger={packPopup} setTrigger={setPackPopup}></IsPack>
             </main>
 
         </div>

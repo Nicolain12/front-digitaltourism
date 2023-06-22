@@ -53,7 +53,7 @@ function deleteUser(props) {
                 <div className="choose-main-div-lo">
                     <div className='close-popup-lo'><i onClick={closePopup} className="fa-solid fa-xmark"></i></div>
                     <div className="choose-title-lo">
-                        <h3>The session active will be close</h3>
+                        <h3>The user will be permanently deleted</h3>
                     </div>
                     <div className="choose-options-lo">
                         <Link className='loggout-cancel-btn' onClick={closePopup}>Cancel</Link>

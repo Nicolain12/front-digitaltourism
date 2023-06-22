@@ -3,11 +3,17 @@ import './flightDetail.css';
 import { Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import Slider from '../../slider/slider';
+import DeleteProduct from '../../Popups/deleteProduct/deleteProduct';
+import IsPack from '../../Popups/isPack/isPack';
 
 function FlightDetail() {
     const { id } = useParams();
+    const [buttonPopup, setButtonPopup] = useState(false)
+    const [packPopup, setPackPopup] = useState(false)
+    const [packId, setPackId] = useState('')
     const [flight, setFlight] = useState({});
     const [flightImgs, setFlightImgs] = useState([]);
+    const [isPack, setIsPack] = useState(false);
     async function fetchApi(endpoint, config) {
         try {
             const response = await fetch(endpoint, config);
@@ -52,16 +58,32 @@ function FlightDetail() {
                 }
                 setFlightImgs(imagesToPush)
                 setFlight(parsedFlightData);
+                if (flightData.info.packId) {
+                    setIsPack(true)
+                    setPackId(flightData.info.packId)
+                }
             } catch (err) {
                 console.error(err);
             }
-        } 
+        }
         fetchData();
     }, []);
 
-const toEditFlight = ()=>{
-    window.location.href = `/flightsUpdate/${flight.id}`
-}
+    const deleteButton = () => {
+        if (isPack) {
+            setPackPopup(true)
+        } else {
+            setButtonPopup(true)
+        }
+    }
+
+    const toEditFlight = () => {
+        if (isPack) {
+            setPackPopup(true)
+        } else {
+            window.location.href = `/flightsUpdate/${flight.id}`
+        }
+    }
     return (
         <div className="App-flightDetail">
             <main className="fd-main-detail-flight">
@@ -120,7 +142,7 @@ const toEditFlight = ()=>{
 
                 {userLogged.id == flight.user_id ? <section className="fd-detail-flight-button-section">
                     <button onClick={toEditFlight} className="fd-detail-flight-button btn-df-edit">Edit</button>
-                    <button className="fd-detail-flight-button btn-df-delete">Delete</button>
+                    <button onClick={deleteButton} className="fd-detail-flight-button btn-df-delete">Delete</button>
                 </section> : <section className="fd-detail-flight-button-section">
                     <div className="fd-detail-flight-button-buy">
                         <p>Price: ${flight.price}</p>
@@ -128,7 +150,8 @@ const toEditFlight = ()=>{
                     </div>
                 </section>}
 
-
+                <DeleteProduct product={'flight'} id={id} trigger={buttonPopup} setTrigger={setButtonPopup}></DeleteProduct>
+                <IsPack packId={packId} trigger={packPopup} setTrigger={setPackPopup}></IsPack>
             </main>
 
         </div>

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 function loggOut(props) {
 
-
+ 
     const closePopup = () => {
         props.setTrigger(false)
     }

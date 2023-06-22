@@ -2,11 +2,11 @@ import React, { useEffect, useState, useRef } from 'react'
 import './packageDetail.css'
 import { useParams } from 'react-router-dom'
 import Slider from '../../slider/slider'
-
-
+import DeleteProduct from '../../Popups/deleteProduct/deleteProduct';
 
 function PackageDetail() {
     const { id } = useParams()
+    const [buttonPopup, setButtonPopup] = useState(false)
     const [packageProduct, setPackageProduct] = useState({})
     const [packageImgsF, setPackageImgsF] = useState([])
     const [packageImgsH, setPackageImgsH] = useState([])
@@ -26,7 +26,9 @@ function PackageDetail() {
         }
     }
     const userLogged = JSON.parse(sessionStorage.getItem('userLogged'))
-
+    const deleteButton = () => {
+        setButtonPopup(true)
+    }
     const refSliderDiv = useRef()
     useEffect(() => {
         async function fetchData() {
@@ -181,14 +183,14 @@ function PackageDetail() {
 
                 {userLogged.id == packageProduct.package.user_id ?  <section className="detail-flight-button-section">
                 <button onClick={toEditPackage} className="detail-flight-button btn-df-edit">Update</button>
-                    <button className="detail-flight-button btn-df-delete">Delete</button>
+                    <button onClick={deleteButton} className="detail-flight-button btn-df-delete">Delete</button>
                 </section> : <section className="detail-flight-button-section">
                 <div className="detail-flight-button-buy">
                         <p>Price: ${packageProduct.package.price}</p>
                         <button className="detail-flight-button btn-df-buy">Buy</button>
                     </div>
                 </section>}
-
+                <DeleteProduct product={'package'} id={id} trigger={buttonPopup} setTrigger={setButtonPopup}></DeleteProduct>
             </main>
 
         </div>
