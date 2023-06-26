@@ -4,6 +4,7 @@
 
 header {
     width: 100%;
+    height: 8vh;
     background-color: #304a73;
     display: flex;
     justify-content: space-between;
