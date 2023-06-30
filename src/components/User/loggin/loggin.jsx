@@ -181,6 +181,7 @@ function Loggin() {
             <button id="button-loggin" className="botons" type="submit">loggin</button>
           </div>
           <p> forgot password?<Link to="#"> Click here</Link></p>
+          <p> Need an acount?<Link to="/register"> Click here</Link></p>
         </form>
       </main>
     </div>

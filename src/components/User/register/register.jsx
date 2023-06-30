@@ -306,11 +306,10 @@ function Register() {
                     onSubmit={submitFetch}
                 >
                     <p className="error-msg"></p>
-                    <h4>Formulario Registro</h4>
                     <div className="register-top">
                         <div className="input-div">
                             <label className="first-label" htmlFor="name-register">
-                                Ingrese su Nombre:
+                                Name:
                             </label>
                             <h5 ref={nameErr} className="error-set-hidden"></h5>
                             <input
@@ -325,7 +324,7 @@ function Register() {
                             />
                         </div>
                         <div className="input-div">
-                            <label htmlFor="surname-register">Ingrese su Apellido:</label>
+                            <label htmlFor="surname-register">Surname:</label>
                             <h5 ref={surnameErr} className="error-set-hidden"></h5>
                             <input
                                 className="controls-register"
@@ -343,7 +342,7 @@ function Register() {
 
                     <div className="register-middle">
                         <div className="input-div">
-                            <label htmlFor="email-register">Ingrese su Email:</label>
+                            <label htmlFor="email-register">Email:</label>
                             <div className="set-password-div">
                                 <h5 ref={emailErr} className="error-set-hidden"></h5>
                                 <h5 id="email-set-alert-register" className="error-set-hidden"></h5>
@@ -362,7 +361,7 @@ function Register() {
                         </div>
                         <div className="age-type">
                             <div className="input-div">
-                                <label htmlFor="age-register">Fecha de nacimiento:</label>
+                                <label htmlFor="age-register">Birth day:</label>
                                 <h5 ref={ageErr} className="error-set-hidden"></h5>
                                 <input
                                     className="controls-register"
@@ -377,11 +376,11 @@ function Register() {
                                 <p className="error-msg"></p>
                             </div>
                             <div className="input-div">
-                                <label htmlFor="admin-register">Tipo de usuario:</label>
+                                <label htmlFor="admin-register">User type:</label>
                                 <h5 ref={adminErr} className="error-set-hidden"></h5>
                                 <select name="isAdmin" id="admin" value={admin} onChange={handleAdminChange} ref={refAdmin} onBlur={validationAdmin}>
-                                    <option value="false">Cliente</option>
-                                    <option value="true">Administrador</option>
+                                    <option value="false">Client</option>
+                                    <option value="true">Admin</option>
                                 </select>
                                 <p className="error-msg"></p>
                             </div>
@@ -390,7 +389,7 @@ function Register() {
 
                     <div className="register-end">
                         <div className="input-div">
-                            <label htmlFor="password-register">Ingrese su Contraseña:</label>
+                            <label htmlFor="password-register">Password:</label>
                             <div className="set-password-div">
                                 <h5 ref={passwordErr} className="error-set-hidden"></h5>
                                 {/* password-cap-register */}
@@ -413,7 +412,7 @@ function Register() {
                         </div>
 
                         <div className="input-div">
-                            <label htmlFor="passwordConfirm">Confirme su Contraseña:</label>
+                            <label htmlFor="passwordConfirm">Confirm password:</label>
                             <h5 ref={passwordConfirmErr} className="error-set-hidden"></h5>
                             <input
                                 className="controls-register"

@@ -1,0 +1,129 @@
+.App-mainSlider {
+    width: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.ms-image-reach-div {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.ms-active:hover{
+    box-shadow: 0 0 30px rgb(100, 100, 100);
+    z-index: 5;
+}
+
+.ms-image-reach-div:hover h2 {
+    text-decoration: underline;
+    z-index: 6;
+}
+
+.ms-reach {
+    position: absolute;
+    bottom: 5%;
+    padding: 1%;
+    border-radius: 5px;
+    background-color: rgba(176, 183, 199, 0.5);
+    color: #000000;
+}
+
+.ms-slider-arrows {
+    width: 95vw;
+    display: flex;
+    position: absolute;
+    justify-content: space-between;
+
+}
+
+.ms-arrows-slider.fa-solid.fa-arrow-left {
+    font-size: 30px;
+    border: 1px solid white;
+    color: white;
+    background-color: #1f53c5;
+    z-index: 2;
+    padding: 1%;
+    border-radius: 20px;
+    position: absolute;
+    top: 50%;
+    left: 2%;
+    cursor: pointer;
+    user-select: none;
+}
+
+.ms-arrows-slider.fa-solid.fa-arrow-left:hover {
+    font-size: 34px;
+}
+
+.ms-arrows-slider.fa-sharp.fa-solid.fa-arrow-right {
+    font-size: 30px;
+    border: 1px solid white;
+    color: white;
+    background-color: #1f53c5;
+    z-index: 2;
+    padding: 1%;
+    border-radius: 20px;
+    position: absolute;
+    top: 50%;
+    right: 2%;
+    cursor: pointer;
+    user-select: none;
+}
+
+.ms-fa-arrow-right:hover {
+    font-size: 34px;
+}
+
+.ms-slider-images-div {
+    width: 100%;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.ms-active {
+    width: 100%;
+    height: 100%;
+    max-height: 350px;
+}
+
+.ms-active-div {
+    width: 100%;
+    height: 100%;
+}
+
+.ms-not-active {
+    display: none;
+}
+
+@media (min-width: 768px) {
+    .ms-slider-images-div {
+        height: 60vh;
+        margin-top: 2%;
+    }
+
+    .ms-active {
+        width: 80%;
+        height: 100%;
+        max-height: none;
+        border-radius: 10px;
+    }
+
+    .ms-active-div {
+        width: 100%;
+        height: 100%;
+        justify-content: center;
+        align-items: center;
+        margin: 0;
+    }
+
+}

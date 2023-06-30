@@ -594,32 +594,6 @@ function PackageUpdate() {
         fileInput.click();
     };
 
-    const showImgStatus = (e) => {
-        e.preventDefault()
-        console.log('-------------------------------------')
-        console.log('FLIGHTS')
-        console.log('-------------------------------------')
-        console.log('oldImages:')
-        console.log(oldImagesFlight)
-        console.log('-------------------------------------')
-        console.log('newImages:')
-        console.log(newImagesFlight)
-        console.log('-------------------------------------')
-        console.log('removeImages:')
-        console.log(removeImagesFlight)
-        console.log('-------------------------------------')
-        console.log('HOTELS')
-        console.log('-------------------------------------')
-        console.log('oldImages:')
-        console.log(oldImagesHotel)
-        console.log('-------------------------------------')
-        console.log('newImages:')
-        console.log(newImagesHotel)
-        console.log('-------------------------------------')
-        console.log('removeImages:')
-        console.log(removeImagesHotel)
-        console.log('-------------------------------------')
-    }
     return (
         <div className="App-packageCreate">
             <form onSubmit={handlePackageSubmit} className="up-crate-package">
@@ -628,7 +602,6 @@ function PackageUpdate() {
                     <label htmlFor="discount">Discount (%):</label>
                     <input ref={refDiscount} onChange={handleDiscount} value={discount} className='up-create-package-discount-input' type="number" name="discount" id="discount"></input>
                 </div>
-                <button onClick={showImgStatus}>Show image status</button>
                 <div className="up-create-package-main-div">
                     <section>
                         <h2>Flight</h2>

@@ -12,6 +12,7 @@
     display: flex;
     flex-direction: column;
     background-color: white;
+    margin-bottom: 2%;
 
 }
 
@@ -43,8 +44,8 @@
 .main-select {
     width: 60%;
     height: 100%;
-    margin-top: 3%;
-    margin-bottom: 3%;
+    margin-top: 1%;
+    margin-bottom: 1%;
     margin-left: 2%;
 }
 
@@ -54,6 +55,8 @@
     background-color: white;
     border: none;
 }
+
+
 
 /*NAV-GAPS*/
 
@@ -131,6 +134,547 @@
     margin-bottom: 20px;
 }
 
+/* Nav products */
+.mi-articles-products{
+    display: flex ;
+    flex-direction: column ;
+    align-items: center;
+    margin: 1% 0;
+    width: 100%;
+}
+.mi-articles-products-hidden{
+    display: hidden;
+}
+.mi-product-flight-hidden, 
+.mi-product-hotel-hidden, 
+.mi-product-package-hidden{
+    display: none;
+}
+.mi-product-flight-hidden h3, 
+.mi-product-hotel-hidden h3, 
+.mi-product-package-hidden h3{
+    display: inherit;
+}
+.mi-product-flight, 
+.mi-product-hotel, 
+.mi-product-package{
+    display: block;
+    width: 80%;
+}
+.mi-product-flight h3, 
+.mi-product-hotel h3, 
+.mi-product-package h3{
+    display: inherit;
+    width: 100%;
+}
+
+.mi-product-hotel-inner-div{
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+}
+/* flight product */
+.mi-article-flight {
+    cursor: pointer;
+    width: 100%;
+    margin: 3% 0;
+    padding: 2%;
+    background-color: #ffffff;
+    border-bottom: 5px solid rgb(100, 100, 100);
+    border-right: 5px solid rgb(100, 100, 100);
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: all 0.2s;
+}
+
+.mi-article-flight:hover {
+    border-bottom: 1px solid rgb(100, 100, 100);
+    border-right: 1px solid rgb(100, 100, 100);
+}
+
+.mi-img-flight {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 95%;
+    height: 100%;
+}
+
+.mi-img-flight-list  {
+    width: 100%;
+    height: 250px;
+    border-radius: 20px;
+}
+
+.mi-info-flight-div {
+    width: 95%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+}
+
+.mi-info-flight-div div {
+    width: 100%;
+    display: flex;
+}
+
+.mi-info-flight-div-1 {
+    justify-content: space-around;
+}
+
+.mi-info-flight-div-2 {
+    flex-direction: column;
+}
+
+.mi-info-flight-div-2 h4 {
+    margin-bottom: 0;
+}
+
+.mi-departure-info {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.mi-date-f {
+    border-right: #000 1px solid;
+}
+
+.mi-departure-info div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 45%;
+    height: 100%;
+}
+
+.mi-departure-info div h4 {
+    align-self: self-start;
+    margin: 0;
+}
+
+.mi-departure-info div p {
+    width: 100%;
+    text-align: center;
+    font-size: 14px;
+}
+
+.mi-date {
+    margin-top: 4%;
+    margin-bottom: 2%;
+
+}
+
+.mi-line-f {
+    width: 75%;
+    border-top: #000 1px solid;
+}
+
+.mi-hour {
+    margin-top: 2%;
+}
+
+.mi-cabin-type {
+    display: flex;
+}
+
+.mi-cabin-type h4 {
+    font-size: 14px;
+}
+
+.mi-cabin-type p {
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    margin-left: 2%;
+}
+
+.mi-info-flight-div-5 {
+    justify-content: space-between;
+}
+
+.mi-info-flight-div-5 p {
+    margin: 0;
+    width: 50%;
+    font-size: 22px;
+}
+
+
+.mi-fa-plane-up.add-cart-flight {
+    color: #304a73;
+    font-size: 30px;
+}
+.mi-fa-solid.fa-plane-circle-check.added-cart-flight {
+    color: #304a73;
+    font-size: 30px;
+}
+.mi-add-cart-flight:hover {
+    color: #1f53c5;
+}
+
+
+
+@media (min-width: 500px) {
+    .mi-article-flight {
+        width: 400px;
+    }
+}
+
+@media (min-width: 768px) {
+    .mi-article-flight {
+        width: 100%;
+        max-width: 1200px;
+        max-height: 300px;
+        height: 40%;
+        flex-direction: row;
+    }
+
+    .mi-info-flight-div {
+        margin-left: 2%;
+        justify-content: space-between;
+        margin-bottom: 0
+    }
+    .mi-img-flight-list  {
+        height: 330px;
+    }
+    
+
+    .mi-info-flight-div-5 p {
+        display: flex;
+        align-items: flex-end;
+        margin-bottom: 0%;
+    }
+
+}
+/* flight product END*/
+/* hotel product START */
+.mi-main-article-hotel {
+    padding: 2%;
+    margin: 2% 0;
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    border-bottom: 5px solid rgb(100, 100, 100);
+    border-right: 5px solid rgb(100, 100, 100);
+    transition: all 0.2s;
+}
+
+.mi-main-article-hotel:hover {
+    border-bottom: 1px solid rgb(100, 100, 100);
+    border-right: 1px solid rgb(100, 100, 100);
+}
+
+.mi-hotel-img {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+.mi-hotel-img img {
+    width: 100%;
+    height: 200px;
+}
+
+.mi-name-hotel {
+    display: flex;
+    justify-content: space-between;
+}
+
+.mi-service-hotel {
+    background-color: #b0b7c7;
+    border-radius: 9px;
+    height: fit-content;
+    padding: 2%;
+    position: relative;
+    bottom: 20px;
+}
+
+.mi-service-hotel p {
+    margin: 0;
+}
+
+.mi-spot-hotel p {
+    margin: 0;
+}
+
+.mi-price-hotel {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2%
+}
+
+.mi-price-hotel p {
+    margin: 0;
+    width: 50%;
+    font-size: 20px;
+    display: flex;
+    align-items: flex-end;
+}
+
+.mi-price-hotel a {
+    text-decoration: none;
+    margin-bottom: 2%;
+    margin-right: 2%;
+}
+
+.mi-price-hotel a i {
+    color: #304a73;
+    font-size: 30px;
+}
+
+.mi-add-cart-flight:hover {
+    color: #1f53c5;
+}
+
+@media (min-width: 331px) {
+    .mi-main-article-hotel {
+        width: 265px;
+        margin: 3% 3%;
+    }
+}
+
+@media (min-width: 768px) {
+    .mi-main-article-hotel {
+        width: 40%;
+    }
+}
+
+@media (min-width: 1024px) {
+    .mi-main-article-hotel {
+        width: 25%;
+        margin: 3% 1%;
+    }
+}
+
+/* hotels product END */
+
+/* package products START */
+.mi-package-article {
+    cursor: pointer;
+    width: 80%;
+    margin: 3% 0;
+    padding: 0 1%;
+    background-color: #ffffff;
+    border-bottom: 5px solid rgb(100, 100, 100);
+    border-right: 5px solid rgb(100, 100, 100);
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: all 0.2s;
+}
+
+.mi-package-article:hover {
+    border-bottom: 1px solid rgb(100, 100, 100);
+    border-right: 1px solid rgb(100, 100, 100);
+}
+
+.mi-img-div-pack {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 95%;
+    height: 100%;
+}
+
+.mi-img-package-list {
+    width: 350px;
+    height: 250px;
+    border-radius: 20px;
+}
+
+.mi-Departure-reach-pack {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+}
+
+.mi-Departure-reach-pack h3 {
+    font-size: 16px;
+    margin: 1% 0;
+}
+
+.mi-second-pack-main-div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.mi-img-div-pack {
+    width: 100%;
+    margin-bottom: 2%;
+    padding: 2%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.mi-img-div-pack img {
+    width: 100%;
+}
+
+.mi-main-pack-info {
+    width: 100%;
+}
+
+.mi-info-pack-div-2 {
+    width: 100%;
+    flex-direction: column;
+}
+
+.mi-info-pack-div-2 h4 {
+    margin-bottom: 0;
+}
+
+.mi-departure-info-pack {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.mi-departure-info-pack div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 45%;
+    height: 100%;
+}
+
+.mi-departure-info-pack div h4 {
+    align-self: self-start;
+    margin: 0;
+}
+
+.mi-departure-info-pack div p {
+    width: 100%;
+    text-align: center;
+    font-size: 14px;
+}
+
+.mi-date-pack {
+    margin-top: 4%;
+    margin-bottom: 2%;
+
+}
+
+.mi-hour-pack {
+    margin-top: 2%;
+}
+
+.mi-hotel-info-start {
+    text-align: center;
+    font-weight: 600;
+    border-top: #000 1px dashed;
+    font-size: 18px;
+}
+
+.mi-hotel-info-start h5 {
+    margin-top: 3%;
+}
+.mi-flight-info-start {
+    text-align: center;
+    font-weight: 600;
+    font-size: 18px;
+}
+
+.mi-flight-info-start h5 {
+    margin-top: 3%;
+}
+
+.mi-name-hotel-pack {
+    display: flex;
+    justify-content: space-between;
+}
+
+.mi-name-hotel-pack h3 {
+    margin: 0;
+}
+
+.mi-service-hotel-pack {
+    background-color: #b0b7c7;
+    border-radius: 9px;
+    height: fit-content;
+    padding: 2%;
+}
+
+.mi-service-hotel-pack p {
+    margin: 0;
+}
+
+.mi-info-pack-div-5 {
+    margin-top: 5%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.mi-info-pack-div-5 p {
+    margin: 0;
+    width: 50%;
+    font-size: 22px;
+}
+
+.mi-info-pack-div-5 a {
+    text-decoration: none;
+    margin-bottom: 2%;
+    margin-right: 2%;
+}
+
+.mi-info-pack-div-5 a i {
+    color: #304a73;
+    font-size: 30px;
+}
+
+@media (min-width: 500px) {
+    .mi-package-article {
+        width: 400px;
+    }
+}
+
+@media (min-width: 768px) {
+    .mi-package-article {
+        width: 100%;
+    }
+
+    .mi-img-package-list {
+        width: 600px;
+        height: 400px;
+    }
+
+
+    .mi-Departure-reach-pack {
+        border-bottom: #000 1px solid;
+        margin-bottom: 1%;
+    }
+
+    .mi-second-pack-main-div {
+        flex-direction: row;
+    }
+
+    .mi-main-pack-info {
+        margin-left: 2%;
+        justify-content: space-between;
+        margin-bottom: 0
+    }
+
+    .mi-info-pack-div-5 p,
+    .mi-info-pack-div-5 a {
+        display: flex;
+        align-items: flex-end;
+        margin-bottom: 0%;
+    }
+
+}
+/* package products END */
 @media (min-width: 768px) {
     .main-select {
         width: 25%;
