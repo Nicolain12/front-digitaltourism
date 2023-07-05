@@ -3,19 +3,19 @@ import './header.css';
 import { Link } from "react-router-dom";
 import Popup from '../Popups/Choose/choosePopup';
 import PopupCreate from '../Popups/createChoose/createChoose';
+import BurguerMenu from '../Popups/burgerMenu/burgerMenu';
 
 function Header() {
     const [userPath, setUserPath] = useState(``)
     const [buttonPopup, setButtonPopup] = useState(false)
+    const [burgerMenu, setBurgerMenu] = useState(false)
     const [profileAllowed, setProfileAllowed] = useState(false)
     const refCreateProduct = useRef()
     const refCart = useRef()
     const refDivLinks = useRef()
     const [createPopup, setCreatePopup] = useState(false)
 
-    const createPopupButton = () => {
-        setCreatePopup(true)
-    }
+
 
     useEffect(() => {
         const userLogged = JSON.parse(sessionStorage.getItem('userLogged'))
@@ -47,6 +47,13 @@ function Header() {
             }
         }
     }
+    const createPopupButton = () => {
+        setCreatePopup(true)
+    }
+    const burgerMenuFunction = () => {
+        if(!burgerMenu)setBurgerMenu(true)
+        if(burgerMenu)setBurgerMenu(false)
+    }
 
     return (
         <div className="App-header">
@@ -64,7 +71,6 @@ function Header() {
                         <li ref={refCreateProduct}><Link onClick={createPopupButton}>Create Service</Link></li>
                     </ul>
                 </div>
-
                 <PopupCreate trigger={createPopup} setTrigger={setCreatePopup}></PopupCreate>
                 <div ref={refDivLinks} className="div-links">
                     <div className="div-i-1">
@@ -73,12 +79,13 @@ function Header() {
                     <div className="div-i-2">
                         <button onClick={popupOpen}><i className="fa-solid fa-user"></i></button>
                     </div>
-                    <div className="burger-menu">
-                        <Link to='#'><i className="fas fa-bars"></i></Link>
-                    </div>
                 </div>
+                    <div className="burger-menu">
+                        <i onClick={burgerMenuFunction} className="fa-solid fa-bars"></i>
+                    </div>
             </header>
             <Popup trigger={buttonPopup} setTrigger={setButtonPopup}></Popup>
+            <BurguerMenu trigger={burgerMenu} userPath={userPath} setTrigger={setBurgerMenu}></BurguerMenu>
         </div>
     );
 }

@@ -144,10 +144,15 @@ header {
     margin-right: 5%;
 }
 
-.burger-menu a i {
+.fa-solid.fa-bars{
     color: white;
     font-size: 30px;
     cursor: pointer;
+}
+.fa-solid.fa-bars:hover {
+    border: white 1px solid;
+    padding: 20%;
+    border-radius: 5px;
 }
 
 @media (min-width: 768px) {
@@ -185,6 +190,9 @@ header {
     }
 
     .burger-menu {
+        display: none;
+    }
+    .fa-solid.fa-bars{
         display: none;
     }
 

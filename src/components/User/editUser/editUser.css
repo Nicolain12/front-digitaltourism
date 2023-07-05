@@ -1,3 +1,7 @@
+.App-editUser {
+    background-color: #b0b7c7;
+}
+
 /* Errors */
 .error-hidden {
     display: none;
@@ -81,13 +85,15 @@
     align-items: flex-start;
 }
 
-.input-edit-user{
+.input-edit-user {
+    border-radius: 5px;
+    background-color: #b0b7c7;
+    border: 2px solid #304a73;
+    padding: 5px 10px;
     margin-top: 5%;
     margin-bottom: 2%;
     height: 2rem;
     width: 100%;
-    border-radius: 5px;
-    border: 1px solid gray;
 }
 
 .name-edit label,

@@ -231,7 +231,7 @@ function MainIndex() {
     const userLogged = JSON.parse(sessionStorage.getItem('userLogged'))
     const articleClick = (id, type)=>{
         if(userLogged){
-            if(type === 'flight')window.location.href = `/flightDetail/${id}`
+            if(type === 'flight')window.location.href = `/flightsDetail/${id}`
             if(type === 'hotel')window.location.href = `/hotelDetail/${id}`
             if(type === 'pack')window.location.href = `/packageDetail/${id}`
         } 
